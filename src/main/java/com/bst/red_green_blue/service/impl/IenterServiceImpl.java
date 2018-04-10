@@ -1,16 +1,15 @@
 package com.bst.red_green_blue.service.impl;
 
+import com.bst.red_green_blue.common.ResponseCode;
 import com.bst.red_green_blue.common.ServerResponse;
 import com.bst.red_green_blue.dao.ApplicationFormMapper;
+import com.bst.red_green_blue.handle.exception.CustomException;
 import com.bst.red_green_blue.pojo.ApplicationForm;
-import com.bst.red_green_blue.pojo.ApplicationFormExample;
 import com.bst.red_green_blue.pojo.vo.ApplicationFormVo;
 import com.bst.red_green_blue.service.IenterService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.jdbc.JdbcUpdateAffectedIncorrectNumberOfRowsException;
 import org.springframework.stereotype.Service;
 
-import java.sql.SQLException;
 import java.util.UUID;
 
 /**
@@ -28,7 +27,7 @@ public class IenterServiceImpl implements IenterService{
      * @return
      */
     @Override
-    public ServerResponse<String> enterApplyFor(ApplicationFormVo applicationFormVo)  {
+    public ServerResponse<String> enterApplyFor(ApplicationFormVo applicationFormVo) throws CustomException {
         String id = String.valueOf(UUID.randomUUID());
         ApplicationForm applicationForm = new ApplicationForm(applicationFormVo,id);
         int status;
@@ -36,7 +35,7 @@ public class IenterServiceImpl implements IenterService{
         try {
             status = applicationFormMapper.insertSelective(applicationForm);
         }catch (Exception e) {
-            return ServerResponse.createBySuccessMessage("团队名称有重复");
+            throw new CustomException(ResponseCode.SQL_EXCEPTION);
         }
 
         if (status == 0) {
