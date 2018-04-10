@@ -1,5 +1,7 @@
 package com.bst.red_green_blue.pojo;
 
+import com.bst.red_green_blue.pojo.vo.ApplicationFormVo;
+
 public class ApplicationForm {
     private String id;
 
@@ -26,6 +28,15 @@ public class ApplicationForm {
         this.errorMessage = errorMessage;
         this.responsibilityPhoneNumber = responsibilityPhoneNumber;
         this.projectInformation = projectInformation;
+    }
+
+    public ApplicationForm(ApplicationFormVo applicationFormVo,String id) {
+        this.id = id;
+        this.projectName = applicationFormVo.getProjectName();
+        this.responsibilityName = applicationFormVo.getResponsibilityName();
+        this.college = applicationFormVo.getCollege();
+        this.responsibilityPhoneNumber = applicationFormVo.getResponsibilityPhoneNumber();
+        this.projectInformation = applicationFormVo.getProjectInformation();
     }
 
     public ApplicationForm() {
@@ -95,4 +106,5 @@ public class ApplicationForm {
     public void setProjectInformation(String projectInformation) {
         this.projectInformation = projectInformation == null ? null : projectInformation.trim();
     }
+
 }
