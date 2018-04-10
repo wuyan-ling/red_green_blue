@@ -1,0 +1,418 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.bst.red_green_blue.dao.OperationMessageMapper" >
+  <resultMap id="BaseResultMap" type="com.bst.red_green_blue.pojo.OperationMessage" >
+    <constructor >
+      <idArg column="id" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="month_turnover" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="transaction_time" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="product_main" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="product_minor" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="buy_cost" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="employee_expend" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="liability" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="investment" jdbcType="VARCHAR" javaType="java.lang.String" />
+    </constructor>
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.bst.red_green_blue.pojo.OperationMessageWithBLOBs" >
+    <constructor >
+      <idArg column="id" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="month_turnover" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="transaction_time" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="product_main" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="product_minor" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="buy_cost" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="employee_expend" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="liability" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="investment" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="month_work" jdbcType="LONGVARCHAR" javaType="java.lang.String" />
+      <arg column="next_month_work" jdbcType="LONGVARCHAR" javaType="java.lang.String" />
+      <arg column="project_specialty" jdbcType="LONGVARCHAR" javaType="java.lang.String" />
+      <arg column="project_question" jdbcType="LONGVARCHAR" javaType="java.lang.String" />
+      <arg column="team_need" jdbcType="LONGVARCHAR" javaType="java.lang.String" />
+    </constructor>
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, month_turnover, transaction_time, product_main, product_minor, buy_cost, employee_expend, 
+    liability, investment
+  </sql>
+  <sql id="Blob_Column_List" >
+    month_work, next_month_work, project_specialty, project_question, team_need
+  </sql>
+  <select id="selectByExampleWithBLOBs" resultMap="ResultMapWithBLOBs" parameterType="com.bst.red_green_blue.pojo.OperationMessageExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from operation_message
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.bst.red_green_blue.pojo.OperationMessageExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from operation_message
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from operation_message
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from operation_message
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.bst.red_green_blue.pojo.OperationMessageExample" >
+    delete from operation_message
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.bst.red_green_blue.pojo.OperationMessageWithBLOBs" >
+    insert into operation_message (id, month_turnover, transaction_time, 
+      product_main, product_minor, buy_cost, 
+      employee_expend, liability, investment, 
+      month_work, next_month_work, project_specialty, 
+      project_question, team_need)
+    values (#{id,jdbcType=VARCHAR}, #{monthTurnover,jdbcType=VARCHAR}, #{transactionTime,jdbcType=INTEGER}, 
+      #{productMain,jdbcType=VARCHAR}, #{productMinor,jdbcType=VARCHAR}, #{buyCost,jdbcType=VARCHAR}, 
+      #{employeeExpend,jdbcType=VARCHAR}, #{liability,jdbcType=VARCHAR}, #{investment,jdbcType=VARCHAR}, 
+      #{monthWork,jdbcType=LONGVARCHAR}, #{nextMonthWork,jdbcType=LONGVARCHAR}, #{projectSpecialty,jdbcType=LONGVARCHAR}, 
+      #{projectQuestion,jdbcType=LONGVARCHAR}, #{teamNeed,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.bst.red_green_blue.pojo.OperationMessageWithBLOBs" >
+    insert into operation_message
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="monthTurnover != null" >
+        month_turnover,
+      </if>
+      <if test="transactionTime != null" >
+        transaction_time,
+      </if>
+      <if test="productMain != null" >
+        product_main,
+      </if>
+      <if test="productMinor != null" >
+        product_minor,
+      </if>
+      <if test="buyCost != null" >
+        buy_cost,
+      </if>
+      <if test="employeeExpend != null" >
+        employee_expend,
+      </if>
+      <if test="liability != null" >
+        liability,
+      </if>
+      <if test="investment != null" >
+        investment,
+      </if>
+      <if test="monthWork != null" >
+        month_work,
+      </if>
+      <if test="nextMonthWork != null" >
+        next_month_work,
+      </if>
+      <if test="projectSpecialty != null" >
+        project_specialty,
+      </if>
+      <if test="projectQuestion != null" >
+        project_question,
+      </if>
+      <if test="teamNeed != null" >
+        team_need,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="monthTurnover != null" >
+        #{monthTurnover,jdbcType=VARCHAR},
+      </if>
+      <if test="transactionTime != null" >
+        #{transactionTime,jdbcType=INTEGER},
+      </if>
+      <if test="productMain != null" >
+        #{productMain,jdbcType=VARCHAR},
+      </if>
+      <if test="productMinor != null" >
+        #{productMinor,jdbcType=VARCHAR},
+      </if>
+      <if test="buyCost != null" >
+        #{buyCost,jdbcType=VARCHAR},
+      </if>
+      <if test="employeeExpend != null" >
+        #{employeeExpend,jdbcType=VARCHAR},
+      </if>
+      <if test="liability != null" >
+        #{liability,jdbcType=VARCHAR},
+      </if>
+      <if test="investment != null" >
+        #{investment,jdbcType=VARCHAR},
+      </if>
+      <if test="monthWork != null" >
+        #{monthWork,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="nextMonthWork != null" >
+        #{nextMonthWork,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="projectSpecialty != null" >
+        #{projectSpecialty,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="projectQuestion != null" >
+        #{projectQuestion,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="teamNeed != null" >
+        #{teamNeed,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.bst.red_green_blue.pojo.OperationMessageExample" resultType="java.lang.Integer" >
+    select count(*) from operation_message
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update operation_message
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=VARCHAR},
+      </if>
+      <if test="record.monthTurnover != null" >
+        month_turnover = #{record.monthTurnover,jdbcType=VARCHAR},
+      </if>
+      <if test="record.transactionTime != null" >
+        transaction_time = #{record.transactionTime,jdbcType=INTEGER},
+      </if>
+      <if test="record.productMain != null" >
+        product_main = #{record.productMain,jdbcType=VARCHAR},
+      </if>
+      <if test="record.productMinor != null" >
+        product_minor = #{record.productMinor,jdbcType=VARCHAR},
+      </if>
+      <if test="record.buyCost != null" >
+        buy_cost = #{record.buyCost,jdbcType=VARCHAR},
+      </if>
+      <if test="record.employeeExpend != null" >
+        employee_expend = #{record.employeeExpend,jdbcType=VARCHAR},
+      </if>
+      <if test="record.liability != null" >
+        liability = #{record.liability,jdbcType=VARCHAR},
+      </if>
+      <if test="record.investment != null" >
+        investment = #{record.investment,jdbcType=VARCHAR},
+      </if>
+      <if test="record.monthWork != null" >
+        month_work = #{record.monthWork,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="record.nextMonthWork != null" >
+        next_month_work = #{record.nextMonthWork,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="record.projectSpecialty != null" >
+        project_specialty = #{record.projectSpecialty,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="record.projectQuestion != null" >
+        project_question = #{record.projectQuestion,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="record.teamNeed != null" >
+        team_need = #{record.teamNeed,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExampleWithBLOBs" parameterType="map" >
+    update operation_message
+    set id = #{record.id,jdbcType=VARCHAR},
+      month_turnover = #{record.monthTurnover,jdbcType=VARCHAR},
+      transaction_time = #{record.transactionTime,jdbcType=INTEGER},
+      product_main = #{record.productMain,jdbcType=VARCHAR},
+      product_minor = #{record.productMinor,jdbcType=VARCHAR},
+      buy_cost = #{record.buyCost,jdbcType=VARCHAR},
+      employee_expend = #{record.employeeExpend,jdbcType=VARCHAR},
+      liability = #{record.liability,jdbcType=VARCHAR},
+      investment = #{record.investment,jdbcType=VARCHAR},
+      month_work = #{record.monthWork,jdbcType=LONGVARCHAR},
+      next_month_work = #{record.nextMonthWork,jdbcType=LONGVARCHAR},
+      project_specialty = #{record.projectSpecialty,jdbcType=LONGVARCHAR},
+      project_question = #{record.projectQuestion,jdbcType=LONGVARCHAR},
+      team_need = #{record.teamNeed,jdbcType=LONGVARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update operation_message
+    set id = #{record.id,jdbcType=VARCHAR},
+      month_turnover = #{record.monthTurnover,jdbcType=VARCHAR},
+      transaction_time = #{record.transactionTime,jdbcType=INTEGER},
+      product_main = #{record.productMain,jdbcType=VARCHAR},
+      product_minor = #{record.productMinor,jdbcType=VARCHAR},
+      buy_cost = #{record.buyCost,jdbcType=VARCHAR},
+      employee_expend = #{record.employeeExpend,jdbcType=VARCHAR},
+      liability = #{record.liability,jdbcType=VARCHAR},
+      investment = #{record.investment,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.bst.red_green_blue.pojo.OperationMessageWithBLOBs" >
+    update operation_message
+    <set >
+      <if test="monthTurnover != null" >
+        month_turnover = #{monthTurnover,jdbcType=VARCHAR},
+      </if>
+      <if test="transactionTime != null" >
+        transaction_time = #{transactionTime,jdbcType=INTEGER},
+      </if>
+      <if test="productMain != null" >
+        product_main = #{productMain,jdbcType=VARCHAR},
+      </if>
+      <if test="productMinor != null" >
+        product_minor = #{productMinor,jdbcType=VARCHAR},
+      </if>
+      <if test="buyCost != null" >
+        buy_cost = #{buyCost,jdbcType=VARCHAR},
+      </if>
+      <if test="employeeExpend != null" >
+        employee_expend = #{employeeExpend,jdbcType=VARCHAR},
+      </if>
+      <if test="liability != null" >
+        liability = #{liability,jdbcType=VARCHAR},
+      </if>
+      <if test="investment != null" >
+        investment = #{investment,jdbcType=VARCHAR},
+      </if>
+      <if test="monthWork != null" >
+        month_work = #{monthWork,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="nextMonthWork != null" >
+        next_month_work = #{nextMonthWork,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="projectSpecialty != null" >
+        project_specialty = #{projectSpecialty,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="projectQuestion != null" >
+        project_question = #{projectQuestion,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="teamNeed != null" >
+        team_need = #{teamNeed,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.bst.red_green_blue.pojo.OperationMessageWithBLOBs" >
+    update operation_message
+    set month_turnover = #{monthTurnover,jdbcType=VARCHAR},
+      transaction_time = #{transactionTime,jdbcType=INTEGER},
+      product_main = #{productMain,jdbcType=VARCHAR},
+      product_minor = #{productMinor,jdbcType=VARCHAR},
+      buy_cost = #{buyCost,jdbcType=VARCHAR},
+      employee_expend = #{employeeExpend,jdbcType=VARCHAR},
+      liability = #{liability,jdbcType=VARCHAR},
+      investment = #{investment,jdbcType=VARCHAR},
+      month_work = #{monthWork,jdbcType=LONGVARCHAR},
+      next_month_work = #{nextMonthWork,jdbcType=LONGVARCHAR},
+      project_specialty = #{projectSpecialty,jdbcType=LONGVARCHAR},
+      project_question = #{projectQuestion,jdbcType=LONGVARCHAR},
+      team_need = #{teamNeed,jdbcType=LONGVARCHAR}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.bst.red_green_blue.pojo.OperationMessage" >
+    update operation_message
+    set month_turnover = #{monthTurnover,jdbcType=VARCHAR},
+      transaction_time = #{transactionTime,jdbcType=INTEGER},
+      product_main = #{productMain,jdbcType=VARCHAR},
+      product_minor = #{productMinor,jdbcType=VARCHAR},
+      buy_cost = #{buyCost,jdbcType=VARCHAR},
+      employee_expend = #{employeeExpend,jdbcType=VARCHAR},
+      liability = #{liability,jdbcType=VARCHAR},
+      investment = #{investment,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+</mapper>

@@ -1,0 +1,231 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.bst.red_green_blue.dao.PublicFacilityMapper" >
+  <resultMap id="BaseResultMap" type="com.bst.red_green_blue.pojo.PublicFacility" >
+    <constructor >
+      <idArg column="id" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="request_address" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="person_number" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="request_use_time" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="contact_way" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="remark" jdbcType="VARCHAR" javaType="java.lang.String" />
+    </constructor>
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, request_address, person_number, request_use_time, contact_way, remark
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.bst.red_green_blue.pojo.PublicFacilityExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from public_facility
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from public_facility
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from public_facility
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.bst.red_green_blue.pojo.PublicFacilityExample" >
+    delete from public_facility
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.bst.red_green_blue.pojo.PublicFacility" >
+    insert into public_facility (id, request_address, person_number, 
+      request_use_time, contact_way, remark
+      )
+    values (#{id,jdbcType=VARCHAR}, #{requestAddress,jdbcType=INTEGER}, #{personNumber,jdbcType=VARCHAR}, 
+      #{requestUseTime,jdbcType=VARCHAR}, #{contactWay,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.bst.red_green_blue.pojo.PublicFacility" >
+    insert into public_facility
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="requestAddress != null" >
+        request_address,
+      </if>
+      <if test="personNumber != null" >
+        person_number,
+      </if>
+      <if test="requestUseTime != null" >
+        request_use_time,
+      </if>
+      <if test="contactWay != null" >
+        contact_way,
+      </if>
+      <if test="remark != null" >
+        remark,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="requestAddress != null" >
+        #{requestAddress,jdbcType=INTEGER},
+      </if>
+      <if test="personNumber != null" >
+        #{personNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="requestUseTime != null" >
+        #{requestUseTime,jdbcType=VARCHAR},
+      </if>
+      <if test="contactWay != null" >
+        #{contactWay,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null" >
+        #{remark,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.bst.red_green_blue.pojo.PublicFacilityExample" resultType="java.lang.Integer" >
+    select count(*) from public_facility
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update public_facility
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=VARCHAR},
+      </if>
+      <if test="record.requestAddress != null" >
+        request_address = #{record.requestAddress,jdbcType=INTEGER},
+      </if>
+      <if test="record.personNumber != null" >
+        person_number = #{record.personNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="record.requestUseTime != null" >
+        request_use_time = #{record.requestUseTime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.contactWay != null" >
+        contact_way = #{record.contactWay,jdbcType=VARCHAR},
+      </if>
+      <if test="record.remark != null" >
+        remark = #{record.remark,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update public_facility
+    set id = #{record.id,jdbcType=VARCHAR},
+      request_address = #{record.requestAddress,jdbcType=INTEGER},
+      person_number = #{record.personNumber,jdbcType=VARCHAR},
+      request_use_time = #{record.requestUseTime,jdbcType=VARCHAR},
+      contact_way = #{record.contactWay,jdbcType=VARCHAR},
+      remark = #{record.remark,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.bst.red_green_blue.pojo.PublicFacility" >
+    update public_facility
+    <set >
+      <if test="requestAddress != null" >
+        request_address = #{requestAddress,jdbcType=INTEGER},
+      </if>
+      <if test="personNumber != null" >
+        person_number = #{personNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="requestUseTime != null" >
+        request_use_time = #{requestUseTime,jdbcType=VARCHAR},
+      </if>
+      <if test="contactWay != null" >
+        contact_way = #{contactWay,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null" >
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.bst.red_green_blue.pojo.PublicFacility" >
+    update public_facility
+    set request_address = #{requestAddress,jdbcType=INTEGER},
+      person_number = #{personNumber,jdbcType=VARCHAR},
+      request_use_time = #{requestUseTime,jdbcType=VARCHAR},
+      contact_way = #{contactWay,jdbcType=VARCHAR},
+      remark = #{remark,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+</mapper>
