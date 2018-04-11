@@ -1,9 +1,6 @@
 package com.bst.red_green_blue.service.impl;
 
 import com.bst.red_green_blue.common.ServerResponse;
-import com.bst.red_green_blue.dao.UserMapper;
-import com.bst.red_green_blue.pojo.User;
-import com.bst.red_green_blue.pojo.UserExample;
 import com.bst.red_green_blue.service.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -53,9 +50,24 @@ public class UserService implements IUserService {
     @Override
     public ServerResponse<String> deleteUser(String phoneNumber, HttpSession session) {
 
-        userMapper.deleteByPrimaryKey(phoneNumber);
-        return ServerResponse.createBySuccessMessage("删除用户成功");
+        int i = userMapper.deleteByPrimaryKey(phoneNumber);
+        if (i != 0) {
+            return ServerResponse.createBySuccessMessage("删除用户成功");
+        } else {
+            return ServerResponse.createByErrorMessage("用户不存在");
+        }
+    }
 
+    @Override
+    public ServerResponse<String> updateUser(User user, HttpSession session) {
+
+        int i = userMapper.updateByPrimaryKeySelective(user);
+        if (i != 0) {
+            return ServerResponse.createByErrorMessage("更新成功");
+        } else {
+            return ServerResponse.createByErrorMessage("更新失败");
+
+        }
 
     }
 

@@ -1,7 +1,7 @@
 package com.bst.red_green_blue.common;
 
 /**
- * @author 杨红星
+ * @author summer
  * @version 1.0.0
  */
 public enum ResponseCode  {

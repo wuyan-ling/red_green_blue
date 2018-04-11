@@ -9,16 +9,17 @@ import javax.servlet.http.HttpSession;
 public interface IUserService {
     /**
      * 登陆
+     *
      * @param phoneNumber
      * @param password
      * @return
      */
-
     ServerResponse<User> login(String phoneNumber, String password);
 
 
     /**
      * 添加用户
+     *
      * @param user
      * @return
      */
@@ -27,9 +28,23 @@ public interface IUserService {
 
     /**
      * 删除用户
+     *
      * @param phoneNumber
      * @param session
      * @return
      */
     ServerResponse<String> deleteUser(String phoneNumber, HttpSession session);
+
+
+
+
+    /**
+     * 修改用户信息
+     * @param user
+     * @param session
+     */
+    ServerResponse<String> updateUser(User user, HttpSession session);
+
 }
+
+

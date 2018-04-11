@@ -8,6 +8,7 @@
       <arg column="password" jdbcType="VARCHAR" javaType="java.lang.String" />
       <arg column="mark" jdbcType="INTEGER" javaType="java.lang.Integer" />
       <arg column="status" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="team_id" jdbcType="VARCHAR" javaType="java.lang.String" />
     </constructor>
   </resultMap>
   <sql id="Example_Where_Clause" >
@@ -69,7 +70,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    phone_number, username, password, mark, status
+    phone_number, username, password, mark, status, team_id
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.bst.red_green_blue.pojo.UserExample" >
     select
@@ -104,9 +105,11 @@
   </delete>
   <insert id="insert" parameterType="com.bst.red_green_blue.pojo.User" >
     insert into user (phone_number, username, password, 
-      mark, status)
+      mark, status, team_id
+      )
     values (#{phoneNumber,jdbcType=VARCHAR}, #{username,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, 
-      #{mark,jdbcType=INTEGER}, #{status,jdbcType=INTEGER})
+      #{mark,jdbcType=INTEGER}, #{status,jdbcType=INTEGER}, #{teamId,jdbcType=VARCHAR}
+      )
   </insert>
   <insert id="insertSelective" parameterType="com.bst.red_green_blue.pojo.User" >
     insert into user
@@ -126,6 +129,9 @@
       <if test="status != null" >
         status,
       </if>
+      <if test="teamId != null" >
+        team_id,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="phoneNumber != null" >
@@ -142,6 +148,9 @@
       </if>
       <if test="status != null" >
         #{status,jdbcType=INTEGER},
+      </if>
+      <if test="teamId != null" >
+        #{teamId,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -169,6 +178,9 @@
       <if test="record.status != null" >
         status = #{record.status,jdbcType=INTEGER},
       </if>
+      <if test="record.teamId != null" >
+        team_id = #{record.teamId,jdbcType=VARCHAR},
+      </if>
     </set>
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
@@ -180,7 +192,8 @@
       username = #{record.username,jdbcType=VARCHAR},
       password = #{record.password,jdbcType=VARCHAR},
       mark = #{record.mark,jdbcType=INTEGER},
-      status = #{record.status,jdbcType=INTEGER}
+      status = #{record.status,jdbcType=INTEGER},
+      team_id = #{record.teamId,jdbcType=VARCHAR}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -200,6 +213,9 @@
       <if test="status != null" >
         status = #{status,jdbcType=INTEGER},
       </if>
+      <if test="teamId != null" >
+        team_id = #{teamId,jdbcType=VARCHAR},
+      </if>
     </set>
     where phone_number = #{phoneNumber,jdbcType=VARCHAR}
   </update>
@@ -208,7 +224,8 @@
     set username = #{username,jdbcType=VARCHAR},
       password = #{password,jdbcType=VARCHAR},
       mark = #{mark,jdbcType=INTEGER},
-      status = #{status,jdbcType=INTEGER}
+      status = #{status,jdbcType=INTEGER},
+      team_id = #{teamId,jdbcType=VARCHAR}
     where phone_number = #{phoneNumber,jdbcType=VARCHAR}
   </update>
 </mapper>
