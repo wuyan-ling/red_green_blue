@@ -1,9 +1,7 @@
 package com.bst.red_green_blue.service;
 
 import com.bst.red_green_blue.common.ServerResponse;
-import com.bst.red_green_blue.handle.exception.CustomException;
 import com.bst.red_green_blue.pojo.ApplicationForm;
-import com.bst.red_green_blue.pojo.vo.ApplicationFormStatusVo;
 import com.bst.red_green_blue.pojo.vo.ApplicationFormVo;
 
 import java.util.List;
@@ -15,7 +13,11 @@ import java.util.List;
 public interface IEnterService {
     ServerResponse<String> enterApplyFor(ApplicationFormVo applicationFormVo);
 
-    ServerResponse<ApplicationForm> applicationStatusQuery(String responsibilityName, String responsibilityPhoneNumber);
+    ServerResponse<ApplicationFormVo> applicationStatusQuery(String responsibilityName, String responsibilityPhoneNumber);
 
     ServerResponse<List<ApplicationFormVo>> applicationPublic();
+
+    ServerResponse<List<ApplicationForm>> checkApplicationFormList();
+
+    ServerResponse<List<ApplicationForm>> checkPendingApplicationFormList();
 }

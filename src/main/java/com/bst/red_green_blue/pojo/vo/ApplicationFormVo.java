@@ -30,16 +30,7 @@ public class ApplicationFormVo {
 
 
 
-    static public ApplicationFormVo createApplicationFormFormApplicationFormVo(ApplicationForm form) {
-        ApplicationFormVo applicationForm = new ApplicationFormVo(form.getProjectName(),form.getResponsibilityName(),form.getCollege(),
-                form.getResponsibilityPhoneNumber(),form.getProjectInformation());
-//        applicationForm.setProjectName();
-//        applicationForm.setResponsibilityName();
-//        applicationForm.setCollege();
-//        applicationForm.setResponsibilityPhoneNumber();
-//        applicationForm.setProjectInformation();
-        return applicationForm;
-    }
+
 
     public String getProjectName() {
         return projectName;

@@ -3,6 +3,7 @@ package com.bst.red_green_blue.service.impl;
 import com.bst.red_green_blue.common.Constant;
 import com.bst.red_green_blue.common.ResponseCode;
 import com.bst.red_green_blue.common.ServerResponse;
+import com.bst.red_green_blue.common.VoHandle;
 import com.bst.red_green_blue.dao.ApplicationFormMapper;
 import com.bst.red_green_blue.pojo.ApplicationForm;
 import com.bst.red_green_blue.pojo.ApplicationFormExample;
@@ -20,19 +21,21 @@ import java.util.UUID;
  * 2018/4/10 21:25
  */
 @Service
-public class IenterServiceImpl implements IEnterService {
+public class IEnterServiceImpl implements IEnterService {
     @Autowired
     private ApplicationFormMapper applicationFormMapper;
 
     /**
      * 入驻申请
+     *
      * @param applicationFormVo
      * @return
      */
     @Override
-    public ServerResponse<String> enterApplyFor(ApplicationFormVo applicationFormVo)  {
+    public ServerResponse<String> enterApplyFor(ApplicationFormVo applicationFormVo) {
         String id = String.valueOf(UUID.randomUUID());
-        ApplicationForm applicationForm = new ApplicationForm(applicationFormVo, id);
+        ApplicationForm applicationForm = VoHandle.createApplicationFormVoToApplicationForm(applicationFormVo, id);
+//        ApplicationForm applicationForm = new ApplicationForm(applicationFormVo, id);
         int status = 0;
 
         try {
@@ -52,12 +55,13 @@ public class IenterServiceImpl implements IEnterService {
 
     /**
      * 申请的状态查询
+     *
      * @param responsibilityName
      * @param responsibilityPhoneNumber
      * @return
      */
     @Override
-    public ServerResponse<ApplicationForm> applicationStatusQuery(String responsibilityName, String responsibilityPhoneNumber) {
+    public ServerResponse<ApplicationFormVo> applicationStatusQuery(String responsibilityName, String responsibilityPhoneNumber) {
         ApplicationFormExample example = new ApplicationFormExample();
         example.createCriteria().andResponsibilityNameEqualTo(responsibilityName).
                 andResponsibilityPhoneNumberEqualTo(responsibilityPhoneNumber);
@@ -70,11 +74,13 @@ public class IenterServiceImpl implements IEnterService {
         if (form.getErrorMessage() == null || form.getErrorMessage().isEmpty()) {
             form.setErrorMessage("");
         }
-        return ServerResponse.createBySuccess(form);
+        return ServerResponse.createBySuccess(VoHandle.createApplicationFormFormApplicationFormVo(form));
 
     }
+
     /**
      * 申请公示
+     *(有瑕疵)
      * @return
      */
     @Override
@@ -87,9 +93,39 @@ public class IenterServiceImpl implements IEnterService {
         }
         List<ApplicationFormVo> formVos = new ArrayList<>();
         for (ApplicationForm form : applicationForms) {
-            formVos.add(ApplicationFormVo.createApplicationFormFormApplicationFormVo(form));
+            formVos.add(VoHandle.createApplicationFormFormApplicationFormVo(form));
         }
         return ServerResponse.createBySuccess(formVos);
     }
 
+    /**
+     * 获取审核列表
+     * @return
+     */
+    @Override
+    public ServerResponse<List<ApplicationForm>> checkApplicationFormList() {
+        ApplicationFormExample example = new ApplicationFormExample();
+        example.or().andStatusEqualTo(Constant.Status.PASS);
+        example.or().andStatusEqualTo(Constant.Status.NOT_PASS);
+        List<ApplicationForm> applicationForms = applicationFormMapper.selectByExample(example);
+        if (applicationForms.size() == 0) {
+            return ServerResponse.createBySuccessMessage("空");
+        }
+        return ServerResponse.createBySuccess(applicationForms);
+    }
+
+    /**
+     * 获取待审核列表
+     * @return
+     */
+    @Override
+    public ServerResponse<List<ApplicationForm>> checkPendingApplicationFormList() {
+        ApplicationFormExample example = new ApplicationFormExample();
+        example.createCriteria().andStatusEqualTo(Constant.Status.UNTREATED);
+        List<ApplicationForm> applicationForms = applicationFormMapper.selectByExample(example);
+        if (applicationForms.size() == 0) {
+            return ServerResponse.createBySuccessMessage("空");
+        }
+        return ServerResponse.createBySuccess(applicationForms);
+    }
 }

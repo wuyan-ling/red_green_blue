@@ -16,12 +16,12 @@ public class Constant {
     }
 
     public interface Status {
-        //审核未通过
-        int NOT_PASS = 0;
+        //未处理
+        int UNTREATED = 0;
         //审核通过
         int PASS = 1;
-        //未处理
-        int UNTREATED = 2;
+        //审核未通过
+        int NOT_PASS = 2;
     }
 
 }
