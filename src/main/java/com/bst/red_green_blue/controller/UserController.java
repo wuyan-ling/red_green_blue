@@ -60,8 +60,6 @@ public class UserController {
         }
 
     }
-
-
     @PostMapping(value = "/deleteUser")
     public ServerResponse<String> deleteUser(String phoneNumber, HttpSession session) {
         User currentUser = (User) session.getAttribute(Constant.CURRENT_USER);
