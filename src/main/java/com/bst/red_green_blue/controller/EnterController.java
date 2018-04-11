@@ -55,7 +55,7 @@ public class EnterController {
 
     }
 
-    @ApiOperation(value = "获取审核列表")
+    @ApiOperation(value = "获取已审核列表")
     @GetMapping(value = "checkApplicationFormList")
     public ServerResponse<List<ApplicationForm>> checkApplicationFormList(HttpSession session) {
         User user = (User) session.getAttribute(Constant.CURRENT_USER);
@@ -88,4 +88,27 @@ public class EnterController {
         String teamId = user.getTeamId();
         return iEnterService.applicationPublicFacility(vo,teamId);
     }
+    @ApiOperation(value = "获取已审核的公共设施申请列表")
+    @GetMapping(value = "checkPublicFacility")
+    public ServerResponse<List<PublicFacility>> checkPublicFacility(HttpSession session) {
+        User user = (User) session.getAttribute(Constant.CURRENT_USER);
+        if (user == null) {
+            return ServerResponse.createByErrorMessage("请先登录");
+        } else if (user.getMark() == 1) {
+            return ServerResponse.createByErrorMessage("不是管理员，权限不足");
+        }
+        return iEnterService.checkPublicFacility();
+    }
+    @ApiOperation(value = "获取待审核的公共设施申请审核列表")
+    @GetMapping(value = "checkPendingPublicFacility")
+    public ServerResponse<List<PublicFacility>> checkPendingPublicFacility(HttpSession session) {
+        User user = (User) session.getAttribute(Constant.CURRENT_USER);
+        if (user == null) {
+            return ServerResponse.createByErrorMessage("请先登录");
+        } else if (user.getMark() == 1) {
+            return ServerResponse.createByErrorMessage("不是管理员，权限不足");
+        }
+        return iEnterService.checkPendingPublicFacility();
+    }
+
 }

@@ -2,6 +2,7 @@ package com.bst.red_green_blue.service;
 
 import com.bst.red_green_blue.common.ServerResponse;
 import com.bst.red_green_blue.pojo.ApplicationForm;
+import com.bst.red_green_blue.pojo.PublicFacility;
 import com.bst.red_green_blue.pojo.vo.ApplicationFormVo;
 import com.bst.red_green_blue.pojo.vo.PublicFacilityVo;
 
@@ -58,4 +59,16 @@ public interface IEnterService {
      * @return
      */
     ServerResponse<String> applicationPublicFacility(PublicFacilityVo vo, String teamId);
+    /**
+     * 获取已审核的公共设施申请
+     *
+     * @return
+     */
+    ServerResponse<List<PublicFacility>> checkPublicFacility();
+    /**
+     * 获取未审核的公共设施申请
+     *
+     * @return
+     */
+    ServerResponse<List<PublicFacility>> checkPendingPublicFacility();
 }

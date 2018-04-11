@@ -82,6 +82,7 @@ public class TeamServiceImpl implements ITeamService {
     }
 
 
+    @Override
     public ServerResponse<TeamMessageAndMember> getTeamMessage(User user) {
         //根据用户对象中的teamId获取所在团队
         String teamId = user.getTeamId();
