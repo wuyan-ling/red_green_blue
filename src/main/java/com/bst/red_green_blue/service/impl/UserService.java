@@ -1,6 +1,9 @@
 package com.bst.red_green_blue.service.impl;
 
 import com.bst.red_green_blue.common.ServerResponse;
+import com.bst.red_green_blue.dao.UserMapper;
+import com.bst.red_green_blue.pojo.User;
+import com.bst.red_green_blue.pojo.UserExample;
 import com.bst.red_green_blue.service.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -25,7 +28,7 @@ public class UserService implements IUserService {
         if (users.size() == 0) {
             return ServerResponse.createByErrorMessage("用户名或密码错误");
         } else {
-            return ServerResponse.createBySuccess(users.get(0));
+            return ServerResponse.createBySuccess("登陆成功",users.get(0));
         }
     }
 

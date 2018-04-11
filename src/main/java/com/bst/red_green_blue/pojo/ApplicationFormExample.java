@@ -314,6 +314,76 @@ public class ApplicationFormExample {
             return (Criteria) this;
         }
 
+        public Criteria andProjectInformationIsNull() {
+            addCriterion("project_information is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andProjectInformationIsNotNull() {
+            addCriterion("project_information is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andProjectInformationEqualTo(String value) {
+            addCriterion("project_information =", value, "projectInformation");
+            return (Criteria) this;
+        }
+
+        public Criteria andProjectInformationNotEqualTo(String value) {
+            addCriterion("project_information <>", value, "projectInformation");
+            return (Criteria) this;
+        }
+
+        public Criteria andProjectInformationGreaterThan(String value) {
+            addCriterion("project_information >", value, "projectInformation");
+            return (Criteria) this;
+        }
+
+        public Criteria andProjectInformationGreaterThanOrEqualTo(String value) {
+            addCriterion("project_information >=", value, "projectInformation");
+            return (Criteria) this;
+        }
+
+        public Criteria andProjectInformationLessThan(String value) {
+            addCriterion("project_information <", value, "projectInformation");
+            return (Criteria) this;
+        }
+
+        public Criteria andProjectInformationLessThanOrEqualTo(String value) {
+            addCriterion("project_information <=", value, "projectInformation");
+            return (Criteria) this;
+        }
+
+        public Criteria andProjectInformationLike(String value) {
+            addCriterion("project_information like", value, "projectInformation");
+            return (Criteria) this;
+        }
+
+        public Criteria andProjectInformationNotLike(String value) {
+            addCriterion("project_information not like", value, "projectInformation");
+            return (Criteria) this;
+        }
+
+        public Criteria andProjectInformationIn(List<String> values) {
+            addCriterion("project_information in", values, "projectInformation");
+            return (Criteria) this;
+        }
+
+        public Criteria andProjectInformationNotIn(List<String> values) {
+            addCriterion("project_information not in", values, "projectInformation");
+            return (Criteria) this;
+        }
+
+        public Criteria andProjectInformationBetween(String value1, String value2) {
+            addCriterion("project_information between", value1, value2, "projectInformation");
+            return (Criteria) this;
+        }
+
+        public Criteria andProjectInformationNotBetween(String value1, String value2) {
+            addCriterion("project_information not between", value1, value2, "projectInformation");
+            return (Criteria) this;
+        }
+
         public Criteria andCollegeIsNull() {
             addCriterion("college is null");
             return (Criteria) this;

@@ -26,7 +26,8 @@ public class enterController {
     @ApiOperation(value = "入驻申请")
     @PostMapping(value = "enter_apply_for")
     public ServerResponse<String> enterApplyFor(@Valid ApplicationFormVo applicationFormVo, BindingResult bindingResult) {
-        return ienterService.enterApplyFor(applicationFormVo);
+//        return ienterService.enterApplyFor(applicationFormVo);
+        return null;
     }
 
 

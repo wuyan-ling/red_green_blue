@@ -7,16 +7,16 @@ public class WechatNews {
 
     private String picture;
 
-    private Integer time;
-
     private String description;
 
-    public WechatNews(String id, String title, String picture, Integer time, String description) {
+    private Integer time;
+
+    public WechatNews(String id, String title, String picture, String description, Integer time) {
         this.id = id;
         this.title = title;
         this.picture = picture;
-        this.time = time;
         this.description = description;
+        this.time = time;
     }
 
     public WechatNews() {
@@ -47,19 +47,19 @@ public class WechatNews {
         this.picture = picture == null ? null : picture.trim();
     }
 
-    public Integer getTime() {
-        return time;
-    }
-
-    public void setTime(Integer time) {
-        this.time = time;
-    }
-
     public String getDescription() {
         return description;
     }
 
     public void setDescription(String description) {
         this.description = description == null ? null : description.trim();
+    }
+
+    public Integer getTime() {
+        return time;
+    }
+
+    public void setTime(Integer time) {
+        this.time = time;
     }
 }

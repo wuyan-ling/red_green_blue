@@ -55,6 +55,9 @@ public class UserController {
         if (currentUser.getMark() == Constant.Role.ROLE_CUSTOMER) {
             return ServerResponse.createByErrorMessage("不是管理员没有权限");
         } else {
+
+            String md5EncodeUtf8Password = MD5Util.MD5EncodeUtf8(user.getPassword());
+            user.setPassword(md5EncodeUtf8Password);
             return iUserService.addUser(user);
 
         }
@@ -69,6 +72,7 @@ public class UserController {
         if (phoneNumber == null) {
             return ServerResponse.createByErrorMessage("请输入要删除的用户手机号码");
         } else {
+
             return iUserService.deleteUser(phoneNumber, session);
         }
 
@@ -83,6 +87,8 @@ public class UserController {
         if (currentUser.getMark() == Constant.Role.ROLE_CUSTOMER) {
             return ServerResponse.createByErrorMessage("不是管理员没有权限");
         } else {
+            String md5EncodeUtf8 = MD5Util.MD5EncodeUtf8(user.getPassword());
+           user.setPassword(md5EncodeUtf8);
             return iUserService.updateUser(user, session);
         }
 

@@ -6,22 +6,11 @@
       <idArg column="id" jdbcType="VARCHAR" javaType="java.lang.String" />
       <arg column="responsibility_name" jdbcType="VARCHAR" javaType="java.lang.String" />
       <arg column="project_name" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="project_information" jdbcType="VARCHAR" javaType="java.lang.String" />
       <arg column="college" jdbcType="VARCHAR" javaType="java.lang.String" />
       <arg column="status" jdbcType="INTEGER" javaType="java.lang.Integer" />
       <arg column="error_message" jdbcType="VARCHAR" javaType="java.lang.String" />
       <arg column="responsibility_phone_number" jdbcType="VARCHAR" javaType="java.lang.String" />
-    </constructor>
-  </resultMap>
-  <resultMap id="ResultMapWithBLOBs" type="com.bst.red_green_blue.pojo.ApplicationForm" >
-    <constructor >
-      <idArg column="id" jdbcType="VARCHAR" javaType="java.lang.String" />
-      <arg column="responsibility_name" jdbcType="VARCHAR" javaType="java.lang.String" />
-      <arg column="project_name" jdbcType="VARCHAR" javaType="java.lang.String" />
-      <arg column="college" jdbcType="VARCHAR" javaType="java.lang.String" />
-      <arg column="status" jdbcType="INTEGER" javaType="java.lang.Integer" />
-      <arg column="error_message" jdbcType="VARCHAR" javaType="java.lang.String" />
-      <arg column="responsibility_phone_number" jdbcType="VARCHAR" javaType="java.lang.String" />
-      <arg column="project_information" jdbcType="LONGVARCHAR" javaType="java.lang.String" />
     </constructor>
   </resultMap>
   <sql id="Example_Where_Clause" >
@@ -83,28 +72,9 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    id, responsibility_name, project_name, college, status, error_message, responsibility_phone_number
+    id, responsibility_name, project_name, project_information, college, status, error_message, 
+    responsibility_phone_number
   </sql>
-  <sql id="Blob_Column_List" >
-    project_information
-  </sql>
-  <select id="selectByExampleWithBLOBs" resultMap="ResultMapWithBLOBs" parameterType="com.bst.red_green_blue.pojo.ApplicationFormExample" >
-    select
-    <if test="distinct" >
-      distinct
-    </if>
-    'true' as QUERYID,
-    <include refid="Base_Column_List" />
-    ,
-    <include refid="Blob_Column_List" />
-    from application_form
-    <if test="_parameter != null" >
-      <include refid="Example_Where_Clause" />
-    </if>
-    <if test="orderByClause != null" >
-      order by ${orderByClause}
-    </if>
-  </select>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.bst.red_green_blue.pojo.ApplicationFormExample" >
     select
     <if test="distinct" >
@@ -120,11 +90,9 @@
       order by ${orderByClause}
     </if>
   </select>
-  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.String" >
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select 
     <include refid="Base_Column_List" />
-    ,
-    <include refid="Blob_Column_List" />
     from application_form
     where id = #{id,jdbcType=VARCHAR}
   </select>
@@ -140,12 +108,12 @@
   </delete>
   <insert id="insert" parameterType="com.bst.red_green_blue.pojo.ApplicationForm" >
     insert into application_form (id, responsibility_name, project_name, 
-      college, status, error_message, 
-      responsibility_phone_number, project_information
+      project_information, college, status, 
+      error_message, responsibility_phone_number
       )
     values (#{id,jdbcType=VARCHAR}, #{responsibilityName,jdbcType=VARCHAR}, #{projectName,jdbcType=VARCHAR}, 
-      #{college,jdbcType=VARCHAR}, #{status,jdbcType=INTEGER}, #{errorMessage,jdbcType=VARCHAR}, 
-      #{responsibilityPhoneNumber,jdbcType=VARCHAR}, #{projectInformation,jdbcType=LONGVARCHAR}
+      #{projectInformation,jdbcType=VARCHAR}, #{college,jdbcType=VARCHAR}, #{status,jdbcType=INTEGER}, 
+      #{errorMessage,jdbcType=VARCHAR}, #{responsibilityPhoneNumber,jdbcType=VARCHAR}
       )
   </insert>
   <insert id="insertSelective" parameterType="com.bst.red_green_blue.pojo.ApplicationForm" >
@@ -160,6 +128,9 @@
       <if test="projectName != null" >
         project_name,
       </if>
+      <if test="projectInformation != null" >
+        project_information,
+      </if>
       <if test="college != null" >
         college,
       </if>
@@ -172,9 +143,6 @@
       <if test="responsibilityPhoneNumber != null" >
         responsibility_phone_number,
       </if>
-      <if test="projectInformation != null" >
-        project_information,
-      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="id != null" >
@@ -185,6 +153,9 @@
       </if>
       <if test="projectName != null" >
         #{projectName,jdbcType=VARCHAR},
+      </if>
+      <if test="projectInformation != null" >
+        #{projectInformation,jdbcType=VARCHAR},
       </if>
       <if test="college != null" >
         #{college,jdbcType=VARCHAR},
@@ -197,9 +168,6 @@
       </if>
       <if test="responsibilityPhoneNumber != null" >
         #{responsibilityPhoneNumber,jdbcType=VARCHAR},
-      </if>
-      <if test="projectInformation != null" >
-        #{projectInformation,jdbcType=LONGVARCHAR},
       </if>
     </trim>
   </insert>
@@ -221,6 +189,9 @@
       <if test="record.projectName != null" >
         project_name = #{record.projectName,jdbcType=VARCHAR},
       </if>
+      <if test="record.projectInformation != null" >
+        project_information = #{record.projectInformation,jdbcType=VARCHAR},
+      </if>
       <if test="record.college != null" >
         college = #{record.college,jdbcType=VARCHAR},
       </if>
@@ -233,24 +204,7 @@
       <if test="record.responsibilityPhoneNumber != null" >
         responsibility_phone_number = #{record.responsibilityPhoneNumber,jdbcType=VARCHAR},
       </if>
-      <if test="record.projectInformation != null" >
-        project_information = #{record.projectInformation,jdbcType=LONGVARCHAR},
-      </if>
     </set>
-    <if test="_parameter != null" >
-      <include refid="Update_By_Example_Where_Clause" />
-    </if>
-  </update>
-  <update id="updateByExampleWithBLOBs" parameterType="map" >
-    update application_form
-    set id = #{record.id,jdbcType=VARCHAR},
-      responsibility_name = #{record.responsibilityName,jdbcType=VARCHAR},
-      project_name = #{record.projectName,jdbcType=VARCHAR},
-      college = #{record.college,jdbcType=VARCHAR},
-      status = #{record.status,jdbcType=INTEGER},
-      error_message = #{record.errorMessage,jdbcType=VARCHAR},
-      responsibility_phone_number = #{record.responsibilityPhoneNumber,jdbcType=VARCHAR},
-      project_information = #{record.projectInformation,jdbcType=LONGVARCHAR}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -260,6 +214,7 @@
     set id = #{record.id,jdbcType=VARCHAR},
       responsibility_name = #{record.responsibilityName,jdbcType=VARCHAR},
       project_name = #{record.projectName,jdbcType=VARCHAR},
+      project_information = #{record.projectInformation,jdbcType=VARCHAR},
       college = #{record.college,jdbcType=VARCHAR},
       status = #{record.status,jdbcType=INTEGER},
       error_message = #{record.errorMessage,jdbcType=VARCHAR},
@@ -277,6 +232,9 @@
       <if test="projectName != null" >
         project_name = #{projectName,jdbcType=VARCHAR},
       </if>
+      <if test="projectInformation != null" >
+        project_information = #{projectInformation,jdbcType=VARCHAR},
+      </if>
       <if test="college != null" >
         college = #{college,jdbcType=VARCHAR},
       </if>
@@ -289,27 +247,14 @@
       <if test="responsibilityPhoneNumber != null" >
         responsibility_phone_number = #{responsibilityPhoneNumber,jdbcType=VARCHAR},
       </if>
-      <if test="projectInformation != null" >
-        project_information = #{projectInformation,jdbcType=LONGVARCHAR},
-      </if>
     </set>
-    where id = #{id,jdbcType=VARCHAR}
-  </update>
-  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.bst.red_green_blue.pojo.ApplicationForm" >
-    update application_form
-    set responsibility_name = #{responsibilityName,jdbcType=VARCHAR},
-      project_name = #{projectName,jdbcType=VARCHAR},
-      college = #{college,jdbcType=VARCHAR},
-      status = #{status,jdbcType=INTEGER},
-      error_message = #{errorMessage,jdbcType=VARCHAR},
-      responsibility_phone_number = #{responsibilityPhoneNumber,jdbcType=VARCHAR},
-      project_information = #{projectInformation,jdbcType=LONGVARCHAR}
     where id = #{id,jdbcType=VARCHAR}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.bst.red_green_blue.pojo.ApplicationForm" >
     update application_form
     set responsibility_name = #{responsibilityName,jdbcType=VARCHAR},
       project_name = #{projectName,jdbcType=VARCHAR},
+      project_information = #{projectInformation,jdbcType=VARCHAR},
       college = #{college,jdbcType=VARCHAR},
       status = #{status,jdbcType=INTEGER},
       error_message = #{errorMessage,jdbcType=VARCHAR},

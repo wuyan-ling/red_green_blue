@@ -12,24 +12,11 @@
       <arg column="employee_expend" jdbcType="VARCHAR" javaType="java.lang.String" />
       <arg column="liability" jdbcType="VARCHAR" javaType="java.lang.String" />
       <arg column="investment" jdbcType="VARCHAR" javaType="java.lang.String" />
-    </constructor>
-  </resultMap>
-  <resultMap id="ResultMapWithBLOBs" type="com.bst.red_green_blue.pojo.OperationMessageWithBLOBs" >
-    <constructor >
-      <idArg column="id" jdbcType="VARCHAR" javaType="java.lang.String" />
-      <arg column="month_turnover" jdbcType="VARCHAR" javaType="java.lang.String" />
-      <arg column="transaction_time" jdbcType="INTEGER" javaType="java.lang.Integer" />
-      <arg column="product_main" jdbcType="VARCHAR" javaType="java.lang.String" />
-      <arg column="product_minor" jdbcType="VARCHAR" javaType="java.lang.String" />
-      <arg column="buy_cost" jdbcType="VARCHAR" javaType="java.lang.String" />
-      <arg column="employee_expend" jdbcType="VARCHAR" javaType="java.lang.String" />
-      <arg column="liability" jdbcType="VARCHAR" javaType="java.lang.String" />
-      <arg column="investment" jdbcType="VARCHAR" javaType="java.lang.String" />
-      <arg column="month_work" jdbcType="LONGVARCHAR" javaType="java.lang.String" />
-      <arg column="next_month_work" jdbcType="LONGVARCHAR" javaType="java.lang.String" />
-      <arg column="project_specialty" jdbcType="LONGVARCHAR" javaType="java.lang.String" />
-      <arg column="project_question" jdbcType="LONGVARCHAR" javaType="java.lang.String" />
-      <arg column="team_need" jdbcType="LONGVARCHAR" javaType="java.lang.String" />
+      <arg column="month_work" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="next_month_work" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="project_specialty" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="project_question" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="team_need" jdbcType="VARCHAR" javaType="java.lang.String" />
     </constructor>
   </resultMap>
   <sql id="Example_Where_Clause" >
@@ -92,28 +79,9 @@
   </sql>
   <sql id="Base_Column_List" >
     id, month_turnover, transaction_time, product_main, product_minor, buy_cost, employee_expend, 
-    liability, investment
+    liability, investment, month_work, next_month_work, project_specialty, project_question, 
+    team_need
   </sql>
-  <sql id="Blob_Column_List" >
-    month_work, next_month_work, project_specialty, project_question, team_need
-  </sql>
-  <select id="selectByExampleWithBLOBs" resultMap="ResultMapWithBLOBs" parameterType="com.bst.red_green_blue.pojo.OperationMessageExample" >
-    select
-    <if test="distinct" >
-      distinct
-    </if>
-    'true' as QUERYID,
-    <include refid="Base_Column_List" />
-    ,
-    <include refid="Blob_Column_List" />
-    from operation_message
-    <if test="_parameter != null" >
-      <include refid="Example_Where_Clause" />
-    </if>
-    <if test="orderByClause != null" >
-      order by ${orderByClause}
-    </if>
-  </select>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.bst.red_green_blue.pojo.OperationMessageExample" >
     select
     <if test="distinct" >
@@ -129,11 +97,9 @@
       order by ${orderByClause}
     </if>
   </select>
-  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.String" >
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select 
     <include refid="Base_Column_List" />
-    ,
-    <include refid="Blob_Column_List" />
     from operation_message
     where id = #{id,jdbcType=VARCHAR}
   </select>
@@ -147,7 +113,7 @@
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.bst.red_green_blue.pojo.OperationMessageWithBLOBs" >
+  <insert id="insert" parameterType="com.bst.red_green_blue.pojo.OperationMessage" >
     insert into operation_message (id, month_turnover, transaction_time, 
       product_main, product_minor, buy_cost, 
       employee_expend, liability, investment, 
@@ -156,10 +122,10 @@
     values (#{id,jdbcType=VARCHAR}, #{monthTurnover,jdbcType=VARCHAR}, #{transactionTime,jdbcType=INTEGER}, 
       #{productMain,jdbcType=VARCHAR}, #{productMinor,jdbcType=VARCHAR}, #{buyCost,jdbcType=VARCHAR}, 
       #{employeeExpend,jdbcType=VARCHAR}, #{liability,jdbcType=VARCHAR}, #{investment,jdbcType=VARCHAR}, 
-      #{monthWork,jdbcType=LONGVARCHAR}, #{nextMonthWork,jdbcType=LONGVARCHAR}, #{projectSpecialty,jdbcType=LONGVARCHAR}, 
-      #{projectQuestion,jdbcType=LONGVARCHAR}, #{teamNeed,jdbcType=LONGVARCHAR})
+      #{monthWork,jdbcType=VARCHAR}, #{nextMonthWork,jdbcType=VARCHAR}, #{projectSpecialty,jdbcType=VARCHAR}, 
+      #{projectQuestion,jdbcType=VARCHAR}, #{teamNeed,jdbcType=VARCHAR})
   </insert>
-  <insert id="insertSelective" parameterType="com.bst.red_green_blue.pojo.OperationMessageWithBLOBs" >
+  <insert id="insertSelective" parameterType="com.bst.red_green_blue.pojo.OperationMessage" >
     insert into operation_message
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="id != null" >
@@ -234,19 +200,19 @@
         #{investment,jdbcType=VARCHAR},
       </if>
       <if test="monthWork != null" >
-        #{monthWork,jdbcType=LONGVARCHAR},
+        #{monthWork,jdbcType=VARCHAR},
       </if>
       <if test="nextMonthWork != null" >
-        #{nextMonthWork,jdbcType=LONGVARCHAR},
+        #{nextMonthWork,jdbcType=VARCHAR},
       </if>
       <if test="projectSpecialty != null" >
-        #{projectSpecialty,jdbcType=LONGVARCHAR},
+        #{projectSpecialty,jdbcType=VARCHAR},
       </if>
       <if test="projectQuestion != null" >
-        #{projectQuestion,jdbcType=LONGVARCHAR},
+        #{projectQuestion,jdbcType=VARCHAR},
       </if>
       <if test="teamNeed != null" >
-        #{teamNeed,jdbcType=LONGVARCHAR},
+        #{teamNeed,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -287,41 +253,21 @@
         investment = #{record.investment,jdbcType=VARCHAR},
       </if>
       <if test="record.monthWork != null" >
-        month_work = #{record.monthWork,jdbcType=LONGVARCHAR},
+        month_work = #{record.monthWork,jdbcType=VARCHAR},
       </if>
       <if test="record.nextMonthWork != null" >
-        next_month_work = #{record.nextMonthWork,jdbcType=LONGVARCHAR},
+        next_month_work = #{record.nextMonthWork,jdbcType=VARCHAR},
       </if>
       <if test="record.projectSpecialty != null" >
-        project_specialty = #{record.projectSpecialty,jdbcType=LONGVARCHAR},
+        project_specialty = #{record.projectSpecialty,jdbcType=VARCHAR},
       </if>
       <if test="record.projectQuestion != null" >
-        project_question = #{record.projectQuestion,jdbcType=LONGVARCHAR},
+        project_question = #{record.projectQuestion,jdbcType=VARCHAR},
       </if>
       <if test="record.teamNeed != null" >
-        team_need = #{record.teamNeed,jdbcType=LONGVARCHAR},
+        team_need = #{record.teamNeed,jdbcType=VARCHAR},
       </if>
     </set>
-    <if test="_parameter != null" >
-      <include refid="Update_By_Example_Where_Clause" />
-    </if>
-  </update>
-  <update id="updateByExampleWithBLOBs" parameterType="map" >
-    update operation_message
-    set id = #{record.id,jdbcType=VARCHAR},
-      month_turnover = #{record.monthTurnover,jdbcType=VARCHAR},
-      transaction_time = #{record.transactionTime,jdbcType=INTEGER},
-      product_main = #{record.productMain,jdbcType=VARCHAR},
-      product_minor = #{record.productMinor,jdbcType=VARCHAR},
-      buy_cost = #{record.buyCost,jdbcType=VARCHAR},
-      employee_expend = #{record.employeeExpend,jdbcType=VARCHAR},
-      liability = #{record.liability,jdbcType=VARCHAR},
-      investment = #{record.investment,jdbcType=VARCHAR},
-      month_work = #{record.monthWork,jdbcType=LONGVARCHAR},
-      next_month_work = #{record.nextMonthWork,jdbcType=LONGVARCHAR},
-      project_specialty = #{record.projectSpecialty,jdbcType=LONGVARCHAR},
-      project_question = #{record.projectQuestion,jdbcType=LONGVARCHAR},
-      team_need = #{record.teamNeed,jdbcType=LONGVARCHAR}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -336,12 +282,17 @@
       buy_cost = #{record.buyCost,jdbcType=VARCHAR},
       employee_expend = #{record.employeeExpend,jdbcType=VARCHAR},
       liability = #{record.liability,jdbcType=VARCHAR},
-      investment = #{record.investment,jdbcType=VARCHAR}
+      investment = #{record.investment,jdbcType=VARCHAR},
+      month_work = #{record.monthWork,jdbcType=VARCHAR},
+      next_month_work = #{record.nextMonthWork,jdbcType=VARCHAR},
+      project_specialty = #{record.projectSpecialty,jdbcType=VARCHAR},
+      project_question = #{record.projectQuestion,jdbcType=VARCHAR},
+      team_need = #{record.teamNeed,jdbcType=VARCHAR}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="com.bst.red_green_blue.pojo.OperationMessageWithBLOBs" >
+  <update id="updateByPrimaryKeySelective" parameterType="com.bst.red_green_blue.pojo.OperationMessage" >
     update operation_message
     <set >
       <if test="monthTurnover != null" >
@@ -369,38 +320,21 @@
         investment = #{investment,jdbcType=VARCHAR},
       </if>
       <if test="monthWork != null" >
-        month_work = #{monthWork,jdbcType=LONGVARCHAR},
+        month_work = #{monthWork,jdbcType=VARCHAR},
       </if>
       <if test="nextMonthWork != null" >
-        next_month_work = #{nextMonthWork,jdbcType=LONGVARCHAR},
+        next_month_work = #{nextMonthWork,jdbcType=VARCHAR},
       </if>
       <if test="projectSpecialty != null" >
-        project_specialty = #{projectSpecialty,jdbcType=LONGVARCHAR},
+        project_specialty = #{projectSpecialty,jdbcType=VARCHAR},
       </if>
       <if test="projectQuestion != null" >
-        project_question = #{projectQuestion,jdbcType=LONGVARCHAR},
+        project_question = #{projectQuestion,jdbcType=VARCHAR},
       </if>
       <if test="teamNeed != null" >
-        team_need = #{teamNeed,jdbcType=LONGVARCHAR},
+        team_need = #{teamNeed,jdbcType=VARCHAR},
       </if>
     </set>
-    where id = #{id,jdbcType=VARCHAR}
-  </update>
-  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.bst.red_green_blue.pojo.OperationMessageWithBLOBs" >
-    update operation_message
-    set month_turnover = #{monthTurnover,jdbcType=VARCHAR},
-      transaction_time = #{transactionTime,jdbcType=INTEGER},
-      product_main = #{productMain,jdbcType=VARCHAR},
-      product_minor = #{productMinor,jdbcType=VARCHAR},
-      buy_cost = #{buyCost,jdbcType=VARCHAR},
-      employee_expend = #{employeeExpend,jdbcType=VARCHAR},
-      liability = #{liability,jdbcType=VARCHAR},
-      investment = #{investment,jdbcType=VARCHAR},
-      month_work = #{monthWork,jdbcType=LONGVARCHAR},
-      next_month_work = #{nextMonthWork,jdbcType=LONGVARCHAR},
-      project_specialty = #{projectSpecialty,jdbcType=LONGVARCHAR},
-      project_question = #{projectQuestion,jdbcType=LONGVARCHAR},
-      team_need = #{teamNeed,jdbcType=LONGVARCHAR}
     where id = #{id,jdbcType=VARCHAR}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.bst.red_green_blue.pojo.OperationMessage" >
@@ -412,7 +346,12 @@
       buy_cost = #{buyCost,jdbcType=VARCHAR},
       employee_expend = #{employeeExpend,jdbcType=VARCHAR},
       liability = #{liability,jdbcType=VARCHAR},
-      investment = #{investment,jdbcType=VARCHAR}
+      investment = #{investment,jdbcType=VARCHAR},
+      month_work = #{monthWork,jdbcType=VARCHAR},
+      next_month_work = #{nextMonthWork,jdbcType=VARCHAR},
+      project_specialty = #{projectSpecialty,jdbcType=VARCHAR},
+      project_question = #{projectQuestion,jdbcType=VARCHAR},
+      team_need = #{teamNeed,jdbcType=VARCHAR}
     where id = #{id,jdbcType=VARCHAR}
   </update>
 </mapper>
