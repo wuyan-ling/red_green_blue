@@ -1,6 +1,10 @@
 spring:
-  profiles:
-    active: dev
+  datasource:
+    url: jdbc:mysql://123.207.110.102:3306/red_green_blue?useUnicode=true&characterEncoding=utf-8&useSSL=true&verifyServerCertificate=false
+    driver-class-name: com.mysql.jdbc.Driver
+    username: root
+    password: Bst123456789
+
 
 mybatis:
   mapper-locations: classpath:mybatis/mapper/*.xml

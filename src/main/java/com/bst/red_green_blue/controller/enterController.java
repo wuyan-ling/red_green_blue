@@ -22,14 +22,12 @@ import javax.validation.Valid;
 @RestController
 @RequestMapping(value = "/enter/")
 public class enterController {
-
     @Autowired
     private IenterService ienterService;
 
     @ApiOperation(value = "入驻申请")
-    @PostMapping(value = "enterApplyFor")
-    public ServerResponse<String> enterApplyFor(@Valid ApplicationFormVo applicationFormVo,
-                                                BindingResult bindingResult) throws Exception {
+    @PostMapping(value = "enter_apply_for")
+    public ServerResponse<String> enterApplyFor(@Valid ApplicationFormVo applicationFormVo, BindingResult bindingResult) {
         return ienterService.enterApplyFor(applicationFormVo);
     }
 

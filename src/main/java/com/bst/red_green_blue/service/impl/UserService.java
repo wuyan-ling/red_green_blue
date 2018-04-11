@@ -28,7 +28,7 @@ public class UserService implements IUserService {
         if (users.size() == 0) {
             return ServerResponse.createByErrorMessage("用户名或密码错误");
         } else {
-            return ServerResponse.createBySuccess(users.get(0));
+            return ServerResponse.createBySuccess("登陆成功",users.get(0));
         }
     }
 
@@ -53,9 +53,24 @@ public class UserService implements IUserService {
     @Override
     public ServerResponse<String> deleteUser(String phoneNumber, HttpSession session) {
 
-        userMapper.deleteByPrimaryKey(phoneNumber);
-        return ServerResponse.createBySuccessMessage("删除用户成功");
+        int i = userMapper.deleteByPrimaryKey(phoneNumber);
+        if (i != 0) {
+            return ServerResponse.createBySuccessMessage("删除用户成功");
+        } else {
+            return ServerResponse.createByErrorMessage("用户不存在");
+        }
+    }
 
+    @Override
+    public ServerResponse<String> updateUser(User user, HttpSession session) {
+
+        int i = userMapper.updateByPrimaryKeySelective(user);
+        if (i != 0) {
+            return ServerResponse.createByErrorMessage("更新成功");
+        } else {
+            return ServerResponse.createByErrorMessage("更新失败");
+
+        }
 
     }
 
