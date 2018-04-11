@@ -1,9 +1,9 @@
 spring:
   datasource:
-    url: jdbc:mysql://45.63.59.19:3306/red_green_blue?useUnicode=true&characterEncoding=utf-8&useSSL=true&verifyServerCertificate=false
+    url: jdbc:mysql://123.207.110.102:3306/red_green_blue?useUnicode=true&characterEncoding=utf-8&useSSL=true&verifyServerCertificate=false
     driver-class-name: com.mysql.jdbc.Driver
     username: root
-    password: Bst12345687
+    password: Bst123456789
 
 
 mybatis:
