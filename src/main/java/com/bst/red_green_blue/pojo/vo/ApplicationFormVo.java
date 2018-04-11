@@ -1,5 +1,7 @@
 package com.bst.red_green_blue.pojo.vo;
 
+import com.bst.red_green_blue.pojo.ApplicationForm;
+
 import javax.validation.constraints.NotBlank;
 
 /**
@@ -26,6 +28,18 @@ public class ApplicationFormVo {
         this.projectInformation = projectInformation;
     }
 
+
+
+    static public ApplicationFormVo createApplicationFormFormApplicationFormVo(ApplicationForm form) {
+        ApplicationFormVo applicationForm = new ApplicationFormVo(form.getProjectName(),form.getResponsibilityName(),form.getCollege(),
+                form.getResponsibilityPhoneNumber(),form.getProjectInformation());
+//        applicationForm.setProjectName();
+//        applicationForm.setResponsibilityName();
+//        applicationForm.setCollege();
+//        applicationForm.setResponsibilityPhoneNumber();
+//        applicationForm.setProjectInformation();
+        return applicationForm;
+    }
 
     public String getProjectName() {
         return projectName;

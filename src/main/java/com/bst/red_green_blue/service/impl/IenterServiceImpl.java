@@ -1,5 +1,6 @@
 package com.bst.red_green_blue.service.impl;
 
+import com.bst.red_green_blue.common.Constant;
 import com.bst.red_green_blue.common.ResponseCode;
 import com.bst.red_green_blue.common.ServerResponse;
 import com.bst.red_green_blue.dao.ApplicationFormMapper;
@@ -10,6 +11,7 @@ import com.bst.red_green_blue.service.IEnterService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -70,6 +72,25 @@ public class IenterServiceImpl implements IEnterService {
         }
         return ServerResponse.createBySuccess(form);
 
+    }
+
+    /**
+     * 申请公示
+     * @return
+     */
+    @Override
+    public ServerResponse<List<ApplicationFormVo>> applicationPublic() {
+        ApplicationFormExample example = new ApplicationFormExample();
+        example.createCriteria().andStatusEqualTo(Constant.Status.PASS);
+        List<ApplicationForm> applicationForms = applicationFormMapper.selectByExample(example);
+        if (applicationForms.size() == 0) {
+            return ServerResponse.createBySuccessMessage("空");
+        }
+        List<ApplicationFormVo> formVos = new ArrayList<>();
+        for (ApplicationForm form : applicationForms) {
+            formVos.add(ApplicationFormVo.createApplicationFormFormApplicationFormVo(form));
+        }
+        return ServerResponse.createBySuccess(formVos);
     }
 
 }
