@@ -3,7 +3,7 @@ package com.bst.red_green_blue.controller;
 import com.bst.red_green_blue.common.ServerResponse;
 import com.bst.red_green_blue.pojo.ApplicationForm;
 import com.bst.red_green_blue.pojo.vo.ApplicationFormVo;
-import com.bst.red_green_blue.service.IenterService;
+import com.bst.red_green_blue.service.IEnterService;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.BindingResult;
@@ -21,9 +21,9 @@ import javax.validation.Valid;
  */
 @RestController
 @RequestMapping(value = "/enter/")
-public class enterController {
+public class EnterController {
     @Autowired
-    private IenterService ienterService;
+    private IEnterService ienterService;
 
     @ApiOperation(value = "入驻申请")
     @PostMapping(value = "enter_apply_for")

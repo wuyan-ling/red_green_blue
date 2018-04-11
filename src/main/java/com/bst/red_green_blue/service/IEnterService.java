@@ -10,7 +10,7 @@ import com.bst.red_green_blue.pojo.vo.ApplicationFormVo;
  * @author XHJ
  * 2018/4/10 21:24
  */
-public interface IenterService {
+public interface IEnterService {
     ServerResponse<String> enterApplyFor(ApplicationFormVo applicationFormVo);
 
     ServerResponse<ApplicationForm> applicationStatusQuery(String responsibilityName, String responsibilityPhoneNumber);

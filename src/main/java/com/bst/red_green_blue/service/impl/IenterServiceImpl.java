@@ -5,9 +5,8 @@ import com.bst.red_green_blue.common.ServerResponse;
 import com.bst.red_green_blue.dao.ApplicationFormMapper;
 import com.bst.red_green_blue.pojo.ApplicationForm;
 import com.bst.red_green_blue.pojo.ApplicationFormExample;
-import com.bst.red_green_blue.pojo.vo.ApplicationFormStatusVo;
 import com.bst.red_green_blue.pojo.vo.ApplicationFormVo;
-import com.bst.red_green_blue.service.IenterService;
+import com.bst.red_green_blue.service.IEnterService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -19,7 +18,7 @@ import java.util.UUID;
  * 2018/4/10 21:25
  */
 @Service
-public class IenterServiceImpl implements IenterService {
+public class IenterServiceImpl implements IEnterService {
     @Autowired
     private ApplicationFormMapper applicationFormMapper;
 
