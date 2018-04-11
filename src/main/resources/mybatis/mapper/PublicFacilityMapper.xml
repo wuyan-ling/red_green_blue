@@ -9,6 +9,7 @@
       <arg column="request_use_time" jdbcType="VARCHAR" javaType="java.lang.String" />
       <arg column="contact_way" jdbcType="VARCHAR" javaType="java.lang.String" />
       <arg column="remark" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="team_id" jdbcType="VARCHAR" javaType="java.lang.String" />
     </constructor>
   </resultMap>
   <sql id="Example_Where_Clause" >
@@ -70,7 +71,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    id, request_address, person_number, request_use_time, contact_way, remark
+    id, request_address, person_number, request_use_time, contact_way, remark, team_id
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.bst.red_green_blue.pojo.PublicFacilityExample" >
     select
@@ -105,11 +106,11 @@
   </delete>
   <insert id="insert" parameterType="com.bst.red_green_blue.pojo.PublicFacility" >
     insert into public_facility (id, request_address, person_number, 
-      request_use_time, contact_way, remark
-      )
+      request_use_time, contact_way, remark, 
+      team_id)
     values (#{id,jdbcType=VARCHAR}, #{requestAddress,jdbcType=INTEGER}, #{personNumber,jdbcType=VARCHAR}, 
-      #{requestUseTime,jdbcType=VARCHAR}, #{contactWay,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR}
-      )
+      #{requestUseTime,jdbcType=VARCHAR}, #{contactWay,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR}, 
+      #{teamId,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.bst.red_green_blue.pojo.PublicFacility" >
     insert into public_facility
@@ -132,6 +133,9 @@
       <if test="remark != null" >
         remark,
       </if>
+      <if test="teamId != null" >
+        team_id,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="id != null" >
@@ -151,6 +155,9 @@
       </if>
       <if test="remark != null" >
         #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="teamId != null" >
+        #{teamId,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -181,6 +188,9 @@
       <if test="record.remark != null" >
         remark = #{record.remark,jdbcType=VARCHAR},
       </if>
+      <if test="record.teamId != null" >
+        team_id = #{record.teamId,jdbcType=VARCHAR},
+      </if>
     </set>
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
@@ -193,7 +203,8 @@
       person_number = #{record.personNumber,jdbcType=VARCHAR},
       request_use_time = #{record.requestUseTime,jdbcType=VARCHAR},
       contact_way = #{record.contactWay,jdbcType=VARCHAR},
-      remark = #{record.remark,jdbcType=VARCHAR}
+      remark = #{record.remark,jdbcType=VARCHAR},
+      team_id = #{record.teamId,jdbcType=VARCHAR}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -216,6 +227,9 @@
       <if test="remark != null" >
         remark = #{remark,jdbcType=VARCHAR},
       </if>
+      <if test="teamId != null" >
+        team_id = #{teamId,jdbcType=VARCHAR},
+      </if>
     </set>
     where id = #{id,jdbcType=VARCHAR}
   </update>
@@ -225,7 +239,8 @@
       person_number = #{personNumber,jdbcType=VARCHAR},
       request_use_time = #{requestUseTime,jdbcType=VARCHAR},
       contact_way = #{contactWay,jdbcType=VARCHAR},
-      remark = #{remark,jdbcType=VARCHAR}
+      remark = #{remark,jdbcType=VARCHAR},
+      team_id = #{teamId,jdbcType=VARCHAR}
     where id = #{id,jdbcType=VARCHAR}
   </update>
 </mapper>

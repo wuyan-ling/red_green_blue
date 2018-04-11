@@ -1,7 +1,9 @@
 package com.bst.red_green_blue.common;
 
 import com.bst.red_green_blue.pojo.ApplicationForm;
+import com.bst.red_green_blue.pojo.PublicFacility;
 import com.bst.red_green_blue.pojo.vo.ApplicationFormVo;
+import com.bst.red_green_blue.pojo.vo.PublicFacilityVo;
 
 /**
  * @author XHJ
@@ -10,24 +12,52 @@ import com.bst.red_green_blue.pojo.vo.ApplicationFormVo;
 public class VoHandle {
     /**
      * 将 ApplicationForm 封装为ApplicationFormVo
+     *
      * @param form
      * @return
      */
-    static public ApplicationFormVo createApplicationFormFormApplicationFormVo(ApplicationForm form) {
-        ApplicationFormVo applicationForm = new ApplicationFormVo(form.getProjectName(),form.getResponsibilityName(),form.getCollege(),
-                form.getResponsibilityPhoneNumber(),form.getProjectInformation());
+    static public ApplicationFormVo useApplicationFormCreateToVo(ApplicationForm form) {
+        ApplicationFormVo applicationForm = new ApplicationFormVo(form.getProjectName(), form.getResponsibilityName(), form.getCollege(),
+                form.getResponsibilityPhoneNumber(), form.getProjectInformation());
         return applicationForm;
     }
-    static public ApplicationForm createApplicationFormVoToApplicationForm(ApplicationFormVo applicationFormVo,String id) {
+
+    /**
+     * 将ApplicatoinFormVo 封装为Application
+     *
+     * @param vo
+     * @param id
+     * @return
+     */
+    static public ApplicationForm useApplicationFormCreateToVo(ApplicationFormVo vo, String id) {
 
         ApplicationForm applicationForm = new ApplicationForm();
         applicationForm.setId(id);
-        applicationForm.setProjectName(applicationFormVo.getProjectName());
-        applicationForm.setProjectInformation(applicationFormVo.getProjectInformation());
-        applicationForm.setResponsibilityName(applicationFormVo.getResponsibilityName());
-        applicationForm.setCollege(applicationFormVo.getCollege());
-        applicationForm.setResponsibilityPhoneNumber(applicationFormVo.getResponsibilityPhoneNumber());
+        applicationForm.setProjectName(vo.getProjectName());
+        applicationForm.setProjectInformation(vo.getProjectInformation());
+        applicationForm.setResponsibilityName(vo.getResponsibilityName());
+        applicationForm.setCollege(vo.getCollege());
+        applicationForm.setResponsibilityPhoneNumber(vo.getResponsibilityPhoneNumber());
 
         return applicationForm;
+    }
+
+    /**
+     * 将PublicFacilityVo 封装为 publicFacility
+     *
+     * @param vo
+     * @return
+     */
+    static public PublicFacility useVoCreateToPublicFacility(PublicFacilityVo vo, String id, String teamId) {
+        PublicFacility publicFacility = new PublicFacility();
+        publicFacility.setId(id);
+        publicFacility.setTeamId(teamId);
+        publicFacility.setRequestAddress(vo.getRequestAddress());
+        publicFacility.setPersonNumber(vo.getPersonNumber());
+        publicFacility.setContactWay(vo.getContactWay());
+        publicFacility.setRemark(vo.getRemark());
+        publicFacility.setRequestUseTime(vo.getRequestUseTime());
+
+        return publicFacility;
     }
 }
