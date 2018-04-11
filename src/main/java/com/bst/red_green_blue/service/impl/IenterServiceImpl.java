@@ -1,16 +1,17 @@
 package com.bst.red_green_blue.service.impl;
 
+import com.bst.red_green_blue.common.Constant;
 import com.bst.red_green_blue.common.ResponseCode;
 import com.bst.red_green_blue.common.ServerResponse;
 import com.bst.red_green_blue.dao.ApplicationFormMapper;
 import com.bst.red_green_blue.pojo.ApplicationForm;
 import com.bst.red_green_blue.pojo.ApplicationFormExample;
-import com.bst.red_green_blue.pojo.vo.ApplicationFormStatusVo;
 import com.bst.red_green_blue.pojo.vo.ApplicationFormVo;
-import com.bst.red_green_blue.service.IenterService;
+import com.bst.red_green_blue.service.IEnterService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -19,7 +20,7 @@ import java.util.UUID;
  * 2018/4/10 21:25
  */
 @Service
-public class IenterServiceImpl implements IenterService {
+public class IenterServiceImpl implements IEnterService {
     @Autowired
     private ApplicationFormMapper applicationFormMapper;
 
@@ -71,6 +72,25 @@ public class IenterServiceImpl implements IenterService {
         }
         return ServerResponse.createBySuccess(form);
 
+    }
+
+    /**
+     * 申请公示
+     * @return
+     */
+    @Override
+    public ServerResponse<List<ApplicationFormVo>> applicationPublic() {
+        ApplicationFormExample example = new ApplicationFormExample();
+        example.createCriteria().andStatusEqualTo(Constant.Status.PASS);
+        List<ApplicationForm> applicationForms = applicationFormMapper.selectByExample(example);
+        if (applicationForms.size() == 0) {
+            return ServerResponse.createBySuccessMessage("空");
+        }
+        List<ApplicationFormVo> formVos = new ArrayList<>();
+        for (ApplicationForm form : applicationForms) {
+            formVos.add(ApplicationFormVo.createApplicationFormFormApplicationFormVo(form));
+        }
+        return ServerResponse.createBySuccess(formVos);
     }
 
 }

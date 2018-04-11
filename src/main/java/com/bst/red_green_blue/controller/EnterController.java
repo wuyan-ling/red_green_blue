@@ -3,7 +3,7 @@ package com.bst.red_green_blue.controller;
 import com.bst.red_green_blue.common.ServerResponse;
 import com.bst.red_green_blue.pojo.ApplicationForm;
 import com.bst.red_green_blue.pojo.vo.ApplicationFormVo;
-import com.bst.red_green_blue.service.IenterService;
+import com.bst.red_green_blue.service.IEnterService;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.BindingResult;
@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
+import java.util.List;
 
 /**
  * @author XHJ
@@ -21,10 +22,10 @@ import javax.validation.Valid;
  */
 @RestController
 @RequestMapping(value = "/enter/")
-public class enterController {
+public class EnterController {
 
     @Autowired
-    private IenterService ienterService;
+    private IEnterService ienterService;
 
     @ApiOperation(value = "入驻申请")
     @PostMapping(value = "enterApplyFor")
@@ -43,4 +44,14 @@ public class enterController {
         return ienterService.applicationStatusQuery(responsibilityName,responsibilityPhoneNumber);
     }
 
+    /**
+     * 申请公示
+     * @return
+     */
+    @ApiOperation(value = "申请公示")
+    @GetMapping(value = "applicationPublic")
+    public ServerResponse<List<ApplicationFormVo>> applicationPublic() {
+        return ienterService.applicationPublic();
+
+    }
 }
