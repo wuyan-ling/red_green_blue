@@ -21,7 +21,7 @@ import java.util.UUID;
  * 2018/4/10 21:25
  */
 @Service
-public class IEnterServiceImpl implements IEnterService {
+public class EnterServiceImpl implements IEnterService {
     @Autowired
     private ApplicationFormMapper applicationFormMapper;
 
