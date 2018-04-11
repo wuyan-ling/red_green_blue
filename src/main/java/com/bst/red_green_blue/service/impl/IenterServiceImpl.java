@@ -73,7 +73,6 @@ public class IenterServiceImpl implements IEnterService {
         return ServerResponse.createBySuccess(form);
 
     }
-
     /**
      * 申请公示
      * @return
