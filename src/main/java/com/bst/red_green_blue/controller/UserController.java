@@ -7,11 +7,13 @@ import com.bst.red_green_blue.pojo.User;
 import com.bst.red_green_blue.service.IUserService;
 import com.bst.red_green_blue.util.MD5Util;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpSession;
+import java.util.List;
 
 
 @RestController
@@ -35,9 +37,9 @@ public class UserController {
     public ServerResponse<User> login(String phoneNumber, String password, HttpSession session) {
 
         if (phoneNumber == null || password == null) {
-            return ServerResponse.createByErrorMessage("不能为空");
-        } else {
-
+            return ServerResponse.createByErrorMessage("参数不能为空");
+        }
+        else {
             String md5EncodeUtf8Password = MD5Util.MD5EncodeUtf8(password);
             ServerResponse<User> loginStatus = iUserService.login(phoneNumber, md5EncodeUtf8Password);
             session.setAttribute(Constant.CURRENT_USER, loginStatus.getData());
@@ -91,6 +93,12 @@ public class UserController {
            user.setPassword(md5EncodeUtf8);
             return iUserService.updateUser(user, session);
         }
+
+    }
+
+    @GetMapping("/getTeamList")
+    public ServerResponse<List> getTeamList() {
+        return iUserService.getTeamList();
 
     }
 

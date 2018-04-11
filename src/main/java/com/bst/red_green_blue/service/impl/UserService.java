@@ -1,14 +1,17 @@
 package com.bst.red_green_blue.service.impl;
 
 import com.bst.red_green_blue.common.ServerResponse;
+import com.bst.red_green_blue.dao.TeamMemberMapper;
+import com.bst.red_green_blue.dao.TeamMessageMapper;
 import com.bst.red_green_blue.dao.UserMapper;
-import com.bst.red_green_blue.pojo.User;
-import com.bst.red_green_blue.pojo.UserExample;
+import com.bst.red_green_blue.pojo.*;
+import com.bst.red_green_blue.pojo.vo.TeamMessageAndMember;
 import com.bst.red_green_blue.service.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpSession;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -17,6 +20,12 @@ public class UserService implements IUserService {
 
     @Autowired
     private UserMapper userMapper;
+
+    @Autowired
+    private TeamMessageMapper teamMessageMapper;
+
+    @Autowired
+    private TeamMemberMapper teamMemberMapper;
 
 
     @Override
@@ -28,7 +37,11 @@ public class UserService implements IUserService {
         if (users.size() == 0) {
             return ServerResponse.createByErrorMessage("用户名或密码错误");
         } else {
-            return ServerResponse.createBySuccess("登陆成功",users.get(0));
+            User user = users.get(0);
+            if (user.getStatus() == 1) {
+                return ServerResponse.createByErrorMessage("你的账户存在问题请和管理员联系");
+            }
+            return ServerResponse.createBySuccess("登陆成功",user);
         }
     }
 
@@ -74,6 +87,39 @@ public class UserService implements IUserService {
         }
 
     }
+
+
+    public ServerResponse<List>getTeamList(){
+        //当id不为空的时候查询出所有的teamMessageAndMembers对象
+        TeamMessageExample teamMessageExample = new TeamMessageExample();
+        teamMessageExample.createCriteria().andIdNotEqualTo(" ");
+        List<TeamMessage> teamMessages = teamMessageMapper.selectByExample(teamMessageExample);
+
+        //返回给前端的TeamMessageAndMember集合
+        List<TeamMessageAndMember> teamMessageAndMembers = new ArrayList<>();
+        //遍历teamMessages集合
+        for (TeamMessage teamMessage:teamMessages) {
+            //获取team_id
+            String id = teamMessage.getId();
+            TeamMemberExample teamMemberExample = new TeamMemberExample();
+            //根据id查询teamMembers列表
+            teamMemberExample.createCriteria().andTeamIdEqualTo(id);
+            List<TeamMember> teamMembers = teamMemberMapper.selectByExample(teamMemberExample);
+            //创建了teamMessageAndMember对象
+            TeamMessageAndMember teamMessageAndMember = new TeamMessageAndMember();
+            //将teamMembers集合加入对象teamMessageAndMember对象
+            teamMessageAndMember.setTeamMembers(teamMembers);
+            //将对象teamMessage加入teamMessageAndMember对象
+            teamMessageAndMember.setTeamMessage(teamMessage);
+            //判断teamMessage的状态
+            if (teamMessage.getStatus() == 0) {
+                //如果状态合法则加入到teamMessageAndMember集合中
+                teamMessageAndMembers.add(teamMessageAndMember);
+            }
+        }
+        return ServerResponse.createBySuccess(teamMessageAndMembers);
+    }
+
 
 
 }

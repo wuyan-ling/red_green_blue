@@ -4,10 +4,8 @@ import com.bst.red_green_blue.common.ServerResponse;
 import com.bst.red_green_blue.dao.TeamMemberMapper;
 import com.bst.red_green_blue.dao.TeamMessageMapper;
 import com.bst.red_green_blue.dao.UserMapper;
-import com.bst.red_green_blue.pojo.TeamMember;
-import com.bst.red_green_blue.pojo.TeamMemberExample;
-import com.bst.red_green_blue.pojo.TeamMessage;
-import com.bst.red_green_blue.pojo.User;
+import com.bst.red_green_blue.pojo.*;
+import com.bst.red_green_blue.pojo.vo.TeamMessageAndMember;
 import com.bst.red_green_blue.service.ITeamService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -15,6 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 
 import javax.servlet.http.HttpSession;
+import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -82,5 +81,28 @@ public class TeamService implements ITeamService {
         return ServerResponse.createBySuccessMessage("删除成员成功");
     }
 
+
+    public ServerResponse<TeamMessageAndMember> getTeamMessage(User user) {
+        //根据用户对象中的teamId获取所在团队
+        String teamId = user.getTeamId();
+        TeamMessageExample teamMessageExample= new TeamMessageExample();
+        teamMessageExample.createCriteria().andIdEqualTo(teamId);
+        List<TeamMessage> teamMessages = teamMessageMapper.selectByExample(teamMessageExample);
+        if (teamMessages==null) {
+            return ServerResponse.createByErrorMessage("管理员通过用户管理界面查询");
+        }
+        //创建TeamMessageAndMember对象
+        TeamMessageAndMember teamMessageAndMember = new TeamMessageAndMember();
+        //将团队信息teamMessages加入TeamMessageAndMember对象中
+        teamMessageAndMember.setTeamMessage(teamMessages.get(0));
+        //查询改团队的成员信息集合
+        TeamMemberExample teamMemberExample = new TeamMemberExample();
+        teamMemberExample.createCriteria().andTeamIdEqualTo(teamId);
+        List<TeamMember> teamMembers = teamMemberMapper.selectByExample(teamMemberExample);
+        //将团队成员集合teamMembers加入TeamMessageAndMember中
+        teamMessageAndMember.setTeamMembers(teamMembers);
+        return ServerResponse.createBySuccess(teamMessageAndMember);
+
+    }
 
 }

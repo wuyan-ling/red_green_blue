@@ -4,6 +4,7 @@ import com.bst.red_green_blue.common.ServerResponse;
 import com.bst.red_green_blue.pojo.User;
 
 import javax.servlet.http.HttpSession;
+import java.util.List;
 
 
 public interface IUserService {
@@ -44,6 +45,12 @@ public interface IUserService {
      * @param session
      */
     ServerResponse<String> updateUser(User user, HttpSession session);
+
+    /**
+     * 查询团队信息列表
+     * @return
+     */
+    ServerResponse<List>getTeamList();
 
 }
 
