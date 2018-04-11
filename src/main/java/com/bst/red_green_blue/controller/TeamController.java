@@ -2,6 +2,7 @@ package com.bst.red_green_blue.controller;
 
 import com.bst.red_green_blue.common.Constant;
 import com.bst.red_green_blue.common.ServerResponse;
+import com.bst.red_green_blue.pojo.TeamMember;
 import com.bst.red_green_blue.pojo.TeamMessage;
 import com.bst.red_green_blue.pojo.User;
 import com.bst.red_green_blue.service.ITeamService;
@@ -20,26 +21,49 @@ public class TeamController {
     private ITeamService iTeamService;
 
 
-
-@PostMapping("/updateOrInsertTeam")
-public ServerResponse<TeamMessage>updateOrInsertTeam(HttpSession session, TeamMessage teamMessage){
-    User user= (User) session.getAttribute(Constant.CURRENT_USER);
-    if (user == null) {
-        return ServerResponse.createByErrorMessage("请登陆");
+    @PostMapping("/updateOrInsertTeam")
+    public ServerResponse<TeamMessage> updateOrInsertTeam(HttpSession session, TeamMessage teamMessage) {
+        User user = (User) session.getAttribute(Constant.CURRENT_USER);
+        if (user == null) {
+            return ServerResponse.createByErrorMessage("请登陆");
+        }
+        if (user.getTeamId() == null && user.getMark() == Constant.Role.ROLE_CUSTOMER) {
+            return iTeamService.insertTeam(teamMessage, user);
+        }
+        if (user.getTeamId() == null && user.getMark() == Constant.Role.ROLE_ADMIN) {
+            return ServerResponse.createByErrorMessage("管理员不应该新建团队，请让团队负责人新建");
+        }
+        return iTeamService.updateTeam(teamMessage);
     }
-    if (user.getTeamId() == null&&user.getMark()==Constant.Role.ROLE_CUSTOMER) {
-        return iTeamService.insertTeam(teamMessage,user);
+
+
+    @PostMapping("/addTeamMember")
+    public ServerResponse<TeamMember> addTeamMember(HttpSession session, String name, String phoneNumber) {
+
+        User user = (User) session.getAttribute(Constant.CURRENT_USER);
+        if (user == null) {
+            return ServerResponse.createByErrorMessage("请登陆");
+        }
+        if (user.getMark() == Constant.Role.ROLE_ADMIN ) {
+            return ServerResponse.createByErrorMessage("管理员不应该新建团队成员，请让团队负责人新建");
     }
-    if (user.getTeamId() == null && user.getMark() == Constant.Role.ROLE_ADMIN) {
-        return ServerResponse.createByErrorMessage("管理员不应该新建团队，请让团队负责人新建");
+        return iTeamService.addTeamMember(user.getTeamId(), name,phoneNumber);
+
     }
-    return iTeamService.updateTeam(teamMessage);
 
 
-}
+    @PostMapping("/deleteTeamMember")
+    public ServerResponse<TeamMember>deleteTeamMember(HttpSession session, String phoneNumber){
 
-
-
+        User user = (User) session.getAttribute(Constant.CURRENT_USER);
+        if (user == null) {
+            return ServerResponse.createByErrorMessage("请登陆");
+        }
+        if (user.getMark() == Constant.Role.ROLE_ADMIN ) {
+            return ServerResponse.createByErrorMessage("管理员不应该删除团队成员，请让团队负责人删除");
+        }
+        return iTeamService.deleteTeamMember(session,phoneNumber);
+    }
 
 
 }

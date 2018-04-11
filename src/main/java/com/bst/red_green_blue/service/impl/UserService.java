@@ -52,8 +52,9 @@ public class UserService implements IUserService {
 
     @Override
     public ServerResponse<String> deleteUser(String phoneNumber, HttpSession session) {
-
-        int i = userMapper.deleteByPrimaryKey(phoneNumber);
+        User user = userMapper.selectByPrimaryKey(phoneNumber);
+        user.setStatus(1);
+        int i = userMapper.updateByPrimaryKeySelective(user);
         if (i != 0) {
             return ServerResponse.createBySuccessMessage("删除用户成功");
         } else {

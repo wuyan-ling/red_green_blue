@@ -1,8 +1,11 @@
 package com.bst.red_green_blue.service;
 
 import com.bst.red_green_blue.common.ServerResponse;
+import com.bst.red_green_blue.pojo.TeamMember;
 import com.bst.red_green_blue.pojo.TeamMessage;
 import com.bst.red_green_blue.pojo.User;
+
+import javax.servlet.http.HttpSession;
 
 
 public interface ITeamService {
@@ -21,4 +24,23 @@ public interface ITeamService {
      * @return
      */
     ServerResponse<TeamMessage> updateTeam(TeamMessage teamMessage);
+
+
+    /**
+     *增加团队成员
+     * @param teamId
+     * @param name
+     * @param phoneNumber
+     * @return
+     */
+    ServerResponse<TeamMember>addTeamMember(String teamId,String name, String phoneNumber);
+
+
+
+    ServerResponse<TeamMember>deleteTeamMember(HttpSession session,String phoneNumber);
 }
+
+
+
+
+
