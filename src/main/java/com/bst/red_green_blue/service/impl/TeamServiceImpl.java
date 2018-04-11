@@ -17,7 +17,7 @@ import java.util.List;
 import java.util.UUID;
 
 @Service
-public class TeamService implements ITeamService {
+public class TeamServiceImpl implements ITeamService {
 
 
     @Autowired
