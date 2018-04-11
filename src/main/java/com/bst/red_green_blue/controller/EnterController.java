@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
+import java.util.List;
 
 /**
  * @author XHJ
@@ -26,8 +27,9 @@ public class EnterController {
     private IEnterService ienterService;
 
     @ApiOperation(value = "入驻申请")
-    @PostMapping(value = "enter_apply_for")
-    public ServerResponse<String> enterApplyFor(@Valid ApplicationFormVo applicationFormVo, BindingResult bindingResult) {
+    @PostMapping(value = "enterApplyFor")
+    public ServerResponse<String> enterApplyFor(@Valid ApplicationFormVo applicationFormVo,
+                                                BindingResult bindingResult) throws Exception {
         return ienterService.enterApplyFor(applicationFormVo);
     }
 
@@ -41,4 +43,14 @@ public class EnterController {
         return ienterService.applicationStatusQuery(responsibilityName,responsibilityPhoneNumber);
     }
 
+    /**
+     * 申请公示
+     * @return
+     */
+    @ApiOperation(value = "申请公示")
+    @GetMapping(value = "applicationPublic")
+    public ServerResponse<List<ApplicationFormVo>> applicationPublic() {
+        return ienterService.applicationPublic();
+
+    }
 }
