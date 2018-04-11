@@ -19,7 +19,17 @@ public class OperationMessage {
 
     private String investment;
 
-    public OperationMessage(String id, String monthTurnover, Integer transactionTime, String productMain, String productMinor, String buyCost, String employeeExpend, String liability, String investment) {
+    private String monthWork;
+
+    private String nextMonthWork;
+
+    private String projectSpecialty;
+
+    private String projectQuestion;
+
+    private String teamNeed;
+
+    public OperationMessage(String id, String monthTurnover, Integer transactionTime, String productMain, String productMinor, String buyCost, String employeeExpend, String liability, String investment, String monthWork, String nextMonthWork, String projectSpecialty, String projectQuestion, String teamNeed) {
         this.id = id;
         this.monthTurnover = monthTurnover;
         this.transactionTime = transactionTime;
@@ -29,6 +39,11 @@ public class OperationMessage {
         this.employeeExpend = employeeExpend;
         this.liability = liability;
         this.investment = investment;
+        this.monthWork = monthWork;
+        this.nextMonthWork = nextMonthWork;
+        this.projectSpecialty = projectSpecialty;
+        this.projectQuestion = projectQuestion;
+        this.teamNeed = teamNeed;
     }
 
     public OperationMessage() {
@@ -105,5 +120,45 @@ public class OperationMessage {
 
     public void setInvestment(String investment) {
         this.investment = investment == null ? null : investment.trim();
+    }
+
+    public String getMonthWork() {
+        return monthWork;
+    }
+
+    public void setMonthWork(String monthWork) {
+        this.monthWork = monthWork == null ? null : monthWork.trim();
+    }
+
+    public String getNextMonthWork() {
+        return nextMonthWork;
+    }
+
+    public void setNextMonthWork(String nextMonthWork) {
+        this.nextMonthWork = nextMonthWork == null ? null : nextMonthWork.trim();
+    }
+
+    public String getProjectSpecialty() {
+        return projectSpecialty;
+    }
+
+    public void setProjectSpecialty(String projectSpecialty) {
+        this.projectSpecialty = projectSpecialty == null ? null : projectSpecialty.trim();
+    }
+
+    public String getProjectQuestion() {
+        return projectQuestion;
+    }
+
+    public void setProjectQuestion(String projectQuestion) {
+        this.projectQuestion = projectQuestion == null ? null : projectQuestion.trim();
+    }
+
+    public String getTeamNeed() {
+        return teamNeed;
+    }
+
+    public void setTeamNeed(String teamNeed) {
+        this.teamNeed = teamNeed == null ? null : teamNeed.trim();
     }
 }

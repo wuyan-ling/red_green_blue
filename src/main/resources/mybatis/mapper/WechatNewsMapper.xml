@@ -6,16 +6,8 @@
       <idArg column="id" jdbcType="VARCHAR" javaType="java.lang.String" />
       <arg column="title" jdbcType="VARCHAR" javaType="java.lang.String" />
       <arg column="picture" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="description" jdbcType="VARCHAR" javaType="java.lang.String" />
       <arg column="time" jdbcType="INTEGER" javaType="java.lang.Integer" />
-    </constructor>
-  </resultMap>
-  <resultMap id="ResultMapWithBLOBs" type="com.bst.red_green_blue.pojo.WechatNews" >
-    <constructor >
-      <idArg column="id" jdbcType="VARCHAR" javaType="java.lang.String" />
-      <arg column="title" jdbcType="VARCHAR" javaType="java.lang.String" />
-      <arg column="picture" jdbcType="VARCHAR" javaType="java.lang.String" />
-      <arg column="time" jdbcType="INTEGER" javaType="java.lang.Integer" />
-      <arg column="description" jdbcType="LONGVARCHAR" javaType="java.lang.String" />
     </constructor>
   </resultMap>
   <sql id="Example_Where_Clause" >
@@ -77,28 +69,8 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    id, title, picture, time
+    id, title, picture, description, time
   </sql>
-  <sql id="Blob_Column_List" >
-    description
-  </sql>
-  <select id="selectByExampleWithBLOBs" resultMap="ResultMapWithBLOBs" parameterType="com.bst.red_green_blue.pojo.WechatNewsExample" >
-    select
-    <if test="distinct" >
-      distinct
-    </if>
-    'true' as QUERYID,
-    <include refid="Base_Column_List" />
-    ,
-    <include refid="Blob_Column_List" />
-    from wechat_news
-    <if test="_parameter != null" >
-      <include refid="Example_Where_Clause" />
-    </if>
-    <if test="orderByClause != null" >
-      order by ${orderByClause}
-    </if>
-  </select>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.bst.red_green_blue.pojo.WechatNewsExample" >
     select
     <if test="distinct" >
@@ -114,11 +86,9 @@
       order by ${orderByClause}
     </if>
   </select>
-  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.String" >
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select 
     <include refid="Base_Column_List" />
-    ,
-    <include refid="Blob_Column_List" />
     from wechat_news
     where id = #{id,jdbcType=VARCHAR}
   </select>
@@ -134,9 +104,9 @@
   </delete>
   <insert id="insert" parameterType="com.bst.red_green_blue.pojo.WechatNews" >
     insert into wechat_news (id, title, picture, 
-      time, description)
+      description, time)
     values (#{id,jdbcType=VARCHAR}, #{title,jdbcType=VARCHAR}, #{picture,jdbcType=VARCHAR}, 
-      #{time,jdbcType=INTEGER}, #{description,jdbcType=LONGVARCHAR})
+      #{description,jdbcType=VARCHAR}, #{time,jdbcType=INTEGER})
   </insert>
   <insert id="insertSelective" parameterType="com.bst.red_green_blue.pojo.WechatNews" >
     insert into wechat_news
@@ -150,11 +120,11 @@
       <if test="picture != null" >
         picture,
       </if>
-      <if test="time != null" >
-        time,
-      </if>
       <if test="description != null" >
         description,
+      </if>
+      <if test="time != null" >
+        time,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
@@ -167,11 +137,11 @@
       <if test="picture != null" >
         #{picture,jdbcType=VARCHAR},
       </if>
+      <if test="description != null" >
+        #{description,jdbcType=VARCHAR},
+      </if>
       <if test="time != null" >
         #{time,jdbcType=INTEGER},
-      </if>
-      <if test="description != null" >
-        #{description,jdbcType=LONGVARCHAR},
       </if>
     </trim>
   </insert>
@@ -193,24 +163,13 @@
       <if test="record.picture != null" >
         picture = #{record.picture,jdbcType=VARCHAR},
       </if>
+      <if test="record.description != null" >
+        description = #{record.description,jdbcType=VARCHAR},
+      </if>
       <if test="record.time != null" >
         time = #{record.time,jdbcType=INTEGER},
       </if>
-      <if test="record.description != null" >
-        description = #{record.description,jdbcType=LONGVARCHAR},
-      </if>
     </set>
-    <if test="_parameter != null" >
-      <include refid="Update_By_Example_Where_Clause" />
-    </if>
-  </update>
-  <update id="updateByExampleWithBLOBs" parameterType="map" >
-    update wechat_news
-    set id = #{record.id,jdbcType=VARCHAR},
-      title = #{record.title,jdbcType=VARCHAR},
-      picture = #{record.picture,jdbcType=VARCHAR},
-      time = #{record.time,jdbcType=INTEGER},
-      description = #{record.description,jdbcType=LONGVARCHAR}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -220,6 +179,7 @@
     set id = #{record.id,jdbcType=VARCHAR},
       title = #{record.title,jdbcType=VARCHAR},
       picture = #{record.picture,jdbcType=VARCHAR},
+      description = #{record.description,jdbcType=VARCHAR},
       time = #{record.time,jdbcType=INTEGER}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
@@ -234,27 +194,20 @@
       <if test="picture != null" >
         picture = #{picture,jdbcType=VARCHAR},
       </if>
+      <if test="description != null" >
+        description = #{description,jdbcType=VARCHAR},
+      </if>
       <if test="time != null" >
         time = #{time,jdbcType=INTEGER},
       </if>
-      <if test="description != null" >
-        description = #{description,jdbcType=LONGVARCHAR},
-      </if>
     </set>
-    where id = #{id,jdbcType=VARCHAR}
-  </update>
-  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.bst.red_green_blue.pojo.WechatNews" >
-    update wechat_news
-    set title = #{title,jdbcType=VARCHAR},
-      picture = #{picture,jdbcType=VARCHAR},
-      time = #{time,jdbcType=INTEGER},
-      description = #{description,jdbcType=LONGVARCHAR}
     where id = #{id,jdbcType=VARCHAR}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.bst.red_green_blue.pojo.WechatNews" >
     update wechat_news
     set title = #{title,jdbcType=VARCHAR},
       picture = #{picture,jdbcType=VARCHAR},
+      description = #{description,jdbcType=VARCHAR},
       time = #{time,jdbcType=INTEGER}
     where id = #{id,jdbcType=VARCHAR}
   </update>

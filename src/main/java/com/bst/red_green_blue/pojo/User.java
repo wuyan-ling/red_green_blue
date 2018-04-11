@@ -11,12 +11,15 @@ public class User {
 
     private Integer status;
 
-    public User(String phoneNumber, String username, String password, Integer mark, Integer status) {
+    private String teamId;
+
+    public User(String phoneNumber, String username, String password, Integer mark, Integer status, String teamId) {
         this.phoneNumber = phoneNumber;
         this.username = username;
         this.password = password;
         this.mark = mark;
         this.status = status;
+        this.teamId = teamId;
     }
 
     public User() {
@@ -61,5 +64,13 @@ public class User {
 
     public void setStatus(Integer status) {
         this.status = status;
+    }
+
+    public String getTeamId() {
+        return teamId;
+    }
+
+    public void setTeamId(String teamId) {
+        this.teamId = teamId == null ? null : teamId.trim();
     }
 }

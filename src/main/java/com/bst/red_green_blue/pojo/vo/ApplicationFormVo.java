@@ -26,6 +26,7 @@ public class ApplicationFormVo {
         this.projectInformation = projectInformation;
     }
 
+
     public String getProjectName() {
         return projectName;
     }

@@ -16,21 +16,15 @@ public interface ApplicationFormMapper {
 
     int insertSelective(ApplicationForm record);
 
-    List<ApplicationForm> selectByExampleWithBLOBs(ApplicationFormExample example);
-
     List<ApplicationForm> selectByExample(ApplicationFormExample example);
 
     ApplicationForm selectByPrimaryKey(String id);
 
     int updateByExampleSelective(@Param("record") ApplicationForm record, @Param("example") ApplicationFormExample example);
 
-    int updateByExampleWithBLOBs(@Param("record") ApplicationForm record, @Param("example") ApplicationFormExample example);
-
     int updateByExample(@Param("record") ApplicationForm record, @Param("example") ApplicationFormExample example);
 
     int updateByPrimaryKeySelective(ApplicationForm record);
-
-    int updateByPrimaryKeyWithBLOBs(ApplicationForm record);
 
     int updateByPrimaryKey(ApplicationForm record);
 }

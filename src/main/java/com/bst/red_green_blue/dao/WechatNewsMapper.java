@@ -16,21 +16,15 @@ public interface WechatNewsMapper {
 
     int insertSelective(WechatNews record);
 
-    List<WechatNews> selectByExampleWithBLOBs(WechatNewsExample example);
-
     List<WechatNews> selectByExample(WechatNewsExample example);
 
     WechatNews selectByPrimaryKey(String id);
 
     int updateByExampleSelective(@Param("record") WechatNews record, @Param("example") WechatNewsExample example);
 
-    int updateByExampleWithBLOBs(@Param("record") WechatNews record, @Param("example") WechatNewsExample example);
-
     int updateByExample(@Param("record") WechatNews record, @Param("example") WechatNewsExample example);
 
     int updateByPrimaryKeySelective(WechatNews record);
-
-    int updateByPrimaryKeyWithBLOBs(WechatNews record);
 
     int updateByPrimaryKey(WechatNews record);
 }
