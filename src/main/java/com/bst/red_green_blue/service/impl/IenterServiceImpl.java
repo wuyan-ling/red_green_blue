@@ -1,13 +1,16 @@
 package com.bst.red_green_blue.service.impl;
 
+import com.bst.red_green_blue.common.ResponseCode;
 import com.bst.red_green_blue.common.ServerResponse;
 import com.bst.red_green_blue.dao.ApplicationFormMapper;
 import com.bst.red_green_blue.pojo.ApplicationForm;
+import com.bst.red_green_blue.pojo.ApplicationFormExample;
 import com.bst.red_green_blue.pojo.vo.ApplicationFormVo;
-import com.bst.red_green_blue.service.IenterService;
+import com.bst.red_green_blue.service.IEnterService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.UUID;
 
 /**
@@ -15,7 +18,7 @@ import java.util.UUID;
  * 2018/4/10 21:25
  */
 @Service
-public class IenterServiceImpl implements IenterService{
+public class IenterServiceImpl implements IEnterService {
     @Autowired
     private ApplicationFormMapper applicationFormMapper;
 
@@ -24,23 +27,49 @@ public class IenterServiceImpl implements IenterService{
      * @param applicationFormVo
      * @return
      */
-//    @Override
-//    public ServerResponse<String> enterApplyFor(ApplicationFormVo applicationFormVo)  {
-//        String id = String.valueOf(UUID.randomUUID());
-//        ApplicationForm applicationForm = new ApplicationForm(applicationFormVo,id);
-//        int status;
-//
-//        try {
-//            status = applicationFormMapper.insertSelective(applicationForm);
-//        }catch (Exception e) {
-//            return ServerResponse.createBySuccessMessage("团队名称有重复");
-//        }
-//
-//        if (status == 0) {
-//            return ServerResponse.createByErrorMessage("提交失败");
-//        }
-//
-//        return ServerResponse.createBySuccessMessage("申请成功");
-//
-//}
+    @Override
+    public ServerResponse<String> enterApplyFor(ApplicationFormVo applicationFormVo)  {
+        String id = String.valueOf(UUID.randomUUID());
+        ApplicationForm applicationForm = new ApplicationForm(applicationFormVo, id);
+        int status = 0;
+
+        try {
+            status = applicationFormMapper.insertSelective(applicationForm);
+        } catch (Exception e) {
+//            throw new CustomException(ResponseCode.SQL_EXCEPTION);
+            return ServerResponse.createByErrorMessage(ResponseCode.SQL_EXCEPTION.getMessage());
+        }
+
+        if (status == 0) {
+            return ServerResponse.createByErrorMessage("提交失败");
+        }
+
+        return ServerResponse.createBySuccessMessage("申请成功");
+
+    }
+
+    /**
+     * 申请的状态查询
+     * @param responsibilityName
+     * @param responsibilityPhoneNumber
+     * @return
+     */
+    @Override
+    public ServerResponse<ApplicationForm> applicationStatusQuery(String responsibilityName, String responsibilityPhoneNumber) {
+        ApplicationFormExample example = new ApplicationFormExample();
+        example.createCriteria().andResponsibilityNameEqualTo(responsibilityName).
+                andResponsibilityPhoneNumberEqualTo(responsibilityPhoneNumber);
+
+        List<ApplicationForm> applicationForms = applicationFormMapper.selectByExample(example);
+        if (applicationForms.size() == 0) {
+            return ServerResponse.createByErrorMessage("无此团队信息,查询失败");
+        }
+        ApplicationForm form = applicationForms.get(0);
+        if (form.getErrorMessage() == null || form.getErrorMessage().isEmpty()) {
+            form.setErrorMessage("");
+        }
+        return ServerResponse.createBySuccess(form);
+
+    }
+
 }

@@ -1,13 +1,13 @@
 package com.bst.red_green_blue.pojo;
 
+import com.bst.red_green_blue.pojo.vo.ApplicationFormVo;
+
 public class ApplicationForm {
     private String id;
 
     private String responsibilityName;
 
     private String projectName;
-
-    private String projectInformation;
 
     private String college;
 
@@ -17,15 +17,26 @@ public class ApplicationForm {
 
     private String responsibilityPhoneNumber;
 
-    public ApplicationForm(String id, String responsibilityName, String projectName, String projectInformation, String college, Integer status, String errorMessage, String responsibilityPhoneNumber) {
+    private String projectInformation;
+
+    public ApplicationForm(String id, String responsibilityName, String projectName, String college, Integer status, String errorMessage, String responsibilityPhoneNumber, String projectInformation) {
         this.id = id;
         this.responsibilityName = responsibilityName;
         this.projectName = projectName;
-        this.projectInformation = projectInformation;
         this.college = college;
         this.status = status;
         this.errorMessage = errorMessage;
         this.responsibilityPhoneNumber = responsibilityPhoneNumber;
+        this.projectInformation = projectInformation;
+    }
+
+    public ApplicationForm(ApplicationFormVo applicationFormVo,String id) {
+        this.id = id;
+        this.projectName = applicationFormVo.getProjectName();
+        this.responsibilityName = applicationFormVo.getResponsibilityName();
+        this.college = applicationFormVo.getCollege();
+        this.responsibilityPhoneNumber = applicationFormVo.getResponsibilityPhoneNumber();
+        this.projectInformation = applicationFormVo.getProjectInformation();
     }
 
     public ApplicationForm() {
@@ -54,14 +65,6 @@ public class ApplicationForm {
 
     public void setProjectName(String projectName) {
         this.projectName = projectName == null ? null : projectName.trim();
-    }
-
-    public String getProjectInformation() {
-        return projectInformation;
-    }
-
-    public void setProjectInformation(String projectInformation) {
-        this.projectInformation = projectInformation == null ? null : projectInformation.trim();
     }
 
     public String getCollege() {
@@ -95,4 +98,13 @@ public class ApplicationForm {
     public void setResponsibilityPhoneNumber(String responsibilityPhoneNumber) {
         this.responsibilityPhoneNumber = responsibilityPhoneNumber == null ? null : responsibilityPhoneNumber.trim();
     }
+
+    public String getProjectInformation() {
+        return projectInformation;
+    }
+
+    public void setProjectInformation(String projectInformation) {
+        this.projectInformation = projectInformation == null ? null : projectInformation.trim();
+    }
+
 }
