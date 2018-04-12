@@ -1,7 +1,5 @@
 package com.bst.red_green_blue.pojo.vo;
 
-import com.bst.red_green_blue.pojo.ApplicationForm;
-
 import javax.validation.constraints.NotBlank;
 
 /**

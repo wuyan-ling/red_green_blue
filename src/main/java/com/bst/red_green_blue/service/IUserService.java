@@ -52,6 +52,14 @@ public interface IUserService {
      */
     ServerResponse<List>getTeamList();
 
+
+    /**
+     * 修改用户密码
+     * @param password
+     * @return
+     */
+    ServerResponse<String>updatePassword(User user,String password);
+
 }
 
 
