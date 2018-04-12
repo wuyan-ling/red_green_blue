@@ -1,5 +1,6 @@
 package com.bst.red_green_blue.service.impl;
 
+import com.bst.red_green_blue.common.Constant;
 import com.bst.red_green_blue.common.ServerResponse;
 import com.bst.red_green_blue.common.VoHandle;
 import com.bst.red_green_blue.dao.PublicFacilityMapper;
@@ -48,8 +49,8 @@ public class FacilityServiceImpl implements IFacilityService{
     @Override
     public ServerResponse<List<PublicFacility>> checkPublicFacility() {
         PublicFacilityExample example = new PublicFacilityExample();
-        example.or().andStatusEqualTo(1);
-        example.or().andStatusEqualTo(2);
+        example.or().andStatusEqualTo(Constant.Status.PASS);
+        example.or().andStatusEqualTo(Constant.Status.NOT_PASS);
         List<PublicFacility> publicFacilities = publicFacilityMapper.selectByExample(example);
         if (publicFacilities.size() == 0) {
             return ServerResponse.createBySuccessMessage("空");
@@ -65,7 +66,7 @@ public class FacilityServiceImpl implements IFacilityService{
     @Override
     public ServerResponse<List<PublicFacility>> checkPendingPublicFacility() {
         PublicFacilityExample example = new PublicFacilityExample();
-        example.createCriteria().andStatusEqualTo(1);
+        example.createCriteria().andStatusEqualTo(Constant.Status.UNTREATED);
         List<PublicFacility> publicFacilities = publicFacilityMapper.selectByExample(example);
         if (publicFacilities.size() == 0) {
             return ServerResponse.createBySuccessMessage("空");
