@@ -7,6 +7,7 @@ import com.bst.red_green_blue.pojo.User;
 import com.bst.red_green_blue.service.IOpreationService;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -33,5 +34,15 @@ public class OperationController {
             return ServerResponse.createByErrorMessage("需要团队负责人提交");
         }
         return iOpreationService.operationDataStatistics(operationMessage);
+    }
+    @ApiOperation("查询团队运营信息")
+    @GetMapping("查询团队运营信息")
+    public ServerResponse<OperationMessage> checkOperationMessage(HttpSession session) {
+        User user = (User) session.getAttribute(Constant.CURRENT_USER);
+        if (user == null) {
+            return ServerResponse.createByErrorMessage("请先登录");
+        }
+        String teamId = user.getTeamId();
+        return iOpreationService.checkOperationMessage(teamId);
     }
 }

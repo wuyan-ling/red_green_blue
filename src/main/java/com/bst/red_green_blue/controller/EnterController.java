@@ -79,7 +79,7 @@ public class EnterController {
         return iEnterService.checkPendingApplicationFormList();
     }
     @ApiOperation(value = "管理员入驻申请审核")
-    @GetMapping(value = "checkApplication")
+    @PostMapping(value = "checkApplication")
     public ServerResponse<String> checkApplication(HttpSession session, String id , int status) {
         User user = (User) session.getAttribute(Constant.CURRENT_USER);
         if (user == null) {

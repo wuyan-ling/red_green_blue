@@ -94,6 +94,10 @@ public class FacilityServiceImpl implements IFacilityService{
         } else if (status == Constant.Status.PASS || status == Constant.Status.NOT_PASS) {
             PublicFacility applicationForm = list.get(0);
             applicationForm.setStatus(status);
+//            尝试使用example进行update
+//            example.clear();
+//            example.createCriteria().andIdEqualTo(applicationForm.getId());
+//            int i = publicFacilityMapper.updateByExampleSelective(applicationForm, example);
             int i = publicFacilityMapper.updateByPrimaryKeySelective(applicationForm);
             if (i == 0) {
                 return ServerResponse.createByErrorMessage("更改审核信息失败");

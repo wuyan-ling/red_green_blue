@@ -15,4 +15,12 @@ public interface IOpreationService {
      * @return
      */
     ServerResponse<String> operationDataStatistics(OperationMessage operationMessage);
+
+    /**
+     * 查询团队运营信息
+     *
+     * @param teamId
+     * @return
+     */
+    ServerResponse<OperationMessage> checkOperationMessage(String teamId);
 }

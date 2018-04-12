@@ -7,8 +7,10 @@ import com.bst.red_green_blue.service.IOpreationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.servlet.http.HttpSession;
+
 /**
- * @author XHJ
+ * @author XH   J
  * 2018/4/12 16:40
  */
 @Service
@@ -18,6 +20,7 @@ public class OperationServiceImpl implements IOpreationService {
 
     /**
      * 存储或更新团队运营数据
+     *
      * @param operationMessage
      * @return
      */
@@ -40,6 +43,20 @@ public class OperationServiceImpl implements IOpreationService {
             }
             return ServerResponse.createByErrorMessage("更新团队运营数据失败");
         }
+    }
 
+    /**
+     * 查询团队运营信息
+     *
+     * @param teamId
+     * @return
+     */
+    @Override
+    public ServerResponse<OperationMessage> checkOperationMessage(String teamId) {
+        OperationMessage operationMessage = operationMessageMapper.selectByPrimaryKey(teamId);
+        if (operationMessage == null) {
+            return ServerResponse.createByErrorMessage("空");
+        }
+        return ServerResponse.createBySuccess(operationMessage);
     }
 }

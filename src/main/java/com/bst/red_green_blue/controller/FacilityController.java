@@ -10,6 +10,7 @@ import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -28,7 +29,7 @@ public class FacilityController  {
     private IFacilityService iFacilityService;
 
     @ApiOperation(value = "申请公共设施使用")
-    @GetMapping(value = "applicationPublicFacility")
+    @PostMapping(value = "applicationPublicFacility")
     public ServerResponse<String> applicationPublicFacility(HttpSession session, @Valid PublicFacilityVo vo, BindingResult bindingResult) {
         User user = (User) session.getAttribute(Constant.CURRENT_USER);
         if (user == null) {
@@ -61,7 +62,7 @@ public class FacilityController  {
     }
 
     @ApiOperation(value = "管理员公共设施申请审核\n")
-    @GetMapping(value = "checkPublicFacility")
+    @PostMapping(value = "checkPublicFacility")
     public ServerResponse<String> checkPublicFacility(HttpSession session, String id , int status) {
         User user = (User) session.getAttribute(Constant.CURRENT_USER);
         if (user == null) {
