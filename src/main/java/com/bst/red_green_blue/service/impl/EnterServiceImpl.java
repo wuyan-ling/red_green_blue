@@ -5,9 +5,13 @@ import com.bst.red_green_blue.common.ResponseCode;
 import com.bst.red_green_blue.common.ServerResponse;
 import com.bst.red_green_blue.common.VoHandle;
 import com.bst.red_green_blue.dao.ApplicationFormMapper;
+import com.bst.red_green_blue.dao.PublicFacilityMapper;
 import com.bst.red_green_blue.pojo.ApplicationForm;
 import com.bst.red_green_blue.pojo.ApplicationFormExample;
+import com.bst.red_green_blue.pojo.PublicFacility;
+import com.bst.red_green_blue.pojo.PublicFacilityExample;
 import com.bst.red_green_blue.pojo.vo.ApplicationFormVo;
+import com.bst.red_green_blue.pojo.vo.PublicFacilityVo;
 import com.bst.red_green_blue.service.IEnterService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -24,6 +28,8 @@ import java.util.UUID;
 public class EnterServiceImpl implements IEnterService {
     @Autowired
     private ApplicationFormMapper applicationFormMapper;
+    @Autowired
+    private PublicFacilityMapper publicFacilityMapper;
 
     /**
      * 入驻申请
@@ -34,7 +40,7 @@ public class EnterServiceImpl implements IEnterService {
     @Override
     public ServerResponse<String> enterApplyFor(ApplicationFormVo applicationFormVo) {
         String id = String.valueOf(UUID.randomUUID());
-        ApplicationForm applicationForm = VoHandle.createApplicationFormVoToApplicationForm(applicationFormVo, id);
+        ApplicationForm applicationForm = VoHandle.useApplicationFormCreateToVo(applicationFormVo, id);
 //        ApplicationForm applicationForm = new ApplicationForm(applicationFormVo, id);
         int status = 0;
 
@@ -74,13 +80,14 @@ public class EnterServiceImpl implements IEnterService {
         if (form.getErrorMessage() == null || form.getErrorMessage().isEmpty()) {
             form.setErrorMessage("");
         }
-        return ServerResponse.createBySuccess(VoHandle.createApplicationFormFormApplicationFormVo(form));
+        return ServerResponse.createBySuccess(VoHandle.useApplicationFormCreateToVo(form));
 
     }
 
     /**
      * 申请公示
-     *(有瑕疵)
+     * (有瑕疵)
+     *
      * @return
      */
     @Override
@@ -93,13 +100,14 @@ public class EnterServiceImpl implements IEnterService {
         }
         List<ApplicationFormVo> formVos = new ArrayList<>();
         for (ApplicationForm form : applicationForms) {
-            formVos.add(VoHandle.createApplicationFormFormApplicationFormVo(form));
+            formVos.add(VoHandle.useApplicationFormCreateToVo(form));
         }
         return ServerResponse.createBySuccess(formVos);
     }
 
     /**
      * 获取审核列表
+     *
      * @return
      */
     @Override
@@ -116,6 +124,7 @@ public class EnterServiceImpl implements IEnterService {
 
     /**
      * 获取待审核列表
+     *
      * @return
      */
     @Override
@@ -128,4 +137,6 @@ public class EnterServiceImpl implements IEnterService {
         }
         return ServerResponse.createBySuccess(applicationForms);
     }
+
+
 }

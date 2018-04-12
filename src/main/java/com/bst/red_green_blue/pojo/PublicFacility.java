@@ -13,13 +13,19 @@ public class PublicFacility {
 
     private String remark;
 
-    public PublicFacility(String id, Integer requestAddress, String personNumber, String requestUseTime, String contactWay, String remark) {
+    private String teamId;
+
+    private Integer status;
+
+    public PublicFacility(String id, Integer requestAddress, String personNumber, String requestUseTime, String contactWay, String remark, String teamId, Integer status) {
         this.id = id;
         this.requestAddress = requestAddress;
         this.personNumber = personNumber;
         this.requestUseTime = requestUseTime;
         this.contactWay = contactWay;
         this.remark = remark;
+        this.teamId = teamId;
+        this.status = status;
     }
 
     public PublicFacility() {
@@ -72,5 +78,21 @@ public class PublicFacility {
 
     public void setRemark(String remark) {
         this.remark = remark == null ? null : remark.trim();
+    }
+
+    public String getTeamId() {
+        return teamId;
+    }
+
+    public void setTeamId(String teamId) {
+        this.teamId = teamId == null ? null : teamId.trim();
+    }
+
+    public Integer getStatus() {
+        return status;
+    }
+
+    public void setStatus(Integer status) {
+        this.status = status;
     }
 }

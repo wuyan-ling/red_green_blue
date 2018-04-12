@@ -3,8 +3,10 @@ package com.bst.red_green_blue.controller;
 import com.bst.red_green_blue.common.Constant;
 import com.bst.red_green_blue.common.ServerResponse;
 import com.bst.red_green_blue.pojo.ApplicationForm;
+import com.bst.red_green_blue.pojo.PublicFacility;
 import com.bst.red_green_blue.pojo.User;
 import com.bst.red_green_blue.pojo.vo.ApplicationFormVo;
+import com.bst.red_green_blue.pojo.vo.PublicFacilityVo;
 import com.bst.red_green_blue.service.IEnterService;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,7 +22,7 @@ import java.util.List;
 
 /**
  * @author XHJ
- * 入驻大杂烩
+ * 入驻
  * 2018/4/10 21:01
  */
 @RestController
@@ -43,7 +45,7 @@ public class EnterController {
                 responsibilityPhoneNumber == null || responsibilityPhoneNumber.isEmpty()) {
             return ServerResponse.createByErrorMessage("团队负责人姓名或联系电话不能为空");
         }
-        return iEnterService.applicationStatusQuery(responsibilityName,responsibilityPhoneNumber);
+        return iEnterService.applicationStatusQuery(responsibilityName, responsibilityPhoneNumber);
     }
 
     @ApiOperation(value = "申请公示")
@@ -52,8 +54,9 @@ public class EnterController {
         return iEnterService.applicationPublic();
 
     }
-    @ApiOperation(value = "获取审核列表")
-    @GetMapping(value = "获取审核列表")
+
+    @ApiOperation(value = "获取已审核列表")
+    @GetMapping(value = "checkApplicationFormList")
     public ServerResponse<List<ApplicationForm>> checkApplicationFormList(HttpSession session) {
         User user = (User) session.getAttribute(Constant.CURRENT_USER);
         if (user == null) {
@@ -63,8 +66,9 @@ public class EnterController {
         }
         return iEnterService.checkApplicationFormList();
     }
+
     @ApiOperation(value = "获取待审核列表")
-    @GetMapping(value = "获取待审核列表")
+    @GetMapping(value = "checkPendingApplicationFormList")
     public ServerResponse<List<ApplicationForm>> checkPendingApplicationFormList(HttpSession session) {
         User user = (User) session.getAttribute(Constant.CURRENT_USER);
         if (user == null) {
@@ -74,5 +78,6 @@ public class EnterController {
         }
         return iEnterService.checkPendingApplicationFormList();
     }
+
 
 }

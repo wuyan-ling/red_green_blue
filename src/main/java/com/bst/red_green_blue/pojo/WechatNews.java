@@ -9,14 +9,17 @@ public class WechatNews {
 
     private String description;
 
-    private Integer time;
+    private Long time;
 
-    public WechatNews(String id, String title, String picture, String description, Integer time) {
+    private String teamId;
+
+    public WechatNews(String id, String title, String picture, String description, Long time, String teamId) {
         this.id = id;
         this.title = title;
         this.picture = picture;
         this.description = description;
         this.time = time;
+        this.teamId = teamId;
     }
 
     public WechatNews() {
@@ -55,11 +58,19 @@ public class WechatNews {
         this.description = description == null ? null : description.trim();
     }
 
-    public Integer getTime() {
+    public Long getTime() {
         return time;
     }
 
-    public void setTime(Integer time) {
+    public void setTime(Long time) {
         this.time = time;
+    }
+
+    public String getTeamId() {
+        return teamId;
+    }
+
+    public void setTeamId(String teamId) {
+        this.teamId = teamId == null ? null : teamId.trim();
     }
 }

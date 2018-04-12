@@ -394,53 +394,123 @@ public class WechatNewsExample {
             return (Criteria) this;
         }
 
-        public Criteria andTimeEqualTo(Integer value) {
+        public Criteria andTimeEqualTo(Long value) {
             addCriterion("time =", value, "time");
             return (Criteria) this;
         }
 
-        public Criteria andTimeNotEqualTo(Integer value) {
+        public Criteria andTimeNotEqualTo(Long value) {
             addCriterion("time <>", value, "time");
             return (Criteria) this;
         }
 
-        public Criteria andTimeGreaterThan(Integer value) {
+        public Criteria andTimeGreaterThan(Long value) {
             addCriterion("time >", value, "time");
             return (Criteria) this;
         }
 
-        public Criteria andTimeGreaterThanOrEqualTo(Integer value) {
+        public Criteria andTimeGreaterThanOrEqualTo(Long value) {
             addCriterion("time >=", value, "time");
             return (Criteria) this;
         }
 
-        public Criteria andTimeLessThan(Integer value) {
+        public Criteria andTimeLessThan(Long value) {
             addCriterion("time <", value, "time");
             return (Criteria) this;
         }
 
-        public Criteria andTimeLessThanOrEqualTo(Integer value) {
+        public Criteria andTimeLessThanOrEqualTo(Long value) {
             addCriterion("time <=", value, "time");
             return (Criteria) this;
         }
 
-        public Criteria andTimeIn(List<Integer> values) {
+        public Criteria andTimeIn(List<Long> values) {
             addCriterion("time in", values, "time");
             return (Criteria) this;
         }
 
-        public Criteria andTimeNotIn(List<Integer> values) {
+        public Criteria andTimeNotIn(List<Long> values) {
             addCriterion("time not in", values, "time");
             return (Criteria) this;
         }
 
-        public Criteria andTimeBetween(Integer value1, Integer value2) {
+        public Criteria andTimeBetween(Long value1, Long value2) {
             addCriterion("time between", value1, value2, "time");
             return (Criteria) this;
         }
 
-        public Criteria andTimeNotBetween(Integer value1, Integer value2) {
+        public Criteria andTimeNotBetween(Long value1, Long value2) {
             addCriterion("time not between", value1, value2, "time");
+            return (Criteria) this;
+        }
+
+        public Criteria andTeamIdIsNull() {
+            addCriterion("team_id is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andTeamIdIsNotNull() {
+            addCriterion("team_id is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andTeamIdEqualTo(String value) {
+            addCriterion("team_id =", value, "teamId");
+            return (Criteria) this;
+        }
+
+        public Criteria andTeamIdNotEqualTo(String value) {
+            addCriterion("team_id <>", value, "teamId");
+            return (Criteria) this;
+        }
+
+        public Criteria andTeamIdGreaterThan(String value) {
+            addCriterion("team_id >", value, "teamId");
+            return (Criteria) this;
+        }
+
+        public Criteria andTeamIdGreaterThanOrEqualTo(String value) {
+            addCriterion("team_id >=", value, "teamId");
+            return (Criteria) this;
+        }
+
+        public Criteria andTeamIdLessThan(String value) {
+            addCriterion("team_id <", value, "teamId");
+            return (Criteria) this;
+        }
+
+        public Criteria andTeamIdLessThanOrEqualTo(String value) {
+            addCriterion("team_id <=", value, "teamId");
+            return (Criteria) this;
+        }
+
+        public Criteria andTeamIdLike(String value) {
+            addCriterion("team_id like", value, "teamId");
+            return (Criteria) this;
+        }
+
+        public Criteria andTeamIdNotLike(String value) {
+            addCriterion("team_id not like", value, "teamId");
+            return (Criteria) this;
+        }
+
+        public Criteria andTeamIdIn(List<String> values) {
+            addCriterion("team_id in", values, "teamId");
+            return (Criteria) this;
+        }
+
+        public Criteria andTeamIdNotIn(List<String> values) {
+            addCriterion("team_id not in", values, "teamId");
+            return (Criteria) this;
+        }
+
+        public Criteria andTeamIdBetween(String value1, String value2) {
+            addCriterion("team_id between", value1, value2, "teamId");
+            return (Criteria) this;
+        }
+
+        public Criteria andTeamIdNotBetween(String value1, String value2) {
+            addCriterion("team_id not between", value1, value2, "teamId");
             return (Criteria) this;
         }
     }
