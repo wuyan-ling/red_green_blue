@@ -5,7 +5,6 @@ import com.bst.red_green_blue.common.ServerResponse;
 import com.bst.red_green_blue.pojo.PublicFacility;
 import com.bst.red_green_blue.pojo.User;
 import com.bst.red_green_blue.pojo.vo.PublicFacilityVo;
-import com.bst.red_green_blue.service.IEnterService;
 import com.bst.red_green_blue.service.IFacilityService;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,15 +38,15 @@ public class FacilityController  {
         return iFacilityService.applicationPublicFacility(vo,teamId);
     }
     @ApiOperation(value = "获取已审核的公共设施申请列表")
-    @GetMapping(value = "checkPublicFacility")
-    public ServerResponse<List<PublicFacility>> checkPublicFacility(HttpSession session) {
+    @GetMapping(value = "checkPublicFacilityList")
+    public ServerResponse<List<PublicFacility>> checkPublicFacilityList(HttpSession session) {
         User user = (User) session.getAttribute(Constant.CURRENT_USER);
         if (user == null) {
             return ServerResponse.createByErrorMessage("请先登录");
         } else if (user.getMark() == 1) {
             return ServerResponse.createByErrorMessage("不是管理员，权限不足");
         }
-        return iFacilityService.checkPublicFacility();
+        return iFacilityService.checkPublicFacilityList();
     }
     @ApiOperation(value = "获取待审核的公共设施申请审核列表")
     @GetMapping(value = "checkPendingPublicFacility")
@@ -59,5 +58,20 @@ public class FacilityController  {
             return ServerResponse.createByErrorMessage("不是管理员，权限不足");
         }
         return iFacilityService.checkPendingPublicFacility();
+    }
+
+    @ApiOperation(value = "管理员公共设施申请审核\n")
+    @GetMapping(value = "checkPublicFacility")
+    public ServerResponse<String> checkPublicFacility(HttpSession session, String id , int status) {
+        User user = (User) session.getAttribute(Constant.CURRENT_USER);
+        if (user == null) {
+            return ServerResponse.createByErrorMessage("请先登录");
+        } else if (user.getMark() == 1) {
+            return ServerResponse.createByErrorMessage("不是管理员,权限不足");
+        } else if (id == null || id.isEmpty()) {
+            return ServerResponse.createByErrorMessage("团队信息错误");
+        }
+        return iFacilityService.checkPublicFacility(id,status);
+//        return null;
     }
 }

@@ -138,5 +138,31 @@ public class EnterServiceImpl implements IEnterService {
         return ServerResponse.createBySuccess(applicationForms);
     }
 
+    /**
+     * 管理员入驻申请审核
+     *
+     * @param id
+     * @param status
+     * @return
+     */
+    @Override
+    public ServerResponse<String> checkApplication(String id, int status) {
+        ApplicationFormExample example = new ApplicationFormExample();
+        example.createCriteria().andIdEqualTo(id);
+        List<ApplicationForm> list = applicationFormMapper.selectByExample(example);
+        ApplicationForm applicationForm = list.get(0);
+        if (list.size() == 0) {
+            return ServerResponse.createByErrorMessage("无此团队");
+        } else if (status == Constant.Status.PASS || status == Constant.Status.NOT_PASS) {
+            applicationForm.setStatus(status);
+            int i = applicationFormMapper.updateByPrimaryKeySelective(applicationForm);
+            if (i == 0) {
+                return ServerResponse.createByErrorMessage("更改审核信息失败");
+            }
+            return ServerResponse.createBySuccessMessage("更改审核状态成功 ");
+        }
+        return ServerResponse.createByErrorMessage("修改状态参数错误");
+    }
+
 
 }

@@ -78,6 +78,17 @@ public class EnterController {
         }
         return iEnterService.checkPendingApplicationFormList();
     }
-
-
+    @ApiOperation(value = "管理员入驻申请审核")
+    @GetMapping(value = "checkApplication")
+    public ServerResponse<String> checkApplication(HttpSession session, String id , int status) {
+        User user = (User) session.getAttribute(Constant.CURRENT_USER);
+        if (user == null) {
+            return ServerResponse.createByErrorMessage("请先登录");
+        } else if (user.getMark() == 1) {
+            return ServerResponse.createByErrorMessage("不是管理员，权限不足");
+        } else if (id == null || id.isEmpty()) {
+            return ServerResponse.createByErrorMessage("团队信息错误");
+        }
+        return iEnterService.checkApplication(id,status);
+    }
 }

@@ -4,6 +4,8 @@ import com.bst.red_green_blue.common.Constant;
 import com.bst.red_green_blue.common.ServerResponse;
 import com.bst.red_green_blue.common.VoHandle;
 import com.bst.red_green_blue.dao.PublicFacilityMapper;
+import com.bst.red_green_blue.pojo.ApplicationForm;
+import com.bst.red_green_blue.pojo.ApplicationFormExample;
 import com.bst.red_green_blue.pojo.PublicFacility;
 import com.bst.red_green_blue.pojo.PublicFacilityExample;
 import com.bst.red_green_blue.pojo.vo.PublicFacilityVo;
@@ -23,7 +25,8 @@ public class FacilityServiceImpl implements IFacilityService{
     @Autowired
     private PublicFacilityMapper publicFacilityMapper;
     /**
-     * 公共设施使用申请
+     * 、、
+     *
      *
      * @param vo
      * @param teamId
@@ -47,7 +50,7 @@ public class FacilityServiceImpl implements IFacilityService{
      * @return
      */
     @Override
-    public ServerResponse<List<PublicFacility>> checkPublicFacility() {
+    public ServerResponse<List<PublicFacility>> checkPublicFacilityList() {
         PublicFacilityExample example = new PublicFacilityExample();
         example.or().andStatusEqualTo(Constant.Status.PASS);
         example.or().andStatusEqualTo(Constant.Status.NOT_PASS);
@@ -73,5 +76,30 @@ public class FacilityServiceImpl implements IFacilityService{
         }
         return ServerResponse.createBySuccess(publicFacilities);
     }
+    /**
+     * 管理员公共设施申请审核
+     *
+     * @param id
+     * @param status
+     * @return
+     */
+    @Override
+    public ServerResponse<String> checkPublicFacility(String id, int status) {
 
+        PublicFacilityExample example = new PublicFacilityExample();
+        example.createCriteria().andIdEqualTo(id);
+        List<PublicFacility> list = publicFacilityMapper.selectByExample(example);
+        if (list.size() == 0) {
+            return ServerResponse.createByErrorMessage("无此团队");
+        } else if (status == Constant.Status.PASS || status == Constant.Status.NOT_PASS) {
+            PublicFacility applicationForm = list.get(0);
+            applicationForm.setStatus(status);
+            int i = publicFacilityMapper.updateByPrimaryKeySelective(applicationForm);
+            if (i == 0) {
+                return ServerResponse.createByErrorMessage("更改审核信息失败");
+            }
+            return ServerResponse.createBySuccessMessage("更改审核状态成功");
+        }
+        return ServerResponse.createByErrorMessage("修改状态参数错误");
+    }
 }
