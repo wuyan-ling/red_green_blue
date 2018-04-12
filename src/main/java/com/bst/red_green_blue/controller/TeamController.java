@@ -2,6 +2,7 @@ package com.bst.red_green_blue.controller;
 
 import com.bst.red_green_blue.common.Constant;
 import com.bst.red_green_blue.common.ServerResponse;
+import com.bst.red_green_blue.dao.UserMapper;
 import com.bst.red_green_blue.pojo.TeamMember;
 import com.bst.red_green_blue.pojo.TeamMessage;
 import com.bst.red_green_blue.pojo.User;
@@ -23,6 +24,9 @@ public class TeamController {
 
     @Autowired
     private ITeamService iTeamService;
+
+    @Autowired
+    private UserMapper userMapper;
 
     @ApiOperation("初始化团队信息")
     @PostMapping("/updateOrInsertTeam")
@@ -51,7 +55,15 @@ public class TeamController {
         if (user.getMark() == Constant.Role.ROLE_ADMIN) {
             return ServerResponse.createByErrorMessage("管理员不应该新建团队成员，请让团队负责人新建");
         }
-        return iTeamService.addTeamMember(user.getTeamId(), name, phoneNumber);
+        String teamId = user.getTeamId();
+        if (teamId==null) {
+            return ServerResponse.createByErrorMessage("请先初始化团队信息");
+        }
+        User user1 = userMapper.selectByPrimaryKey(phoneNumber);
+        if (user1 != null) {
+            return ServerResponse.createByErrorMessage("该手机已被使用");
+        }
+        return iTeamService.addTeamMember(teamId, name, phoneNumber);
 
     }
 

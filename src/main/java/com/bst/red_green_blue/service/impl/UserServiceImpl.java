@@ -7,6 +7,7 @@ import com.bst.red_green_blue.dao.UserMapper;
 import com.bst.red_green_blue.pojo.*;
 import com.bst.red_green_blue.pojo.vo.TeamMessageAndMember;
 import com.bst.red_green_blue.service.IUserService;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -41,7 +42,7 @@ public class UserServiceImpl implements IUserService {
             if (user.getStatus() == 1) {
                 return ServerResponse.createByErrorMessage("你的账户存在问题请和管理员联系");
             }
-            return ServerResponse.createBySuccess("登陆成功",user);
+            return ServerResponse.createBySuccess("登陆成功", user);
         }
     }
 
@@ -89,21 +90,20 @@ public class UserServiceImpl implements IUserService {
     }
 
 
-    public ServerResponse<List>getTeamList(){
+    public ServerResponse<List> getTeamList() {
         //当id不为空的时候查询出所有的teamMessageAndMembers对象
         TeamMessageExample teamMessageExample = new TeamMessageExample();
         teamMessageExample.createCriteria().andIdNotEqualTo(" ");
         List<TeamMessage> teamMessages = teamMessageMapper.selectByExample(teamMessageExample);
-
         //返回给前端的TeamMessageAndMember集合
         List<TeamMessageAndMember> teamMessageAndMembers = new ArrayList<>();
         //遍历teamMessages集合
-        for (TeamMessage teamMessage:teamMessages) {
+        for (int i = 0; i < teamMessages.size(); i++) {
             //获取team_id
-            String id = teamMessage.getId();
+            TeamMessage teamMessage = teamMessages.get(i);
             TeamMemberExample teamMemberExample = new TeamMemberExample();
             //根据id查询teamMembers列表
-            teamMemberExample.createCriteria().andTeamIdEqualTo(id);
+            teamMemberExample.createCriteria().andTeamIdEqualTo(teamMessage.getId());
             List<TeamMember> teamMembers = teamMemberMapper.selectByExample(teamMemberExample);
             //创建了teamMessageAndMember对象
             TeamMessageAndMember teamMessageAndMember = new TeamMessageAndMember();
@@ -118,8 +118,8 @@ public class UserServiceImpl implements IUserService {
             }
         }
         return ServerResponse.createBySuccess(teamMessageAndMembers);
-    }
 
+    }
 
 
 }
