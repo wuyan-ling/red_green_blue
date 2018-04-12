@@ -28,6 +28,9 @@ public class TeamController {
     @Autowired
     private UserMapper userMapper;
 
+
+
+
     @ApiOperation("初始化团队信息")
     @PostMapping("/updateOrInsertTeam")
     public ServerResponse<TeamMessage> updateOrInsertTeam(HttpSession session, TeamMessage teamMessage) {
@@ -78,6 +81,7 @@ public class TeamController {
         if (user.getMark() == Constant.Role.ROLE_ADMIN) {
             return ServerResponse.createByErrorMessage("管理员不应该删除团队成员，请让团队负责人删除");
         }
+
         return iTeamService.deleteTeamMember(session, phoneNumber);
     }
     @ApiOperation("获取团队信息")

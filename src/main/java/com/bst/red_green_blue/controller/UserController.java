@@ -106,7 +106,23 @@ public class UserController {
         return iUserService.getTeamList();
 
     }
+    @ApiOperation("修改密码")
+    @PostMapping("/updatePassword")
+    public ServerResponse<String>updatePassword(HttpSession session,String password){
+        User attribute =(User) session.getAttribute(Constant.CURRENT_USER);
+        if (attribute == null) {
+            return ServerResponse.createByErrorMessage("请登陆");
+        }
+        String s = MD5Util.MD5EncodeUtf8(password);
+        return iUserService.updatePassword(attribute,s);
+    }
+    @ApiOperation("退出登陆")
+    @PostMapping("/logout")
+    public ServerResponse<String>logout(HttpSession session){
+        session.setAttribute(Constant.CURRENT_USER, null);
+        return ServerResponse.createBySuccess("你已成功退出");
 
+    }
 
 }
 
