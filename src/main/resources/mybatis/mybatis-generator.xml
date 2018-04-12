@@ -76,17 +76,17 @@
                <!--enableUpdateByExample="true" enableDeleteByExample="true" enableSelectByExample="true"-->
                <!--selectByExampleQueryId="true"/>-->
 
-        <table tableName="public_facility" domainObjectName="PublicFacility" enableCountByExample="true"
-               enableUpdateByExample="true" enableDeleteByExample="true" enableSelectByExample="true"
-               selectByExampleQueryId="true"/>
+        <!--<table tableName="public_facility" domainObjectName="PublicFacility" enableCountByExample="true"-->
+               <!--enableUpdateByExample="true" enableDeleteByExample="true" enableSelectByExample="true"-->
+               <!--selectByExampleQueryId="true"/>-->
 
         <!--<table tableName="user" domainObjectName="User" enableCountByExample="true"-->
                <!--enableUpdateByExample="true" enableDeleteByExample="true" enableSelectByExample="true"-->
                <!--selectByExampleQueryId="true"/>-->
 
-        <!--<table tableName="wechat_news" domainObjectName="WechatNews" enableCountByExample="true"-->
-               <!--enableUpdateByExample="true" enableDeleteByExample="true" enableSelectByExample="true"-->
-               <!--selectByExampleQueryId="true"/>-->
+        <table tableName="wechat_news" domainObjectName="WechatNews" enableCountByExample="true"
+               enableUpdateByExample="true" enableDeleteByExample="true" enableSelectByExample="true"
+               selectByExampleQueryId="true"/>
         <!--<table tableName="team_message" domainObjectName="TeamMessage" enableCountByExample="true"-->
                <!--enableUpdateByExample="true" enableDeleteByExample="true" enableSelectByExample="true"-->
                <!--selectByExampleQueryId="true"/>-->

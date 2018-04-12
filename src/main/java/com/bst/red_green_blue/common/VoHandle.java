@@ -2,8 +2,10 @@ package com.bst.red_green_blue.common;
 
 import com.bst.red_green_blue.pojo.ApplicationForm;
 import com.bst.red_green_blue.pojo.PublicFacility;
+import com.bst.red_green_blue.pojo.WechatNews;
 import com.bst.red_green_blue.pojo.vo.ApplicationFormVo;
 import com.bst.red_green_blue.pojo.vo.PublicFacilityVo;
+import com.bst.red_green_blue.pojo.vo.WechatNewsVo;
 
 /**
  * @author XHJ
@@ -59,5 +61,17 @@ public class VoHandle {
         publicFacility.setRequestUseTime(vo.getRequestUseTime());
 
         return publicFacility;
+    }
+
+    static public WechatNews useVoCreateToWechatNews(WechatNewsVo vo, String id, String teamId,Integer time) {
+        WechatNews news = new WechatNews();
+        news.setId(id);
+        news.setDescription(vo.getDescription());
+        news.setPicture(vo.getPicture());
+        news.setTeamId(teamId);
+        news.setTime(time);
+        news.setTitle(vo.getTitle());
+
+        return news;
     }
 }

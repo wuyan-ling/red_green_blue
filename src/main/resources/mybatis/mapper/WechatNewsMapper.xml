@@ -8,6 +8,7 @@
       <arg column="picture" jdbcType="VARCHAR" javaType="java.lang.String" />
       <arg column="description" jdbcType="VARCHAR" javaType="java.lang.String" />
       <arg column="time" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="team_id" jdbcType="VARCHAR" javaType="java.lang.String" />
     </constructor>
   </resultMap>
   <sql id="Example_Where_Clause" >
@@ -69,7 +70,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    id, title, picture, description, time
+    id, title, picture, description, time, team_id
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.bst.red_green_blue.pojo.WechatNewsExample" >
     select
@@ -104,9 +105,11 @@
   </delete>
   <insert id="insert" parameterType="com.bst.red_green_blue.pojo.WechatNews" >
     insert into wechat_news (id, title, picture, 
-      description, time)
+      description, time, team_id
+      )
     values (#{id,jdbcType=VARCHAR}, #{title,jdbcType=VARCHAR}, #{picture,jdbcType=VARCHAR}, 
-      #{description,jdbcType=VARCHAR}, #{time,jdbcType=INTEGER})
+      #{description,jdbcType=VARCHAR}, #{time,jdbcType=INTEGER}, #{teamId,jdbcType=VARCHAR}
+      )
   </insert>
   <insert id="insertSelective" parameterType="com.bst.red_green_blue.pojo.WechatNews" >
     insert into wechat_news
@@ -126,6 +129,9 @@
       <if test="time != null" >
         time,
       </if>
+      <if test="teamId != null" >
+        team_id,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="id != null" >
@@ -142,6 +148,9 @@
       </if>
       <if test="time != null" >
         #{time,jdbcType=INTEGER},
+      </if>
+      <if test="teamId != null" >
+        #{teamId,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -169,6 +178,9 @@
       <if test="record.time != null" >
         time = #{record.time,jdbcType=INTEGER},
       </if>
+      <if test="record.teamId != null" >
+        team_id = #{record.teamId,jdbcType=VARCHAR},
+      </if>
     </set>
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
@@ -180,7 +192,8 @@
       title = #{record.title,jdbcType=VARCHAR},
       picture = #{record.picture,jdbcType=VARCHAR},
       description = #{record.description,jdbcType=VARCHAR},
-      time = #{record.time,jdbcType=INTEGER}
+      time = #{record.time,jdbcType=INTEGER},
+      team_id = #{record.teamId,jdbcType=VARCHAR}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -200,6 +213,9 @@
       <if test="time != null" >
         time = #{time,jdbcType=INTEGER},
       </if>
+      <if test="teamId != null" >
+        team_id = #{teamId,jdbcType=VARCHAR},
+      </if>
     </set>
     where id = #{id,jdbcType=VARCHAR}
   </update>
@@ -208,7 +224,8 @@
     set title = #{title,jdbcType=VARCHAR},
       picture = #{picture,jdbcType=VARCHAR},
       description = #{description,jdbcType=VARCHAR},
-      time = #{time,jdbcType=INTEGER}
+      time = #{time,jdbcType=INTEGER},
+      team_id = #{teamId,jdbcType=VARCHAR}
     where id = #{id,jdbcType=VARCHAR}
   </update>
 </mapper>
