@@ -7,7 +7,7 @@
       <arg column="title" jdbcType="VARCHAR" javaType="java.lang.String" />
       <arg column="picture" jdbcType="VARCHAR" javaType="java.lang.String" />
       <arg column="description" jdbcType="VARCHAR" javaType="java.lang.String" />
-      <arg column="time" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="time" jdbcType="BIGINT" javaType="java.lang.Long" />
       <arg column="team_id" jdbcType="VARCHAR" javaType="java.lang.String" />
     </constructor>
   </resultMap>
@@ -108,7 +108,7 @@
       description, time, team_id
       )
     values (#{id,jdbcType=VARCHAR}, #{title,jdbcType=VARCHAR}, #{picture,jdbcType=VARCHAR}, 
-      #{description,jdbcType=VARCHAR}, #{time,jdbcType=INTEGER}, #{teamId,jdbcType=VARCHAR}
+      #{description,jdbcType=VARCHAR}, #{time,jdbcType=BIGINT}, #{teamId,jdbcType=VARCHAR}
       )
   </insert>
   <insert id="insertSelective" parameterType="com.bst.red_green_blue.pojo.WechatNews" >
@@ -147,7 +147,7 @@
         #{description,jdbcType=VARCHAR},
       </if>
       <if test="time != null" >
-        #{time,jdbcType=INTEGER},
+        #{time,jdbcType=BIGINT},
       </if>
       <if test="teamId != null" >
         #{teamId,jdbcType=VARCHAR},
@@ -176,7 +176,7 @@
         description = #{record.description,jdbcType=VARCHAR},
       </if>
       <if test="record.time != null" >
-        time = #{record.time,jdbcType=INTEGER},
+        time = #{record.time,jdbcType=BIGINT},
       </if>
       <if test="record.teamId != null" >
         team_id = #{record.teamId,jdbcType=VARCHAR},
@@ -192,7 +192,7 @@
       title = #{record.title,jdbcType=VARCHAR},
       picture = #{record.picture,jdbcType=VARCHAR},
       description = #{record.description,jdbcType=VARCHAR},
-      time = #{record.time,jdbcType=INTEGER},
+      time = #{record.time,jdbcType=BIGINT},
       team_id = #{record.teamId,jdbcType=VARCHAR}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
@@ -211,7 +211,7 @@
         description = #{description,jdbcType=VARCHAR},
       </if>
       <if test="time != null" >
-        time = #{time,jdbcType=INTEGER},
+        time = #{time,jdbcType=BIGINT},
       </if>
       <if test="teamId != null" >
         team_id = #{teamId,jdbcType=VARCHAR},
@@ -224,7 +224,7 @@
     set title = #{title,jdbcType=VARCHAR},
       picture = #{picture,jdbcType=VARCHAR},
       description = #{description,jdbcType=VARCHAR},
-      time = #{time,jdbcType=INTEGER},
+      time = #{time,jdbcType=BIGINT},
       team_id = #{teamId,jdbcType=VARCHAR}
     where id = #{id,jdbcType=VARCHAR}
   </update>

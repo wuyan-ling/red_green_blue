@@ -3,7 +3,6 @@ package com.bst.red_green_blue.controller;
 import com.bst.red_green_blue.common.Constant;
 import com.bst.red_green_blue.common.ServerResponse;
 import com.bst.red_green_blue.pojo.User;
-import com.bst.red_green_blue.pojo.WechatNews;
 import com.bst.red_green_blue.pojo.vo.WechatNewsVo;
 import com.bst.red_green_blue.service.IWechatNewsService;
 import io.swagger.annotations.ApiOperation;

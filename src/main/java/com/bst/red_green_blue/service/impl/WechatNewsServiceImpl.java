@@ -33,8 +33,7 @@ public class WechatNewsServiceImpl implements IWechatNewsService {
         String uuid = UUID.randomUUID().toString();
         long Millis = System.currentTimeMillis();
         System.out.println(Millis);
-        int timeMillis = (int) Millis;
-        WechatNews wechatNews = VoHandle.useVoCreateToWechatNews(vo, uuid, teamId, timeMillis);
+        WechatNews wechatNews = VoHandle.useVoCreateToWechatNews(vo, uuid, teamId, Millis);
         int insert = wechatNewsMapper.insert(wechatNews);
         if (insert == 0) {
             return ServerResponse.createByErrorMessage("发布失败");

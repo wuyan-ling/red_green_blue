@@ -63,7 +63,7 @@ public class VoHandle {
         return publicFacility;
     }
 
-    static public WechatNews useVoCreateToWechatNews(WechatNewsVo vo, String id, String teamId,Integer time) {
+    static public WechatNews useVoCreateToWechatNews(WechatNewsVo vo, String id, String teamId, Long time) {
         WechatNews news = new WechatNews();
         news.setId(id);
         news.setDescription(vo.getDescription());
