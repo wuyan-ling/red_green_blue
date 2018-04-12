@@ -7,6 +7,7 @@ import com.bst.red_green_blue.pojo.TeamMessage;
 import com.bst.red_green_blue.pojo.User;
 import com.bst.red_green_blue.pojo.vo.TeamMessageAndMember;
 import com.bst.red_green_blue.service.ITeamService;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -14,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpSession;
-import java.util.List;
+
 
 @RestController
 @RequestMapping("/team")
@@ -23,7 +24,7 @@ public class TeamController {
     @Autowired
     private ITeamService iTeamService;
 
-
+    @ApiOperation("初始化团队信息")
     @PostMapping("/updateOrInsertTeam")
     public ServerResponse<TeamMessage> updateOrInsertTeam(HttpSession session, TeamMessage teamMessage) {
         User user = (User) session.getAttribute(Constant.CURRENT_USER);
@@ -39,7 +40,7 @@ public class TeamController {
         return iTeamService.updateTeam(teamMessage);
     }
 
-
+    @ApiOperation("添加团队成员")
     @PostMapping("/addTeamMember")
     public ServerResponse<TeamMember> addTeamMember(HttpSession session, String name, String phoneNumber) {
 
@@ -54,7 +55,7 @@ public class TeamController {
 
     }
 
-
+    @ApiOperation("删除团队成员")
     @PostMapping("/deleteTeamMember")
     public ServerResponse<TeamMember> deleteTeamMember(HttpSession session, String phoneNumber) {
 
@@ -67,7 +68,7 @@ public class TeamController {
         }
         return iTeamService.deleteTeamMember(session, phoneNumber);
     }
-
+    @ApiOperation("获取团队信息")
     @GetMapping("/getTeamMessage")
     public ServerResponse<TeamMessageAndMember> getTeamMessage(HttpSession session) {
         User currentUser = (User) session.getAttribute(Constant.CURRENT_USER);
