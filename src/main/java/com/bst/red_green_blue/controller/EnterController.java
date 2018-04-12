@@ -22,7 +22,7 @@ import java.util.List;
 
 /**
  * @author XHJ
- * 入驻大杂烩
+ * 入驻
  * 2018/4/10 21:01
  */
 @RestController
@@ -78,37 +78,6 @@ public class EnterController {
         }
         return iEnterService.checkPendingApplicationFormList();
     }
-    @ApiOperation(value = "申请公共设施使用")
-    @GetMapping(value = "applicationPublicFacility")
-    public ServerResponse<String> applicationPublicFacility(HttpSession session, @Valid PublicFacilityVo vo,BindingResult bindingResult) {
-        User user = (User) session.getAttribute(Constant.CURRENT_USER);
-        if (user == null) {
-            return ServerResponse.createByErrorMessage("请先登录");
-        }
-        String teamId = user.getTeamId();
-        return iEnterService.applicationPublicFacility(vo,teamId);
-    }
-    @ApiOperation(value = "获取已审核的公共设施申请列表")
-    @GetMapping(value = "checkPublicFacility")
-    public ServerResponse<List<PublicFacility>> checkPublicFacility(HttpSession session) {
-        User user = (User) session.getAttribute(Constant.CURRENT_USER);
-        if (user == null) {
-            return ServerResponse.createByErrorMessage("请先登录");
-        } else if (user.getMark() == 1) {
-            return ServerResponse.createByErrorMessage("不是管理员，权限不足");
-        }
-        return iEnterService.checkPublicFacility();
-    }
-    @ApiOperation(value = "获取待审核的公共设施申请审核列表")
-    @GetMapping(value = "checkPendingPublicFacility")
-    public ServerResponse<List<PublicFacility>> checkPendingPublicFacility(HttpSession session) {
-        User user = (User) session.getAttribute(Constant.CURRENT_USER);
-        if (user == null) {
-            return ServerResponse.createByErrorMessage("请先登录");
-        } else if (user.getMark() == 1) {
-            return ServerResponse.createByErrorMessage("不是管理员，权限不足");
-        }
-        return iEnterService.checkPendingPublicFacility();
-    }
+
 
 }
