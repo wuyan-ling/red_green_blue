@@ -25,7 +25,7 @@ public class OperationController {
     private IOpreationService iOpreationService;
 
     @ApiOperation("提交或更新运营信息统计")
-    @PostMapping("提交或更新运营信息统计")
+    @PostMapping("operationDataStatistics")
     public ServerResponse<String> operationDataStatistics(OperationMessage operationMessage, HttpSession session) {
         User user = (User) session.getAttribute(Constant.CURRENT_USER);
         if (user == null) {
@@ -36,7 +36,7 @@ public class OperationController {
         return iOpreationService.operationDataStatistics(operationMessage);
     }
     @ApiOperation("查询团队运营信息")
-    @GetMapping("查询团队运营信息")
+    @GetMapping("checkOperationMessage")
     public ServerResponse<OperationMessage> checkOperationMessage(HttpSession session) {
         User user = (User) session.getAttribute(Constant.CURRENT_USER);
         if (user == null) {
