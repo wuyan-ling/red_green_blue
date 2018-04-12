@@ -102,9 +102,15 @@ public class UserController {
 
     @ApiOperation("获取团队列表")
     @GetMapping("/getTeamList")
-    public ServerResponse<List> getTeamList() {
+    public ServerResponse<List> getTeamList(HttpSession session) {
+        User user = (User) session.getAttribute(Constant.CURRENT_USER);
+        if (user==null) {
+            return ServerResponse.createByErrorMessage("请登录");
+        }
+        if (user.getMark() == Constant.Role.ROLE_ADMIN) {
+            return ServerResponse.createByErrorMessage("你没有查看的权限");
+        }
         return iUserService.getTeamList();
-
     }
     @ApiOperation("修改密码")
     @PostMapping("/updatePassword")

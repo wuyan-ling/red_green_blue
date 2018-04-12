@@ -89,8 +89,8 @@ public class TeamServiceImpl implements ITeamService {
         TeamMessageExample teamMessageExample= new TeamMessageExample();
         teamMessageExample.createCriteria().andIdEqualTo(teamId);
         List<TeamMessage> teamMessages = teamMessageMapper.selectByExample(teamMessageExample);
-        if (teamMessages==null) {
-            return ServerResponse.createByErrorMessage("管理员通过用户管理界面查询");
+        if (teamMessages.size()==0) {
+            return ServerResponse.createByErrorMessage("你还没有初始化团队");
         }
         //创建TeamMessageAndMember对象
         TeamMessageAndMember teamMessageAndMember = new TeamMessageAndMember();
