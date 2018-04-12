@@ -7,8 +7,6 @@ import com.bst.red_green_blue.service.IOpreationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.servlet.http.HttpSession;
-
 /**
  * @author XH   J
  * 2018/4/12 16:40
@@ -55,7 +53,7 @@ public class OperationServiceImpl implements IOpreationService {
     public ServerResponse<OperationMessage> checkOperationMessage(String teamId) {
         OperationMessage operationMessage = operationMessageMapper.selectByPrimaryKey(teamId);
         if (operationMessage == null) {
-            return ServerResponse.createByErrorMessage("空");
+            return ServerResponse.createBySuccessMessage("团队运营信息为空");
         }
         return ServerResponse.createBySuccess(operationMessage);
     }

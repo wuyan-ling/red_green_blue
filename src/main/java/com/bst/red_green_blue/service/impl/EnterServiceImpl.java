@@ -40,21 +40,20 @@ public class EnterServiceImpl implements IEnterService {
     @Override
     public ServerResponse<String> enterApplyFor(ApplicationFormVo applicationFormVo) {
         String id = String.valueOf(UUID.randomUUID());
+        //将Vo对象转换为完整的对象
         ApplicationForm applicationForm = VoHandle.useApplicationFormCreateToVo(applicationFormVo, id);
 //        ApplicationForm applicationForm = new ApplicationForm(applicationFormVo, id);
         int status = 0;
-
         try {
             status = applicationFormMapper.insertSelective(applicationForm);
         } catch (Exception e) {
+//            尝试使用统一异常处理，使用不够成熟，暂时不使用
 //            throw new CustomException(ResponseCode.SQL_EXCEPTION);
             return ServerResponse.createByErrorMessage(ResponseCode.SQL_EXCEPTION.getMessage());
         }
-
         if (status == 0) {
             return ServerResponse.createByErrorMessage("提交失败");
         }
-
         return ServerResponse.createBySuccessMessage("申请成功");
 
     }
@@ -99,6 +98,7 @@ public class EnterServiceImpl implements IEnterService {
             return ServerResponse.createBySuccessMessage("空");
         }
         List<ApplicationFormVo> formVos = new ArrayList<>();
+        //将Vo对象转换为完整的对象
         for (ApplicationForm form : applicationForms) {
             formVos.add(VoHandle.useApplicationFormCreateToVo(form));
         }
@@ -106,7 +106,7 @@ public class EnterServiceImpl implements IEnterService {
     }
 
     /**
-     * 获取审核列表
+     * 获取已审核列表
      *
      * @return
      */
@@ -117,7 +117,7 @@ public class EnterServiceImpl implements IEnterService {
         example.or().andStatusEqualTo(Constant.Status.NOT_PASS);
         List<ApplicationForm> applicationForms = applicationFormMapper.selectByExample(example);
         if (applicationForms.size() == 0) {
-            return ServerResponse.createBySuccessMessage("空");
+            return ServerResponse.createBySuccessMessage("已审核列表为空");
         }
         return ServerResponse.createBySuccess(applicationForms);
     }
@@ -133,7 +133,7 @@ public class EnterServiceImpl implements IEnterService {
         example.createCriteria().andStatusEqualTo(Constant.Status.UNTREATED);
         List<ApplicationForm> applicationForms = applicationFormMapper.selectByExample(example);
         if (applicationForms.size() == 0) {
-            return ServerResponse.createBySuccessMessage("空");
+            return ServerResponse.createBySuccessMessage("待审核列表空");
         }
         return ServerResponse.createBySuccess(applicationForms);
     }
@@ -152,8 +152,8 @@ public class EnterServiceImpl implements IEnterService {
         List<ApplicationForm> list = applicationFormMapper.selectByExample(example);
         ApplicationForm applicationForm = list.get(0);
         if (list.size() == 0) {
-            return ServerResponse.createByErrorMessage("无此团队");
-        } else if (status == Constant.Status.PASS || status == Constant.Status.NOT_PASS) {
+            return ServerResponse.createByErrorMessage("团队信息错误，查无此团队");
+        } else if (status == Constant.Status.PASS || status == Constant.Status.NOT_PASS) {//判断将要用来改变审核状态的参数是否正确
             applicationForm.setStatus(status);
             int i = applicationFormMapper.updateByPrimaryKeySelective(applicationForm);
             if (i == 0) {

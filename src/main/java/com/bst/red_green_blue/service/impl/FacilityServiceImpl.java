@@ -21,12 +21,12 @@ import java.util.UUID;
  * 2018/4/12 14:08
  */
 @Service
-public class FacilityServiceImpl implements IFacilityService{
+public class FacilityServiceImpl implements IFacilityService {
     @Autowired
     private PublicFacilityMapper publicFacilityMapper;
+
     /**
-     * 、、
-     *
+     * 公共设施使用申请
      *
      * @param vo
      * @param teamId
@@ -35,6 +35,7 @@ public class FacilityServiceImpl implements IFacilityService{
     @Override
     public ServerResponse<String> applicationPublicFacility(PublicFacilityVo vo, String teamId) {
         String id = String.valueOf(UUID.randomUUID());
+        //将Vo对象转化为完整的对象
         PublicFacility publicFacility = VoHandle.useVoCreateToPublicFacility(vo, id, teamId);
         int status = publicFacilityMapper.insertSelective(publicFacility);
         if (status == 0) {
@@ -56,7 +57,7 @@ public class FacilityServiceImpl implements IFacilityService{
         example.or().andStatusEqualTo(Constant.Status.NOT_PASS);
         List<PublicFacility> publicFacilities = publicFacilityMapper.selectByExample(example);
         if (publicFacilities.size() == 0) {
-            return ServerResponse.createBySuccessMessage("空");
+            return ServerResponse.createBySuccessMessage("已审核的公共设施申请空");
         }
         return ServerResponse.createBySuccess(publicFacilities);
     }
@@ -72,10 +73,11 @@ public class FacilityServiceImpl implements IFacilityService{
         example.createCriteria().andStatusEqualTo(Constant.Status.UNTREATED);
         List<PublicFacility> publicFacilities = publicFacilityMapper.selectByExample(example);
         if (publicFacilities.size() == 0) {
-            return ServerResponse.createBySuccessMessage("空");
+            return ServerResponse.createBySuccessMessage("未审核的公共设施申请为空");
         }
         return ServerResponse.createBySuccess(publicFacilities);
     }
+
     /**
      * 管理员公共设施申请审核
      *
@@ -91,7 +93,7 @@ public class FacilityServiceImpl implements IFacilityService{
         List<PublicFacility> list = publicFacilityMapper.selectByExample(example);
         if (list.size() == 0) {
             return ServerResponse.createByErrorMessage("无此团队");
-        } else if (status == Constant.Status.PASS || status == Constant.Status.NOT_PASS) {
+        } else if (status == Constant.Status.PASS || status == Constant.Status.NOT_PASS) {//判断将要用来改变审核状态的参数是否正确
             PublicFacility applicationForm = list.get(0);
             applicationForm.setStatus(status);
 //            尝试使用example进行update
