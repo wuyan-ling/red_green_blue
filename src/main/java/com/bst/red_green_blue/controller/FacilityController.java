@@ -61,7 +61,7 @@ public class FacilityController  {
         return iFacilityService.checkPendingPublicFacility();
     }
 
-    @ApiOperation(value = "管理员公共设施申请审核\n")
+    @ApiOperation(value = "管理员公共设施申请审核")
     @PostMapping(value = "checkPublicFacility")
     public ServerResponse<String> checkPublicFacility(HttpSession session, String id , int status) {
         User user = (User) session.getAttribute(Constant.CURRENT_USER);
