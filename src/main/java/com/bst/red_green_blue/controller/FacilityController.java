@@ -72,6 +72,5 @@ public class FacilityController  {
             return ServerResponse.createByErrorMessage("团队信息错误");
         }
         return iFacilityService.checkPublicFacility(id,status);
-//        return null;
     }
 }
