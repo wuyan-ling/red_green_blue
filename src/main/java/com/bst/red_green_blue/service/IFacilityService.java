@@ -25,11 +25,19 @@ public interface IFacilityService {
      *
      * @return
      */
-    ServerResponse<List<PublicFacility>> checkPublicFacility();
+    ServerResponse<List<PublicFacility>> checkPublicFacilityList();
     /**
      * 获取未审核的公共设施申请
      *
      * @return
      */
     ServerResponse<List<PublicFacility>> checkPendingPublicFacility();
+    /**
+     * 管理员公共设施申请审核
+     *
+     * @param id
+     * @param status
+     * @return
+     */
+    ServerResponse<String> checkPublicFacility(String id, int status);
 }
