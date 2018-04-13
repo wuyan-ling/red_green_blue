@@ -3,18 +3,13 @@ package com.bst.red_green_blue.controller;
 import com.bst.red_green_blue.common.Constant;
 import com.bst.red_green_blue.common.ServerResponse;
 import com.bst.red_green_blue.pojo.ApplicationForm;
-import com.bst.red_green_blue.pojo.PublicFacility;
 import com.bst.red_green_blue.pojo.User;
 import com.bst.red_green_blue.pojo.vo.ApplicationFormVo;
-import com.bst.red_green_blue.pojo.vo.PublicFacilityVo;
 import com.bst.red_green_blue.service.IEnterService;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
@@ -25,6 +20,7 @@ import java.util.List;
  * 入驻
  * 2018/4/10 21:01
  */
+@CrossOrigin
 @RestController
 @RequestMapping(value = "/enter/")
 public class EnterController {

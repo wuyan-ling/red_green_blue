@@ -9,10 +9,7 @@ import com.bst.red_green_blue.service.IFacilityService;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
@@ -22,6 +19,7 @@ import java.util.List;
  * @author XHJ
  * 2018/4/12 14:06
  */
+@CrossOrigin
 @RestController
 @RequestMapping("/Facility")
 public class FacilityController  {

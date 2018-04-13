@@ -8,15 +8,12 @@ import com.bst.red_green_blue.service.IUserService;
 import com.bst.red_green_blue.util.MD5Util;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
 import java.util.List;
 
-
+@CrossOrigin
 @RestController
 @RequestMapping("/user")
 public class UserController {
@@ -32,11 +29,11 @@ public class UserController {
      * @param password    密码
      * @return user对象
      */
-
     @ApiOperation("登陆")
     @PostMapping(value = "/login")
     public ServerResponse<User> login(String phoneNumber, String password, HttpSession session) {
-
+        System.out.println("++++++++++++++++++++++++++++++++");
+        System.out.println(password+"+++++++++++++"+phoneNumber);
         if (phoneNumber == null || password == null) {
             return ServerResponse.createByErrorMessage("参数不能为空");
         } else {

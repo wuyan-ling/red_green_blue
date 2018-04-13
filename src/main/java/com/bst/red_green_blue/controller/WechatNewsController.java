@@ -7,6 +7,7 @@ import com.bst.red_green_blue.pojo.vo.WechatNewsVo;
 import com.bst.red_green_blue.service.IWechatNewsService;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -17,6 +18,7 @@ import javax.servlet.http.HttpSession;
  * @author XHJ
  * 2018/4/12 15:21
  */
+@CrossOrigin
 @RestController
 @RequestMapping("/WechatNews/")
 public class WechatNewsController {
