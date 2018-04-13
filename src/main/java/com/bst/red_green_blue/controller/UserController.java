@@ -71,6 +71,9 @@ public class UserController {
     @PostMapping(value = "/deleteUser")
     public ServerResponse<String> deleteUser(String phoneNumber, HttpSession session) {
         User currentUser = (User) session.getAttribute(Constant.CURRENT_USER);
+        if (currentUser == null) {
+           return ServerResponse.createByErrorMessage("请登录");
+        }
         if (currentUser.getMark() == Constant.Role.ROLE_CUSTOMER) {
             return ServerResponse.createByErrorMessage("不是管理员没有权限");
         }
@@ -107,7 +110,7 @@ public class UserController {
         if (user==null) {
             return ServerResponse.createByErrorMessage("请登录");
         }
-        if (user.getMark() == Constant.Role.ROLE_ADMIN) {
+        if (user.getMark() != Constant.Role.ROLE_ADMIN) {
             return ServerResponse.createByErrorMessage("你没有查看的权限");
         }
         return iUserService.getTeamList();
