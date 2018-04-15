@@ -3,6 +3,7 @@ package com.bst.red_green_blue.common;
 import com.bst.red_green_blue.pojo.ApplicationForm;
 import com.bst.red_green_blue.pojo.PublicFacility;
 import com.bst.red_green_blue.pojo.WechatNews;
+import com.bst.red_green_blue.pojo.vo.ApplicationFormStatusVo;
 import com.bst.red_green_blue.pojo.vo.ApplicationFormVo;
 import com.bst.red_green_blue.pojo.vo.PublicFacilityVo;
 import com.bst.red_green_blue.pojo.vo.WechatNewsVo;
@@ -73,5 +74,18 @@ public class VoHandle {
         news.setTitle(vo.getTitle());
 
         return news;
+    }
+
+    static public ApplicationFormStatusVo useApplicationFormCreateToStatusVo(ApplicationForm applicationForm) {
+        ApplicationFormStatusVo vo = new ApplicationFormStatusVo();
+        vo.setResponsibilityName(applicationForm.getResponsibilityName());
+        vo.setProjectName(applicationForm.getProjectName());
+        vo.setCollege(applicationForm.getCollege());
+        vo.setStatus(applicationForm.getStatus());
+        vo.setErrorMessage(applicationForm.getErrorMessage()) ;
+        vo.setResponsibilityPhoneNumber(applicationForm.getResponsibilityPhoneNumber()) ;
+        vo.setProjectInformation(applicationForm.getProjectInformation()) ;
+
+        return vo;
     }
 }

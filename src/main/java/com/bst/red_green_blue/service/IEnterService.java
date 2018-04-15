@@ -3,6 +3,7 @@ package com.bst.red_green_blue.service;
 import com.bst.red_green_blue.common.ServerResponse;
 import com.bst.red_green_blue.pojo.ApplicationForm;
 import com.bst.red_green_blue.pojo.PublicFacility;
+import com.bst.red_green_blue.pojo.vo.ApplicationFormStatusVo;
 import com.bst.red_green_blue.pojo.vo.ApplicationFormVo;
 import com.bst.red_green_blue.pojo.vo.PublicFacilityVo;
 
@@ -35,7 +36,7 @@ public interface IEnterService {
      *
      * @return
      */
-    ServerResponse<List<ApplicationFormVo>> applicationPublic();
+    ServerResponse<List<ApplicationFormStatusVo>> applicationPublic();
 
     /**
      * 获取审核列表

@@ -30,15 +30,6 @@ public class ApplicationForm {
         this.projectInformation = projectInformation;
     }
 
-    public ApplicationForm(ApplicationFormVo applicationFormVo,String id) {
-        this.id = id;
-        this.projectName = applicationFormVo.getProjectName();
-        this.responsibilityName = applicationFormVo.getResponsibilityName();
-        this.college = applicationFormVo.getCollege();
-        this.responsibilityPhoneNumber = applicationFormVo.getResponsibilityPhoneNumber();
-        this.projectInformation = applicationFormVo.getProjectInformation();
-    }
-
     public ApplicationForm() {
         super();
     }
@@ -106,5 +97,6 @@ public class ApplicationForm {
     public void setProjectInformation(String projectInformation) {
         this.projectInformation = projectInformation == null ? null : projectInformation.trim();
     }
+
 
 }

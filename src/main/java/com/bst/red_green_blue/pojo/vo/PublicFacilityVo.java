@@ -72,4 +72,15 @@ public class PublicFacilityVo {
         this.remark = remark;
         return this;
     }
+
+    @Override
+    public String toString() {
+        return "PublicFacilityVo{" +
+                "requestAddress=" + requestAddress +
+                ", personNumber='" + personNumber + '\'' +
+                ", requestUseTime='" + requestUseTime + '\'' +
+                ", contactWay='" + contactWay + '\'' +
+                ", remark='" + remark + '\'' +
+                '}';
+    }
 }

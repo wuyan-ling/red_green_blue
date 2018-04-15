@@ -26,4 +26,12 @@ public class TeamMessageAndMember {
     public void setTeamMembers(List<TeamMember> teamMembers) {
         this.teamMembers = teamMembers;
     }
+
+    @Override
+    public String toString() {
+        return "TeamMessageAndMember{" +
+                "teamMessage=" + teamMessage +
+                ", teamMembers=" + teamMembers +
+                '}';
+    }
 }

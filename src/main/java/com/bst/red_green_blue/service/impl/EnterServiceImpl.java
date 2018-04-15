@@ -5,13 +5,10 @@ import com.bst.red_green_blue.common.ResponseCode;
 import com.bst.red_green_blue.common.ServerResponse;
 import com.bst.red_green_blue.common.VoHandle;
 import com.bst.red_green_blue.dao.ApplicationFormMapper;
-import com.bst.red_green_blue.dao.PublicFacilityMapper;
 import com.bst.red_green_blue.pojo.ApplicationForm;
 import com.bst.red_green_blue.pojo.ApplicationFormExample;
-import com.bst.red_green_blue.pojo.PublicFacility;
-import com.bst.red_green_blue.pojo.PublicFacilityExample;
+import com.bst.red_green_blue.pojo.vo.ApplicationFormStatusVo;
 import com.bst.red_green_blue.pojo.vo.ApplicationFormVo;
-import com.bst.red_green_blue.pojo.vo.PublicFacilityVo;
 import com.bst.red_green_blue.service.IEnterService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -28,8 +25,6 @@ import java.util.UUID;
 public class EnterServiceImpl implements IEnterService {
     @Autowired
     private ApplicationFormMapper applicationFormMapper;
-    @Autowired
-    private PublicFacilityMapper publicFacilityMapper;
 
     /**
      * 入驻申请
@@ -85,22 +80,22 @@ public class EnterServiceImpl implements IEnterService {
 
     /**
      * 申请公示
-     * (有瑕疵)
+     *
      *
      * @return
      */
     @Override
-    public ServerResponse<List<ApplicationFormVo>> applicationPublic() {
+    public ServerResponse<List<ApplicationFormStatusVo>> applicationPublic() {
         ApplicationFormExample example = new ApplicationFormExample();
-        example.createCriteria().andStatusEqualTo(Constant.Status.PASS);
+        example.createCriteria();
         List<ApplicationForm> applicationForms = applicationFormMapper.selectByExample(example);
         if (applicationForms.size() == 0) {
             return ServerResponse.createBySuccessMessage("空");
         }
-        List<ApplicationFormVo> formVos = new ArrayList<>();
+        List<ApplicationFormStatusVo> formVos = new ArrayList<>();
         //将Vo对象转换为完整的对象
         for (ApplicationForm form : applicationForms) {
-            formVos.add(VoHandle.useApplicationFormCreateToVo(form));
+            formVos.add(VoHandle.useApplicationFormCreateToStatusVo(form));
         }
         return ServerResponse.createBySuccess(formVos);
     }

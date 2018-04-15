@@ -46,4 +46,13 @@ public class WechatNewsVo {
         this.description = description;
         return this;
     }
+
+    @Override
+    public String toString() {
+        return "WechatNewsVo{" +
+                "title='" + title + '\'' +
+                ", picture='" + picture + '\'' +
+                ", description='" + description + '\'' +
+                '}';
+    }
 }

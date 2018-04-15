@@ -4,6 +4,7 @@ import com.bst.red_green_blue.common.Constant;
 import com.bst.red_green_blue.common.ServerResponse;
 import com.bst.red_green_blue.pojo.ApplicationForm;
 import com.bst.red_green_blue.pojo.User;
+import com.bst.red_green_blue.pojo.vo.ApplicationFormStatusVo;
 import com.bst.red_green_blue.pojo.vo.ApplicationFormVo;
 import com.bst.red_green_blue.service.IEnterService;
 import io.swagger.annotations.ApiOperation;
@@ -30,7 +31,7 @@ public class EnterController {
     @ApiOperation(value = "入驻申请")
     @PostMapping(value = "enterApplyFor")
     public ServerResponse<String> enterApplyFor(@Valid ApplicationFormVo applicationFormVo,
-                                                BindingResult bindingResult) throws Exception {
+                                                BindingResult bindingResult)  {
         return iEnterService.enterApplyFor(applicationFormVo);
     }
 
@@ -46,7 +47,7 @@ public class EnterController {
 
     @ApiOperation(value = "申请公示")
     @GetMapping(value = "applicationPublic")
-    public ServerResponse<List<ApplicationFormVo>> applicationPublic() {
+    public ServerResponse<List<ApplicationFormStatusVo>> applicationPublic() {
         return iEnterService.applicationPublic();
 
     }
