@@ -21,7 +21,7 @@ public class VoHandle {
      */
     static public ApplicationFormVo useApplicationFormCreateToVo(ApplicationForm form) {
         ApplicationFormVo applicationForm = new ApplicationFormVo(form.getProjectName(), form.getResponsibilityName(), form.getCollege(),
-                form.getResponsibilityPhoneNumber(), form.getProjectInformation());
+                form.getResponsibilityPhoneNumber(),form.getStatus(),form.getProjectInformation());
         return applicationForm;
     }
 

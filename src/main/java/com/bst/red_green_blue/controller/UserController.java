@@ -4,12 +4,14 @@ package com.bst.red_green_blue.controller;
 import com.bst.red_green_blue.common.Constant;
 import com.bst.red_green_blue.common.ServerResponse;
 import com.bst.red_green_blue.pojo.User;
+import com.bst.red_green_blue.pojo.vo.UserVo;
 import com.bst.red_green_blue.service.IUserService;
 import com.bst.red_green_blue.util.MD5Util;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.util.List;
 
@@ -29,17 +31,19 @@ public class UserController {
      * @param password    密码
      * @return user对象
      */
+
     @ApiOperation("登陆")
     @PostMapping(value = "/login")
-    public ServerResponse<User> login(String phoneNumber, String password, HttpSession session) {
+    public ServerResponse<UserVo> login(String phoneNumber, String password, HttpSession session, HttpServletResponse response) {
         System.out.println("++++++++++++++++++++++++++++++++");
-        System.out.println(password+"+++++++++++++"+phoneNumber);
+        System.out.println(password + "+++++++++++++" + phoneNumber);
         if (phoneNumber == null || password == null) {
             return ServerResponse.createByErrorMessage("参数不能为空");
         } else {
             String md5EncodeUtf8Password = MD5Util.MD5EncodeUtf8(password);
-            ServerResponse<User> loginStatus = iUserService.login(phoneNumber, md5EncodeUtf8Password);
-            session.setAttribute(Constant.CURRENT_USER, loginStatus.getData());
+            ServerResponse<UserVo> loginStatus = iUserService.login(phoneNumber, md5EncodeUtf8Password);
+//            response.addHeader(Constant.Consts.AUTH_KEY, JwtUtil.getTokenHeader(token));
+
             return loginStatus;
         }
     }
@@ -69,7 +73,7 @@ public class UserController {
     public ServerResponse<String> deleteUser(String phoneNumber, HttpSession session) {
         User currentUser = (User) session.getAttribute(Constant.CURRENT_USER);
         if (currentUser == null) {
-           return ServerResponse.createByErrorMessage("请登录");
+            return ServerResponse.createByErrorMessage("请登录");
         }
         if (currentUser.getMark() == Constant.Role.ROLE_CUSTOMER) {
             return ServerResponse.createByErrorMessage("不是管理员没有权限");
@@ -104,7 +108,7 @@ public class UserController {
     @GetMapping("/getTeamList")
     public ServerResponse<List> getTeamList(HttpSession session) {
         User user = (User) session.getAttribute(Constant.CURRENT_USER);
-        if (user==null) {
+        if (user == null) {
             return ServerResponse.createByErrorMessage("请登录");
         }
         if (user.getMark() != Constant.Role.ROLE_ADMIN) {
@@ -112,19 +116,21 @@ public class UserController {
         }
         return iUserService.getTeamList();
     }
+
     @ApiOperation("修改密码")
     @PostMapping("/updatePassword")
-    public ServerResponse<String>updatePassword(HttpSession session,String password){
-        User attribute =(User) session.getAttribute(Constant.CURRENT_USER);
+    public ServerResponse<String> updatePassword(HttpSession session, String password) {
+        User attribute = (User) session.getAttribute(Constant.CURRENT_USER);
         if (attribute == null) {
             return ServerResponse.createByErrorMessage("请登陆");
         }
         String s = MD5Util.MD5EncodeUtf8(password);
-        return iUserService.updatePassword(attribute,s);
+        return iUserService.updatePassword(attribute, s);
     }
+
     @ApiOperation("退出登陆")
     @PostMapping("/logout")
-    public ServerResponse<String>logout(HttpSession session){
+    public ServerResponse<String> logout(HttpSession session) {
         session.setAttribute(Constant.CURRENT_USER, null);
         return ServerResponse.createBySuccess("你已成功退出");
 

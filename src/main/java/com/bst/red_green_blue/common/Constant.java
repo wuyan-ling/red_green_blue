@@ -24,4 +24,15 @@ public class Constant {
         int NOT_PASS = 2;
     }
 
+    public interface Consts {
+        /**鉴权的key*/
+        public static final String AUTH_KEY = "authorization";
+        /**JWT 秘钥*/
+        public static final String SECRET = "XX#$%()(#*!()!KL<><MQLMNQNQJQK sdfkjsdrow32234545fdf>?N<:{LWPW";
+        /**jwt失效时间 4个小时*/
+        public static final Long JWT_EXPIRE = 4 * 60 * 60 * 1000L;
+        /**验证码code*/
+        public static final String IMAGE_CODE = "imagecode";
+    }
+
 }

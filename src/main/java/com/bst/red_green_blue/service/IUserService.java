@@ -2,6 +2,7 @@ package com.bst.red_green_blue.service;
 
 import com.bst.red_green_blue.common.ServerResponse;
 import com.bst.red_green_blue.pojo.User;
+import com.bst.red_green_blue.pojo.vo.UserVo;
 
 import javax.servlet.http.HttpSession;
 import java.util.List;
@@ -15,7 +16,7 @@ public interface IUserService {
      * @param password
      * @return
      */
-    ServerResponse<User> login(String phoneNumber, String password);
+    ServerResponse<UserVo> login(String phoneNumber, String password);
 
 
     /**

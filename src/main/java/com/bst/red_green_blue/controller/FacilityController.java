@@ -2,17 +2,17 @@ package com.bst.red_green_blue.controller;
 
 import com.bst.red_green_blue.common.Constant;
 import com.bst.red_green_blue.common.ServerResponse;
+import com.bst.red_green_blue.dao.UserMapper;
 import com.bst.red_green_blue.pojo.PublicFacility;
 import com.bst.red_green_blue.pojo.User;
 import com.bst.red_green_blue.pojo.vo.PublicFacilityVo;
 import com.bst.red_green_blue.service.IFacilityService;
+import io.jsonwebtoken.Jwts;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
-import javax.validation.Valid;
 import java.util.List;
 
 /**
@@ -25,13 +25,21 @@ import java.util.List;
 public class FacilityController  {
     @Autowired
     private IFacilityService iFacilityService;
-
+    @Autowired
+    private UserMapper userMapper;
     @ApiOperation(value = "申请公共设施使用")
     @PostMapping(value = "applicationPublicFacility")
-    public ServerResponse<String> applicationPublicFacility(HttpSession session, @Valid PublicFacilityVo vo, BindingResult bindingResult) {
-        User user = (User) session.getAttribute(Constant.CURRENT_USER);
-        if (user == null) {
+    public ServerResponse<String> applicationPublicFacility(String token, PublicFacilityVo vo) {
+
+        if (token==null) {
             return ServerResponse.createByErrorMessage("请先登录");
+        }
+//        String replace = token.replace(JwtUtil.getAuthorizationHeaderPrefix(), "");
+        String phoneNumber = Jwts.parser().setSigningKey(Constant.Consts.SECRET).parseClaimsJws(token).getBody().getSubject();
+        User user = userMapper.selectByPrimaryKey(phoneNumber);
+
+        if (user == null) {
+            return ServerResponse.createByErrorMessage("请重新登录");
         }
         String teamId = user.getTeamId();
         return iFacilityService.applicationPublicFacility(vo,teamId);

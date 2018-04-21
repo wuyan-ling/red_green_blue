@@ -1,20 +1,22 @@
 package com.bst.red_green_blue.service.impl;
 
+import com.bst.red_green_blue.common.Constant;
 import com.bst.red_green_blue.common.ServerResponse;
 import com.bst.red_green_blue.dao.TeamMemberMapper;
 import com.bst.red_green_blue.dao.TeamMessageMapper;
 import com.bst.red_green_blue.dao.UserMapper;
 import com.bst.red_green_blue.pojo.*;
 import com.bst.red_green_blue.pojo.vo.TeamMessageAndMember;
+import com.bst.red_green_blue.pojo.vo.UserVo;
 import com.bst.red_green_blue.service.IUserService;
-import com.fasterxml.jackson.annotation.JsonTypeInfo;
-import io.swagger.annotations.Example;
+import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.SignatureAlgorithm;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
-import java.util.Iterator;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -32,8 +34,7 @@ public class UserServiceImpl implements IUserService {
 
 
     @Override
-    public ServerResponse<User> login(String phoneNumber, String password) {
-
+    public ServerResponse<UserVo> login(String phoneNumber, String password) {
         UserExample userExample = new UserExample();
         userExample.createCriteria().andPhoneNumberEqualTo(phoneNumber).andPasswordEqualTo(password);
         List<User> users = userMapper.selectByExample(userExample);
@@ -44,7 +45,15 @@ public class UserServiceImpl implements IUserService {
             if (user.getStatus() == 1) {
                 return ServerResponse.createByErrorMessage("你的账户存在问题请和管理员联系");
             }
-            return ServerResponse.createBySuccess("登陆成功", user);
+            String token = Jwts.builder()
+                    .setSubject(phoneNumber)
+                    .setExpiration(new Date(System.currentTimeMillis() + Constant.Consts.JWT_EXPIRE)) //失效时间
+                    .signWith(SignatureAlgorithm.HS512, Constant.Consts.SECRET)
+                    .compact();
+            UserVo userVo = new UserVo();
+            userVo.setUser(user);
+            userVo.setToken(token);
+            return ServerResponse.createBySuccess("登陆成功", userVo);
         }
     }
 

@@ -1,21 +1,18 @@
 package com.bst.red_green_blue.pojo.vo;
 
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
-
 /**
  * @author XHJ
  * 2018/4/11 23:32
  */
 public class PublicFacilityVo {
 
-    @NotNull(message = "申请地址不能为空")
+//    @NotNull(message = "申请地址不能为空")
     private Integer requestAddress;
-    @NotBlank(message = "使用人数范围不能为空")
+//    @NotBlank(message = "使用人数范围不能为空")
     private String personNumber;
-    @NotBlank(message = "使用时间不能为空")
+//    @NotBlank(message = "使用时间不能为空")
     private String requestUseTime;
-    @NotBlank(message = "联系方式不能为空")
+//    @NotBlank(message = "联系方式不能为空")
     private String contactWay;
 
     private String remark;
