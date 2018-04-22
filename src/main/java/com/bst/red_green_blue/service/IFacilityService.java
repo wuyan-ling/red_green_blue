@@ -19,7 +19,7 @@ public interface IFacilityService {
      * @param teamId
      * @return
      */
-    ServerResponse<String> applicationPublicFacility(PublicFacilityVo vo, String teamId);
+    ServerResponse<String> applicationPublicFacility(PublicFacilityVo vo, String teamId,String phoneNumber);
     /**
      * 获取已审核的公共设施申请
      *
@@ -40,4 +40,11 @@ public interface IFacilityService {
      * @return
      */
     ServerResponse<String> checkPublicFacility(String id, int status);
+
+    /**
+     * 获取我的申请列表
+     * @param phoneNumber
+     * @return
+     */
+    ServerResponse<List> getPublicFacilityList(String phoneNumber);
 }

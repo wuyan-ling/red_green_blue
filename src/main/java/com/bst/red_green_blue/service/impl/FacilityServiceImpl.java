@@ -4,8 +4,6 @@ import com.bst.red_green_blue.common.Constant;
 import com.bst.red_green_blue.common.ServerResponse;
 import com.bst.red_green_blue.common.VoHandle;
 import com.bst.red_green_blue.dao.PublicFacilityMapper;
-import com.bst.red_green_blue.pojo.ApplicationForm;
-import com.bst.red_green_blue.pojo.ApplicationFormExample;
 import com.bst.red_green_blue.pojo.PublicFacility;
 import com.bst.red_green_blue.pojo.PublicFacilityExample;
 import com.bst.red_green_blue.pojo.vo.PublicFacilityVo;
@@ -33,15 +31,15 @@ public class FacilityServiceImpl implements IFacilityService {
      * @return
      */
     @Override
-    public ServerResponse<String> applicationPublicFacility(PublicFacilityVo vo, String teamId) {
+    public ServerResponse<String> applicationPublicFacility(PublicFacilityVo vo, String teamId,String phoneNumber) {
         String id = String.valueOf(UUID.randomUUID());
         //将Vo对象转化为完整的对象
-        PublicFacility publicFacility = VoHandle.useVoCreateToPublicFacility(vo, id, teamId);
+        PublicFacility publicFacility = VoHandle.useVoCreateToPublicFacility(vo, id, teamId,phoneNumber);
         int status = publicFacilityMapper.insertSelective(publicFacility);
         if (status == 0) {
             return ServerResponse.createByErrorMessage("提交失败");
         }
-        return ServerResponse.createBySuccessMessage("提交成功");
+        return ServerResponse.createBySuccess("提交成功");
 
     }
 
@@ -108,4 +106,19 @@ public class FacilityServiceImpl implements IFacilityService {
         }
         return ServerResponse.createByErrorMessage("修改状态参数错误");
     }
+
+    /**
+     * 获取我的申请列表
+     * @param phoneNumber
+     * @return
+     */
+    @Override
+    public ServerResponse<List> getPublicFacilityList(String phoneNumber){
+        PublicFacilityExample publicFacilityExample = new PublicFacilityExample();
+        publicFacilityExample.createCriteria().andUserIdEqualTo(phoneNumber);
+        List<PublicFacility> publicFacilities = publicFacilityMapper.selectByExample(publicFacilityExample);
+        return ServerResponse.createBySuccess(publicFacilities);
+    }
+
+
 }

@@ -35,6 +35,7 @@ public class FacilityController  {
             return ServerResponse.createByErrorMessage("请先登录");
         }
 //        String replace = token.replace(JwtUtil.getAuthorizationHeaderPrefix(), "");
+        //解析token的代码
         String phoneNumber = Jwts.parser().setSigningKey(Constant.Consts.SECRET).parseClaimsJws(token).getBody().getSubject();
         User user = userMapper.selectByPrimaryKey(phoneNumber);
 
@@ -42,8 +43,10 @@ public class FacilityController  {
             return ServerResponse.createByErrorMessage("请重新登录");
         }
         String teamId = user.getTeamId();
-        return iFacilityService.applicationPublicFacility(vo,teamId);
+        return iFacilityService.applicationPublicFacility(vo,teamId,phoneNumber);
     }
+
+
     @ApiOperation(value = "获取已审核的公共设施申请列表")
     @GetMapping(value = "checkPublicFacilityList")
     public ServerResponse<List<PublicFacility>> checkPublicFacilityList(HttpSession session) {
@@ -79,5 +82,15 @@ public class FacilityController  {
             return ServerResponse.createByErrorMessage("团队信息错误");
         }
         return iFacilityService.checkPublicFacility(id,status);
+    }
+    @ApiOperation(value = "获取我的公共设施申请列表")
+    @PostMapping(value = "getPublicFacilityList")
+    public ServerResponse<List> getPublicFacilityList(String token) {
+        if (token==null) {
+            return ServerResponse.createByErrorMessage("请先登录");
+        }
+//        String replace = token.replace(JwtUtil.getAuthorizationHeaderPrefix(), "");
+        String phoneNumber = Jwts.parser().setSigningKey(Constant.Consts.SECRET).parseClaimsJws(token).getBody().getSubject();
+        return iFacilityService.getPublicFacilityList(phoneNumber);
     }
 }
