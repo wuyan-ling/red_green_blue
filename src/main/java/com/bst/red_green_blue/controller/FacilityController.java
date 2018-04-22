@@ -8,6 +8,7 @@ import com.bst.red_green_blue.pojo.User;
 import com.bst.red_green_blue.pojo.vo.PublicFacilityVo;
 import com.bst.red_green_blue.service.IFacilityService;
 import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.MalformedJwtException;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -90,7 +91,12 @@ public class FacilityController  {
             return ServerResponse.createByErrorMessage("请先登录");
         }
 //        String replace = token.replace(JwtUtil.getAuthorizationHeaderPrefix(), "");
-        String phoneNumber = Jwts.parser().setSigningKey(Constant.Consts.SECRET).parseClaimsJws(token).getBody().getSubject();
+        String phoneNumber;
+        try {
+            phoneNumber = Jwts.parser().setSigningKey(Constant.Consts.SECRET).parseClaimsJws(token).getBody().getSubject();
+        }catch (MalformedJwtException e){
+            return ServerResponse.createByErrorMessage("token无效或已过期，请重新登录");
+        }
         return iFacilityService.getPublicFacilityList(phoneNumber);
     }
 }

@@ -130,8 +130,8 @@ public class UserController {
 
     @ApiOperation("退出登陆")
     @PostMapping("/logout")
-    public ServerResponse<String> logout(HttpSession session) {
-        session.setAttribute(Constant.CURRENT_USER, null);
+    public ServerResponse<String> logout(String token) {
+
         return ServerResponse.createBySuccess("你已成功退出");
 
     }
