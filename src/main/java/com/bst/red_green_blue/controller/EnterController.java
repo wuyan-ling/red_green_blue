@@ -43,11 +43,8 @@ public class EnterController {
                 responsibilityPhoneNumber == null || responsibilityPhoneNumber.isEmpty()) {
             return ServerResponse.createByErrorMessage("团队负责人姓名或联系电话不能为空");
         }
-        ServerResponse<ApplicationFormVo> applicationFormVoServerResponse = iEnterService.applicationStatusQuery(responsibilityName, responsibilityPhoneNumber);
-//        ApplicationFormVo data = applicationFormVoServerResponse.getData();
-        //TODO
         System.out.println();
-        return applicationFormVoServerResponse;
+        return iEnterService.applicationStatusQuery(responsibilityName, responsibilityPhoneNumber);
     }
 
     @ApiOperation(value = "申请公示")
