@@ -21,6 +21,7 @@ public class JwtUtil {
 
     /**
      * 创建token，带参数
+     *
      * @param id
      * @param issuer
      * @param subject
@@ -59,10 +60,11 @@ public class JwtUtil {
 
     /**
      * 生成token，不带从参数
+     *
      * @param id
      * @return
      */
-    public static String createJWT(String id,String subject) {
+    public static String createJWT(String id, String subject) {
         String token = Jwts.builder()
                 .setId(id)
                 .setSubject(subject)
@@ -74,10 +76,11 @@ public class JwtUtil {
 
     /**
      * 简单点
+     *
      * @param subject
      * @return
      */
-    public static String createJWT(String subject){
+    public static String createJWT(String subject) {
         String token = Jwts.builder()
                 .setSubject(subject)
                 .setExpiration(new Date(System.currentTimeMillis() + Constant.Consts.JWT_EXPIRE)) //失效时间
@@ -85,10 +88,12 @@ public class JwtUtil {
                 .compact();
         return token;
     }
-   public static Claims parseJWT(String jwt) {
+
+    public static Claims parseJWT(String jwt) {
         //This line will throw an exception if it is not a signed JWS (as expected)
         Claims claims = Jwts.parser()
                 .setSigningKey(DatatypeConverter.parseBase64Binary(JwtUtil.getAuthorizationHeaderPrefix()))
                 .parseClaimsJws(jwt).getBody();
-       return claims;
+        return claims;
+    }
 }
