@@ -9,6 +9,8 @@ import com.bst.red_green_blue.pojo.*;
 import com.bst.red_green_blue.pojo.vo.TeamMessageAndMember;
 import com.bst.red_green_blue.pojo.vo.UserVo;
 import com.bst.red_green_blue.service.IUserService;
+import com.bst.red_green_blue.util.JwtUtil;
+import com.google.gson.Gson;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,11 +47,12 @@ public class UserServiceImpl implements IUserService {
             if (user.getStatus() == 1) {
                 return ServerResponse.createByErrorMessage("你的账户存在问题请和管理员联系");
             }
-            String token = Jwts.builder()
-                    .setSubject(phoneNumber)
-                    .setExpiration(new Date(System.currentTimeMillis() + Constant.Consts.JWT_EXPIRE)) //失效时间
-                    .signWith(SignatureAlgorithm.HS512, Constant.Consts.SECRET)
-                    .compact();
+            //todo
+            Gson gson = new Gson();
+            String userJson = gson.toJson(user);
+            String token = JwtUtil.createJWT(userJson);
+            System.out.println(gson.fromJson(userJson, User.class));
+            //            User user1 = gson.fromJson(userJson, User.class);
             UserVo userVo = new UserVo();
             userVo.setUser(user);
             userVo.setToken(token);
@@ -76,7 +79,7 @@ public class UserServiceImpl implements IUserService {
     }
 
     @Override
-    public ServerResponse<String> deleteUser(String phoneNumber, HttpSession session) {
+    public ServerResponse<String> deleteUser(String phoneNumber) {
         User user = userMapper.selectByPrimaryKey(phoneNumber);
         user.setStatus(1);
         int i = userMapper.updateByPrimaryKeySelective(user);
@@ -87,8 +90,10 @@ public class UserServiceImpl implements IUserService {
         }
     }
 
+
+
     @Override
-    public ServerResponse<String> updateUser(User user, HttpSession session) {
+    public ServerResponse<String> updateUser(User user) {
 
         int i = userMapper.updateByPrimaryKeySelective(user);
         if (i != 0) {
@@ -101,6 +106,7 @@ public class UserServiceImpl implements IUserService {
     }
 
 
+    @Override
     public ServerResponse<List> getTeamList() {
         //当id不为空的时候查询出所有的teamMessageAndMembers对象
         TeamMessageExample teamMessageExample = new TeamMessageExample();
@@ -133,7 +139,8 @@ public class UserServiceImpl implements IUserService {
 
     }
 
-   public ServerResponse<String>updatePassword(User user,String password){
+   @Override
+   public ServerResponse<String>updatePassword(User user, String password){
        user.setPassword(password);
        int i = userMapper.updateByPrimaryKeySelective(user);
        if (i == 0) {

@@ -83,7 +83,9 @@ public class JwtUtil {
     public static String createJWT(String subject) {
         String token = Jwts.builder()
                 .setSubject(subject)
-                .setExpiration(new Date(System.currentTimeMillis() + Constant.Consts.JWT_EXPIRE)) //失效时间
+                .setId(Constant.Consts.STATUS_VALID)
+                //失效时间
+                .setExpiration(new Date(System.currentTimeMillis() + Constant.Consts.JWT_EXPIRE))
                 .signWith(SignatureAlgorithm.HS512, Constant.Consts.SECRET)
                 .compact();
         return token;
@@ -92,8 +94,10 @@ public class JwtUtil {
     public static Claims parseJWT(String jwt) {
         //This line will throw an exception if it is not a signed JWS (as expected)
         Claims claims = Jwts.parser()
-                .setSigningKey(DatatypeConverter.parseBase64Binary(JwtUtil.getAuthorizationHeaderPrefix()))
+                .setSigningKey(Constant.Consts.SECRET)
                 .parseClaimsJws(jwt).getBody();
+//        String phoneNumber = Jwts.parser().setSigningKey(Constant.Consts.SECRET).parseClaimsJws(token).getBody().getSubject();
+
         return claims;
     }
 }

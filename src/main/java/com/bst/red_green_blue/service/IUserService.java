@@ -32,10 +32,9 @@ public interface IUserService {
      * 删除用户
      *
      * @param phoneNumber
-     * @param session
      * @return
      */
-    ServerResponse<String> deleteUser(String phoneNumber, HttpSession session);
+    ServerResponse<String> deleteUser(String phoneNumber);
 
 
 
@@ -45,7 +44,7 @@ public interface IUserService {
      * @param user
      * @param session
      */
-    ServerResponse<String> updateUser(User user, HttpSession session);
+    ServerResponse<String> updateUser(User user);
 
     /**
      * 查询团队信息列表

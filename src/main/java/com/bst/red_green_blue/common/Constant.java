@@ -33,6 +33,10 @@ public class Constant {
         public static final Long JWT_EXPIRE = 4 * 60 * 60 * 1000L;
         /**验证码code*/
         public static final String IMAGE_CODE = "imagecode";
+        /***有效的状态*/
+        public static final String STATUS_VALID = "1";
+        /***失效的状态*/
+        public static final String STATUS_NOT_VALID = "0";
     }
 
 }

@@ -73,4 +73,17 @@ public class User {
     public void setTeamId(String teamId) {
         this.teamId = teamId == null ? null : teamId.trim();
     }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "phoneNumber" +":"+ phoneNumber +
+                ", username" +":"+  username +
+                ", password" + ":"+ password +
+                ", mark" +":"+  mark +
+                ", status" + ":"+ status +
+                ", teamId" + ":"+ teamId +
+                '}';
+    }
+
 }

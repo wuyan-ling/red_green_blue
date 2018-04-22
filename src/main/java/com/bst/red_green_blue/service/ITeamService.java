@@ -39,11 +39,10 @@ public interface ITeamService {
 
     /**
      * 删除团队成员
-     * @param session
      * @param phoneNumber
      * @return
      */
-    ServerResponse<TeamMember>deleteTeamMember(HttpSession session,String phoneNumber);
+    ServerResponse<TeamMember>deleteTeamMember(String phoneNumber);
 
     /**
      * 获取团队信息

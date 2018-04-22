@@ -1,18 +1,19 @@
 package com.bst.red_green_blue.controller;
 
-import com.bst.red_green_blue.common.Constant;
 import com.bst.red_green_blue.common.ServerResponse;
 import com.bst.red_green_blue.pojo.ApplicationForm;
 import com.bst.red_green_blue.pojo.User;
 import com.bst.red_green_blue.pojo.vo.ApplicationFormStatusVo;
 import com.bst.red_green_blue.pojo.vo.ApplicationFormVo;
 import com.bst.red_green_blue.service.IEnterService;
+import com.bst.red_green_blue.util.GsonUtil;
+import com.bst.red_green_blue.util.JwtUtil;
+import com.google.gson.Gson;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.util.List;
 
@@ -43,8 +44,8 @@ public class EnterController {
             return ServerResponse.createByErrorMessage("团队负责人姓名或联系电话不能为空");
         }
         ServerResponse<ApplicationFormVo> applicationFormVoServerResponse = iEnterService.applicationStatusQuery(responsibilityName, responsibilityPhoneNumber);
-        ApplicationFormVo data = applicationFormVoServerResponse.getData();
-
+//        ApplicationFormVo data = applicationFormVoServerResponse.getData();
+        //TODO
         System.out.println();
         return applicationFormVoServerResponse;
     }
@@ -58,11 +59,12 @@ public class EnterController {
 
     @ApiOperation(value = "获取已审核列表")
     @GetMapping(value = "checkApplicationFormList")
-    public ServerResponse<List<ApplicationForm>> checkApplicationFormList(HttpSession session) {
-        User user = (User) session.getAttribute(Constant.CURRENT_USER);
-        if (user == null) {
+    public ServerResponse<List<ApplicationForm>> checkApplicationFormList(String token) {
+        if (token == null) {
             return ServerResponse.createByErrorMessage("请先登录");
-        } else if (user.getMark() == 1) {
+        }
+        User currentUser = GsonUtil.createUserUseToToken(token);
+        if (currentUser.getMark() == 1) {
             return ServerResponse.createByErrorMessage("不是管理员，权限不足");
         }
         return iEnterService.checkApplicationFormList();
@@ -70,22 +72,24 @@ public class EnterController {
 
     @ApiOperation(value = "获取待审核列表")
     @GetMapping(value = "checkPendingApplicationFormList")
-    public ServerResponse<List<ApplicationForm>> checkPendingApplicationFormList(HttpSession session) {
-        User user = (User) session.getAttribute(Constant.CURRENT_USER);
-        if (user == null) {
+    public ServerResponse<List<ApplicationForm>> checkPendingApplicationFormList(String token) {
+        if (token == null) {
             return ServerResponse.createByErrorMessage("请先登录");
-        } else if (user.getMark() == 1) {
+        }
+        User currentUser = GsonUtil.createUserUseToToken(token);
+        if (currentUser.getMark() == 1) {
             return ServerResponse.createByErrorMessage("不是管理员，权限不足");
         }
         return iEnterService.checkPendingApplicationFormList();
     }
     @ApiOperation(value = "管理员入驻申请审核")
     @PostMapping(value = "checkApplication")
-    public ServerResponse<String> checkApplication(HttpSession session, String id , int status) {
-        User user = (User) session.getAttribute(Constant.CURRENT_USER);
-        if (user == null) {
+    public ServerResponse<String> checkApplication(String token, String id , int status) {
+        if (token == null) {
             return ServerResponse.createByErrorMessage("请先登录");
-        } else if (user.getMark() == 1) {
+        }
+        User currentUser = GsonUtil.createUserUseToToken(token);
+        if (currentUser.getMark() == 1) {
             return ServerResponse.createByErrorMessage("不是管理员，权限不足");
         } else if (id == null || id.isEmpty()) {
             return ServerResponse.createByErrorMessage("团队信息错误");
