@@ -92,6 +92,7 @@ public class UserServiceImpl implements IUserService {
     }
 
 
+    @Override
     public ServerResponse<List> getTeamList() {
         //当id不为空的时候查询出所有的teamMessageAndMembers对象
         TeamMessageExample teamMessageExample = new TeamMessageExample();

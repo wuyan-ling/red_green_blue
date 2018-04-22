@@ -18,7 +18,7 @@ import java.util.List;
 import java.util.UUID;
 
 /**
- * @author XHJ
+ * @author 熊厚谨
  * 2018/4/10 21:25
  */
 @Service
@@ -50,7 +50,6 @@ public class EnterServiceImpl implements IEnterService {
             return ServerResponse.createByErrorMessage("提交失败");
         }
         return ServerResponse.createBySuccessMessage("申请成功");
-
     }
 
     /**
@@ -61,7 +60,7 @@ public class EnterServiceImpl implements IEnterService {
      * @return
      */
     @Override
-    public ServerResponse<ApplicationFormVo> applicationStatusQuery(String responsibilityName, String responsibilityPhoneNumber) {
+    public ServerResponse<ApplicationFormStatusVo> applicationStatusQuery(String responsibilityName, String responsibilityPhoneNumber) {
         ApplicationFormExample example = new ApplicationFormExample();
         example.createCriteria().andResponsibilityNameEqualTo(responsibilityName).
                 andResponsibilityPhoneNumberEqualTo(responsibilityPhoneNumber);
@@ -74,7 +73,7 @@ public class EnterServiceImpl implements IEnterService {
         if (form.getErrorMessage() == null || form.getErrorMessage().isEmpty()) {
             form.setErrorMessage("");
         }
-        return ServerResponse.createBySuccess(VoHandle.useApplicationFormCreateToVo(form));
+        return ServerResponse.createBySuccess(VoHandle.useApplicationFormCreateToStatusVo(form));
 
     }
 

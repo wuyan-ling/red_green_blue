@@ -37,7 +37,7 @@ public class EnterController {
 
     @ApiOperation(value = "审核状态查询")
     @GetMapping(value = "applicationStatusQuery")
-    public ServerResponse<ApplicationFormVo> applicationStatusQuery(String responsibilityName, String responsibilityPhoneNumber) {
+    public ServerResponse<ApplicationFormStatusVo> applicationStatusQuery(String responsibilityName, String responsibilityPhoneNumber) {
         if (responsibilityName == null || responsibilityName.isEmpty() ||
                 responsibilityPhoneNumber == null || responsibilityPhoneNumber.isEmpty()) {
             return ServerResponse.createByErrorMessage("团队负责人姓名或联系电话不能为空");

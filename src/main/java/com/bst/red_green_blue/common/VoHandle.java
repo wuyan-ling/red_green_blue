@@ -9,7 +9,7 @@ import com.bst.red_green_blue.pojo.vo.PublicFacilityVo;
 import com.bst.red_green_blue.pojo.vo.WechatNewsVo;
 
 /**
- * @author XHJ
+ * @author 熊厚谨
  * 2018/4/11 21:15
  */
 public class VoHandle {

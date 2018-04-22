@@ -29,7 +29,7 @@ public interface IEnterService {
      * @param responsibilityPhoneNumber
      * @return
      */
-    ServerResponse<ApplicationFormVo> applicationStatusQuery(String responsibilityName, String responsibilityPhoneNumber);
+    ServerResponse<ApplicationFormStatusVo> applicationStatusQuery(String responsibilityName, String responsibilityPhoneNumber);
 
     /**
      * 申请公示

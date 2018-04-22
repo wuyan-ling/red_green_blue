@@ -11,7 +11,8 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 import javax.servlet.http.HttpServletRequest;
 
 /**
- * @author xhj
+ * @author 熊厚谨
+ * date 2017/9/11
  */
 @Component
 @Aspect

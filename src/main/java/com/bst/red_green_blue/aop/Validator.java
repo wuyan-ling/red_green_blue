@@ -14,7 +14,7 @@ import org.springframework.validation.FieldError;
 import java.util.List;
 
 /**
- * @author xhj
+ * @author 熊厚谨
  * decription  Controller 参数验证
  * date 2017/9/11
  */

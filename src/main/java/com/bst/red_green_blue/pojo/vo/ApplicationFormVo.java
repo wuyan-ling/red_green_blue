@@ -7,11 +7,11 @@ import javax.validation.constraints.NotBlank;
  * 2018/4/10 21:09
  */
 public class ApplicationFormVo {
-    @NotBlank(message = "项目名称不能为空")
+//    @NotBlank(message = "项目名称不能为空")
     private String projectName;
     @NotBlank(message = "负责人姓名不能为空")
     private String responsibilityName;
-    @NotBlank(message = "团队所属学院不能为空")
+//    @NotBlank(message = "团队所属学院不能为空")
     private String college;
     @NotBlank(message = "项目负责人电话不能为空")
     private String responsibilityPhoneNumber;

@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
 import java.util.UUID;
 
 /**
- * @author XHJ
+ * @author 熊厚谨
  * 2018/4/12 15:23
  */
 @Service
