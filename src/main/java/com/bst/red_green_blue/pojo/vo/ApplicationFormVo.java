@@ -15,20 +15,17 @@ public class ApplicationFormVo {
     private String college;
     @NotBlank(message = "项目负责人电话不能为空")
     private String responsibilityPhoneNumber;
-
+    private Integer status;
     private String projectInformation;
 
-    public ApplicationFormVo(String projectName, String responsibilityName, String college, String responsibilityPhoneNumber, String projectInformation) {
+    public ApplicationFormVo(@NotBlank(message = "项目名称不能为空") String projectName, @NotBlank(message = "负责人姓名不能为空") String responsibilityName, @NotBlank(message = "团队所属学院不能为空") String college, @NotBlank(message = "项目负责人电话不能为空") String responsibilityPhoneNumber, Integer status, String projectInformation) {
         this.projectName = projectName;
         this.responsibilityName = responsibilityName;
         this.college = college;
         this.responsibilityPhoneNumber = responsibilityPhoneNumber;
+        this.status = status;
         this.projectInformation = projectInformation;
     }
-
-
-
-
 
     public String getProjectName() {
         return projectName;
@@ -66,6 +63,15 @@ public class ApplicationFormVo {
         return this;
     }
 
+    public Integer getStatus() {
+        return status;
+    }
+
+    public ApplicationFormVo setStatus(Integer status) {
+        this.status = status;
+        return this;
+    }
+
     public String getProjectInformation() {
         return projectInformation;
     }
@@ -82,6 +88,7 @@ public class ApplicationFormVo {
                 ", responsibilityName='" + responsibilityName + '\'' +
                 ", college='" + college + '\'' +
                 ", responsibilityPhoneNumber='" + responsibilityPhoneNumber + '\'' +
+                ", status=" + status +
                 ", projectInformation='" + projectInformation + '\'' +
                 '}';
     }

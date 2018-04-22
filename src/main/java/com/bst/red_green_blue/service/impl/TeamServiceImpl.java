@@ -71,7 +71,7 @@ public class TeamServiceImpl implements ITeamService {
     }
 
     @Override
-    public ServerResponse<TeamMember>deleteTeamMember(HttpSession session,String phoneNumber){
+    public ServerResponse<TeamMember>deleteTeamMember(String phoneNumber){
         TeamMemberExample teamMemberExample=new TeamMemberExample();
         teamMemberExample.createCriteria().andPhoneNumberEqualTo(phoneNumber);
         int i = teamMemberMapper.deleteByExample(teamMemberExample);

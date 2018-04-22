@@ -21,7 +21,7 @@ public class VoHandle {
      */
     static public ApplicationFormVo useApplicationFormCreateToVo(ApplicationForm form) {
         ApplicationFormVo applicationForm = new ApplicationFormVo(form.getProjectName(), form.getResponsibilityName(), form.getCollege(),
-                form.getResponsibilityPhoneNumber(), form.getProjectInformation());
+                form.getResponsibilityPhoneNumber(),form.getStatus(),form.getProjectInformation());
         return applicationForm;
     }
 
@@ -51,7 +51,7 @@ public class VoHandle {
      * @param vo
      * @return
      */
-    static public PublicFacility useVoCreateToPublicFacility(PublicFacilityVo vo, String id, String teamId) {
+    static public PublicFacility useVoCreateToPublicFacility(PublicFacilityVo vo, String id, String teamId,String phoneNumber) {
         PublicFacility publicFacility = new PublicFacility();
         publicFacility.setId(id);
         publicFacility.setTeamId(teamId);
@@ -60,7 +60,7 @@ public class VoHandle {
         publicFacility.setContactWay(vo.getContactWay());
         publicFacility.setRemark(vo.getRemark());
         publicFacility.setRequestUseTime(vo.getRequestUseTime());
-
+        publicFacility.setUserId(phoneNumber);
         return publicFacility;
     }
 

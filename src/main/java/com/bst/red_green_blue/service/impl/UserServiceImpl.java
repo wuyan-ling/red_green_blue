@@ -1,20 +1,24 @@
 package com.bst.red_green_blue.service.impl;
 
+import com.bst.red_green_blue.common.Constant;
 import com.bst.red_green_blue.common.ServerResponse;
 import com.bst.red_green_blue.dao.TeamMemberMapper;
 import com.bst.red_green_blue.dao.TeamMessageMapper;
 import com.bst.red_green_blue.dao.UserMapper;
 import com.bst.red_green_blue.pojo.*;
 import com.bst.red_green_blue.pojo.vo.TeamMessageAndMember;
+import com.bst.red_green_blue.pojo.vo.UserVo;
 import com.bst.red_green_blue.service.IUserService;
-import com.fasterxml.jackson.annotation.JsonTypeInfo;
-import io.swagger.annotations.Example;
+import com.bst.red_green_blue.util.JwtUtil;
+import com.google.gson.Gson;
+import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.SignatureAlgorithm;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
-import java.util.Iterator;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -32,8 +36,7 @@ public class UserServiceImpl implements IUserService {
 
 
     @Override
-    public ServerResponse<User> login(String phoneNumber, String password) {
-
+    public ServerResponse<UserVo> login(String phoneNumber, String password) {
         UserExample userExample = new UserExample();
         userExample.createCriteria().andPhoneNumberEqualTo(phoneNumber).andPasswordEqualTo(password);
         List<User> users = userMapper.selectByExample(userExample);
@@ -44,7 +47,16 @@ public class UserServiceImpl implements IUserService {
             if (user.getStatus() == 1) {
                 return ServerResponse.createByErrorMessage("你的账户存在问题请和管理员联系");
             }
-            return ServerResponse.createBySuccess("登陆成功", user);
+            //todo
+            Gson gson = new Gson();
+            String userJson = gson.toJson(user);
+            String token = JwtUtil.createJWT(userJson);
+            System.out.println(gson.fromJson(userJson, User.class));
+            //            User user1 = gson.fromJson(userJson, User.class);
+            UserVo userVo = new UserVo();
+            userVo.setUser(user);
+            userVo.setToken(token);
+            return ServerResponse.createBySuccess("登陆成功", userVo);
         }
     }
 
@@ -67,7 +79,7 @@ public class UserServiceImpl implements IUserService {
     }
 
     @Override
-    public ServerResponse<String> deleteUser(String phoneNumber, HttpSession session) {
+    public ServerResponse<String> deleteUser(String phoneNumber) {
         User user = userMapper.selectByPrimaryKey(phoneNumber);
         user.setStatus(1);
         int i = userMapper.updateByPrimaryKeySelective(user);
@@ -78,8 +90,10 @@ public class UserServiceImpl implements IUserService {
         }
     }
 
+
+
     @Override
-    public ServerResponse<String> updateUser(User user, HttpSession session) {
+    public ServerResponse<String> updateUser(User user) {
 
         int i = userMapper.updateByPrimaryKeySelective(user);
         if (i != 0) {
@@ -125,7 +139,8 @@ public class UserServiceImpl implements IUserService {
 
     }
 
-   public ServerResponse<String>updatePassword(User user,String password){
+   @Override
+   public ServerResponse<String>updatePassword(User user, String password){
        user.setPassword(password);
        int i = userMapper.updateByPrimaryKeySelective(user);
        if (i == 0) {

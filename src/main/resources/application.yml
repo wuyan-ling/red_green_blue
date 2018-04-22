@@ -6,6 +6,14 @@ spring:
     driver-class-name: com.mysql.jdbc.Driver
     username: root
     password: Bst123456789
+#  redis:
+#    host: localhost
+#    port: 6379
+#  session:
+#    store-type: redis
+
+
+
 
 mybatis:
   mapper-locations: classpath:mybatis/mapper/*.xml
@@ -13,6 +21,6 @@ mybatis:
 #  配置日志打印的等级
 logging:
     level:
-      com.bst.red_green_blue: DEBUG
+      com.bst.red_green_blue: debug
 server:
   port: 8000

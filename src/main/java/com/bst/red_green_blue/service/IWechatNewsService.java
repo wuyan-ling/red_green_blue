@@ -1,7 +1,10 @@
 package com.bst.red_green_blue.service;
 
 import com.bst.red_green_blue.common.ServerResponse;
+import com.bst.red_green_blue.pojo.WechatNews;
 import com.bst.red_green_blue.pojo.vo.WechatNewsVo;
+
+import java.util.List;
 
 /**
  * @author XHJ
@@ -16,4 +19,11 @@ public interface IWechatNewsService {
      * @return
      */
     ServerResponse<String> releaseNews(WechatNewsVo vo, String teamId);
+
+    /**
+     * 查看新闻
+     *
+     * @return
+     */
+    ServerResponse<List<WechatNews>> SeeTheNews();
 }

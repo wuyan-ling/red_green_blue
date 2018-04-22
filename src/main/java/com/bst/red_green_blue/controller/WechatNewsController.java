@@ -3,16 +3,16 @@ package com.bst.red_green_blue.controller;
 import com.bst.red_green_blue.common.Constant;
 import com.bst.red_green_blue.common.ServerResponse;
 import com.bst.red_green_blue.pojo.User;
+import com.bst.red_green_blue.pojo.WechatNews;
 import com.bst.red_green_blue.pojo.vo.WechatNewsVo;
 import com.bst.red_green_blue.service.IWechatNewsService;
+import com.bst.red_green_blue.util.GsonUtil;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
+import java.util.List;
 
 /**
  * @author XHJ
@@ -26,13 +26,19 @@ public class WechatNewsController {
     private IWechatNewsService iWechatNewsService;
 
     @ApiOperation("新闻发布")
-    @PostMapping("release")
-    public ServerResponse<String> releaseNews(WechatNewsVo vo, HttpSession session) {
-        User user = (User) session.getAttribute(Constant.CURRENT_USER);
-        if (user == null) {
+    @PostMapping("releaseNews")
+    public ServerResponse<String> releaseNews(WechatNewsVo vo, String token) {
+        if (token == null) {
             return ServerResponse.createByErrorMessage("请先登录");
         }
-        String teamId = user.getTeamId();
+        User currentUser = GsonUtil.createUserUseToToken(token);
+        String teamId = currentUser.getTeamId();
         return iWechatNewsService.releaseNews(vo,teamId);
+    }
+    @ApiOperation("查看新闻 ")
+    @GetMapping("SeeTheNews")
+    public ServerResponse<List<WechatNews>> SeeTheNews( ) {
+        return iWechatNewsService.SeeTheNews();
+
     }
 }

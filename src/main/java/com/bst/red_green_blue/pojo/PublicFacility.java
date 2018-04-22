@@ -17,7 +17,9 @@ public class PublicFacility {
 
     private Integer status;
 
-    public PublicFacility(String id, Integer requestAddress, String personNumber, String requestUseTime, String contactWay, String remark, String teamId, Integer status) {
+    private String userId;
+
+    public PublicFacility(String id, Integer requestAddress, String personNumber, String requestUseTime, String contactWay, String remark, String teamId, Integer status, String userId) {
         this.id = id;
         this.requestAddress = requestAddress;
         this.personNumber = personNumber;
@@ -26,6 +28,7 @@ public class PublicFacility {
         this.remark = remark;
         this.teamId = teamId;
         this.status = status;
+        this.userId = userId;
     }
 
     public PublicFacility() {
@@ -94,5 +97,13 @@ public class PublicFacility {
 
     public void setStatus(Integer status) {
         this.status = status;
+    }
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId == null ? null : userId.trim();
     }
 }

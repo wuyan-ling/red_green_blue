@@ -4,11 +4,13 @@ import com.bst.red_green_blue.common.ServerResponse;
 import com.bst.red_green_blue.common.VoHandle;
 import com.bst.red_green_blue.dao.WechatNewsMapper;
 import com.bst.red_green_blue.pojo.WechatNews;
+import com.bst.red_green_blue.pojo.WechatNewsExample;
 import com.bst.red_green_blue.pojo.vo.WechatNewsVo;
 import com.bst.red_green_blue.service.IWechatNewsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.UUID;
 
 /**
@@ -40,5 +42,13 @@ public class WechatNewsServiceImpl implements IWechatNewsService {
         }
         return ServerResponse.createBySuccessMessage("发布成功");
 
+    }
+
+    @Override
+    public ServerResponse<List<WechatNews>> SeeTheNews() {
+        WechatNewsExample example = new WechatNewsExample();
+        example.createCriteria().andIdNotEqualTo("");
+        List<WechatNews> wechatNews = wechatNewsMapper.selectByExample(example);
+        return ServerResponse.createBySuccess(wechatNews);
     }
 }
