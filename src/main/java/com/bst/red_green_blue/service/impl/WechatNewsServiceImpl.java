@@ -44,6 +44,11 @@ public class WechatNewsServiceImpl implements IWechatNewsService {
 
     }
 
+    /**
+     * 查看新闻
+     *
+     * @return
+     */
     @Override
     public ServerResponse<List<WechatNews>> SeeTheNews() {
         WechatNewsExample example = new WechatNewsExample();

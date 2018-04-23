@@ -91,7 +91,6 @@ public class UserServiceImpl implements IUserService {
     }
 
 
-
     @Override
     public ServerResponse<String> updateUser(User user) {
 
@@ -139,15 +138,15 @@ public class UserServiceImpl implements IUserService {
 
     }
 
-   @Override
-   public ServerResponse<String>updatePassword(User user, String password){
-       user.setPassword(password);
-       int i = userMapper.updateByPrimaryKeySelective(user);
-       if (i == 0) {
-           return ServerResponse.createByErrorMessage("修改密码失败");
-       }
-       return ServerResponse.createBySuccess("修改密码成功");
-   }
+    @Override
+    public ServerResponse<String> updatePassword(User user, String password) {
+        user.setPassword(password);
+        int i = userMapper.updateByPrimaryKeySelective(user);
+        if (i == 0) {
+            return ServerResponse.createByErrorMessage("修改密码失败");
+        }
+        return ServerResponse.createBySuccess("修改密码成功");
+    }
 
 
 }

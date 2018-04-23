@@ -59,9 +59,9 @@ public class TeamServiceImpl implements ITeamService {
 
 
     @Override
-    public ServerResponse<TeamMember>addTeamMember(String teamId,String name, String phoneNumber){
+    public ServerResponse<TeamMember> addTeamMember(String teamId, String name, String phoneNumber) {
         String id = String.valueOf(UUID.randomUUID());
-        TeamMember teamMember = new TeamMember(id,teamId,name,phoneNumber);
+        TeamMember teamMember = new TeamMember(id, teamId, name, phoneNumber);
         int i = teamMemberMapper.insertSelective(teamMember);
         if (i == 0) {
             return ServerResponse.createByErrorMessage("添加成员失败");
@@ -71,8 +71,8 @@ public class TeamServiceImpl implements ITeamService {
     }
 
     @Override
-    public ServerResponse<TeamMember>deleteTeamMember(String phoneNumber){
-        TeamMemberExample teamMemberExample=new TeamMemberExample();
+    public ServerResponse<TeamMember> deleteTeamMember(String phoneNumber) {
+        TeamMemberExample teamMemberExample = new TeamMemberExample();
         teamMemberExample.createCriteria().andPhoneNumberEqualTo(phoneNumber);
         int i = teamMemberMapper.deleteByExample(teamMemberExample);
         if (i == 0) {
@@ -86,10 +86,10 @@ public class TeamServiceImpl implements ITeamService {
     public ServerResponse<TeamMessageAndMember> getTeamMessage(User user) {
         //根据用户对象中的teamId获取所在团队
         String teamId = user.getTeamId();
-        TeamMessageExample teamMessageExample= new TeamMessageExample();
+        TeamMessageExample teamMessageExample = new TeamMessageExample();
         teamMessageExample.createCriteria().andIdEqualTo(teamId);
         List<TeamMessage> teamMessages = teamMessageMapper.selectByExample(teamMessageExample);
-        if (teamMessages.size()==0) {
+        if (teamMessages.size() == 0) {
             return ServerResponse.createByErrorMessage("你还没有初始化团队");
         }
         //创建TeamMessageAndMember对象

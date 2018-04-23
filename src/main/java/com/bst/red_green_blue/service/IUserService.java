@@ -37,10 +37,9 @@ public interface IUserService {
     ServerResponse<String> deleteUser(String phoneNumber);
 
 
-
-
     /**
      * 修改用户信息
+     *
      * @param user
      * @param session
      */
@@ -48,17 +47,19 @@ public interface IUserService {
 
     /**
      * 查询团队信息列表
+     *
      * @return
      */
-    ServerResponse<List>getTeamList();
+    ServerResponse<List> getTeamList();
 
 
     /**
      * 修改用户密码
+     *
      * @param password
      * @return
      */
-    ServerResponse<String>updatePassword(User user,String password);
+    ServerResponse<String> updatePassword(User user, String password);
 
 }
 

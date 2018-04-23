@@ -2,15 +2,17 @@ package com.bst.red_green_blue.controller;
 
 import com.bst.red_green_blue.common.ServerResponse;
 import com.bst.red_green_blue.dao.UserMapper;
-import com.bst.red_green_blue.pojo.PublicFacility;
 import com.bst.red_green_blue.pojo.User;
+import com.bst.red_green_blue.pojo.vo.PublicFacilityManageVo;
 import com.bst.red_green_blue.pojo.vo.PublicFacilityVo;
 import com.bst.red_green_blue.service.IFacilityService;
 import com.bst.red_green_blue.util.GsonUtil;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 /**
@@ -20,16 +22,17 @@ import java.util.List;
 @CrossOrigin
 @RestController
 @RequestMapping("/Facility")
-public class FacilityController  {
+public class FacilityController {
     @Autowired
     private IFacilityService iFacilityService;
     @Autowired
     private UserMapper userMapper;
+
     @ApiOperation(value = "申请公共设施使用")
     @PostMapping(value = "applicationPublicFacility")
-    public ServerResponse<String> applicationPublicFacility(String token, PublicFacilityVo vo) {
+    public ServerResponse<String> applicationPublicFacility(String token, @Valid PublicFacilityVo vo, BindingResult bindingResult) {
 
-        if (token==null) {
+        if (token == null) {
             return ServerResponse.createByErrorMessage("请先登录");
         }
 //        String phoneNumber = JwtUtil.parseJWT(token).getSubject();
@@ -40,13 +43,13 @@ public class FacilityController  {
         }
         String teamId = currentUser.getTeamId();
         String phoneNumber = currentUser.getPhoneNumber();
-        return iFacilityService.applicationPublicFacility(vo,teamId,phoneNumber);
+        return iFacilityService.applicationPublicFacility(vo, teamId, phoneNumber);
     }
 
 
     @ApiOperation(value = "获取已审核的公共设施申请列表")
     @GetMapping(value = "checkPublicFacilityList")
-    public ServerResponse<List<PublicFacility>> checkPublicFacilityList(String token) {
+    public ServerResponse<List<PublicFacilityManageVo>> checkPublicFacilityList(String token) {
         if (token == null) {
             return ServerResponse.createByErrorMessage("请先登录");
         }
@@ -57,9 +60,10 @@ public class FacilityController  {
         }
         return iFacilityService.checkPublicFacilityList();
     }
+
     @ApiOperation(value = "获取待审核的公共设施申请审核列表")
     @GetMapping(value = "checkPendingPublicFacility")
-    public ServerResponse<List<PublicFacility>> checkPendingPublicFacility(String token) {
+    public ServerResponse<List<PublicFacilityManageVo>> checkPendingPublicFacility(String token) {
         if (token == null) {
             return ServerResponse.createByErrorMessage("请先登录");
         }
@@ -72,7 +76,7 @@ public class FacilityController  {
 
     @ApiOperation(value = "管理员公共设施申请审核")
     @PostMapping(value = "checkPublicFacility")
-    public ServerResponse<String> checkPublicFacility(String token, String id , int status) {
+    public ServerResponse<String> checkPublicFacility(String token, String id, int status) {
         if (token == null) {
             return ServerResponse.createByErrorMessage("请先登录");
         }
@@ -82,23 +86,24 @@ public class FacilityController  {
         } else if (id == null || id.isEmpty()) {
             return ServerResponse.createByErrorMessage("团队信息错误");
         }
-        return iFacilityService.checkPublicFacility(id,status);
+        return iFacilityService.checkPublicFacility(id, status);
     }
+
     @ApiOperation(value = "获取我的公共设施申请列表")
     @PostMapping(value = "getPublicFacilityList")
     public ServerResponse<List> getPublicFacilityList(String token) {
-        if (token==null) {
+        if (token == null) {
             return ServerResponse.createByErrorMessage("请先登录");
         }
 //        todo
         try {
 //            if ( GsonUtil.StatusCheckout(token)){
-                User currentUser = GsonUtil.createUserUseToToken(token);
-                return iFacilityService.getPublicFacilityList(currentUser.getPhoneNumber());
+            User currentUser = GsonUtil.createUserUseToToken(token);
+            return iFacilityService.getPublicFacilityList(currentUser.getPhoneNumber());
 //            }else {
 //                return ServerResponse.createByErrorMessage("token无效或已过期，请重新登录");
 //            }
-        }catch (Exception e){
+        } catch (Exception e) {
             return ServerResponse.createByErrorMessage("token无效或已过期，请重新登录");
         }
     }

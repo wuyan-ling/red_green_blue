@@ -19,7 +19,7 @@ public class ApplicationForm {
 
     private String projectInformation;
 
-    public ApplicationForm(String id, String responsibilityName, String projectName,String projectInformation, String college, Integer status,  String errorMessage, String responsibilityPhoneNumber) {
+    public ApplicationForm(String id, String responsibilityName, String projectName, String projectInformation, String college, Integer status, String errorMessage, String responsibilityPhoneNumber) {
         this.id = id;
         this.responsibilityName = responsibilityName;
         this.projectName = projectName;

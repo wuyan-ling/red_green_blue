@@ -2,6 +2,7 @@ package com.bst.red_green_blue.service;
 
 import com.bst.red_green_blue.common.ServerResponse;
 import com.bst.red_green_blue.pojo.PublicFacility;
+import com.bst.red_green_blue.pojo.vo.PublicFacilityManageVo;
 import com.bst.red_green_blue.pojo.vo.PublicFacilityVo;
 
 import java.util.List;
@@ -19,19 +20,22 @@ public interface IFacilityService {
      * @param teamId
      * @return
      */
-    ServerResponse<String> applicationPublicFacility(PublicFacilityVo vo, String teamId,String phoneNumber);
+    ServerResponse<String> applicationPublicFacility(PublicFacilityVo vo, String teamId, String phoneNumber);
+
     /**
      * 获取已审核的公共设施申请
      *
      * @return
      */
-    ServerResponse<List<PublicFacility>> checkPublicFacilityList();
+    ServerResponse<List<PublicFacilityManageVo>> checkPublicFacilityList();
+
     /**
      * 获取未审核的公共设施申请
      *
      * @return
      */
-    ServerResponse<List<PublicFacility>> checkPendingPublicFacility();
+    ServerResponse<List<PublicFacilityManageVo>> checkPendingPublicFacility();
+
     /**
      * 管理员公共设施申请审核
      *
@@ -43,6 +47,7 @@ public interface IFacilityService {
 
     /**
      * 获取我的申请列表
+     *
      * @param phoneNumber
      * @return
      */

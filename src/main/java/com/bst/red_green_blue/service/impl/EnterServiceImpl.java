@@ -80,13 +80,13 @@ public class EnterServiceImpl implements IEnterService {
     /**
      * 申请公示
      *
-     *
      * @return
      */
     @Override
     public ServerResponse<List<ApplicationFormStatusVo>> applicationPublic() {
         ApplicationFormExample example = new ApplicationFormExample();
-        example.createCriteria();
+        example.or().andStatusEqualTo(Constant.Status.UNTREATED);
+        example.or().andStatusEqualTo(Constant.Status.PASS);
         List<ApplicationForm> applicationForms = applicationFormMapper.selectByExample(example);
         if (applicationForms.size() == 0) {
             return ServerResponse.createBySuccessMessage("空");

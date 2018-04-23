@@ -21,6 +21,7 @@ public interface ITeamService {
 
     /**
      * 更新团队信息
+     *
      * @param teamMessage
      * @return
      */
@@ -28,24 +29,27 @@ public interface ITeamService {
 
 
     /**
-     *增加团队成员
+     * 增加团队成员
+     *
      * @param teamId
      * @param name
      * @param phoneNumber
      * @return
      */
-    ServerResponse<TeamMember>addTeamMember(String teamId,String name, String phoneNumber);
+    ServerResponse<TeamMember> addTeamMember(String teamId, String name, String phoneNumber);
 
 
     /**
      * 删除团队成员
+     *
      * @param phoneNumber
      * @return
      */
-    ServerResponse<TeamMember>deleteTeamMember(String phoneNumber);
+    ServerResponse<TeamMember> deleteTeamMember(String phoneNumber);
 
     /**
      * 获取团队信息
+     *
      * @return
      */
     ServerResponse<TeamMessageAndMember> getTeamMessage(User user);

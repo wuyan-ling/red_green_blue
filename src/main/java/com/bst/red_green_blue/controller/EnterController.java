@@ -7,8 +7,6 @@ import com.bst.red_green_blue.pojo.vo.ApplicationFormStatusVo;
 import com.bst.red_green_blue.pojo.vo.ApplicationFormVo;
 import com.bst.red_green_blue.service.IEnterService;
 import com.bst.red_green_blue.util.GsonUtil;
-import com.bst.red_green_blue.util.JwtUtil;
-import com.google.gson.Gson;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.BindingResult;
@@ -32,7 +30,7 @@ public class EnterController {
     @ApiOperation(value = "入驻申请")
     @PostMapping(value = "enterApplyFor")
     public ServerResponse<String> enterApplyFor(@Valid ApplicationFormVo applicationFormVo,
-                                                BindingResult bindingResult)  {
+                                                BindingResult bindingResult) {
         return iEnterService.enterApplyFor(applicationFormVo);
     }
 
@@ -79,9 +77,10 @@ public class EnterController {
         }
         return iEnterService.checkPendingApplicationFormList();
     }
+
     @ApiOperation(value = "管理员入驻申请审核")
     @PostMapping(value = "checkApplication")
-    public ServerResponse<String> checkApplication(String token, String id , int status) {
+    public ServerResponse<String> checkApplication(String token, String id, int status) {
         if (token == null) {
             return ServerResponse.createByErrorMessage("请先登录");
         }
@@ -91,6 +90,6 @@ public class EnterController {
         } else if (id == null || id.isEmpty()) {
             return ServerResponse.createByErrorMessage("团队信息错误");
         }
-        return iEnterService.checkApplication(id,status);
+        return iEnterService.checkApplication(id, status);
     }
 }

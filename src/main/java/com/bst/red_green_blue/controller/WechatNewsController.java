@@ -9,9 +9,11 @@ import com.bst.red_green_blue.service.IWechatNewsService;
 import com.bst.red_green_blue.util.GsonUtil;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
+import javax.validation.Valid;
 import java.util.List;
 
 /**
@@ -27,7 +29,7 @@ public class WechatNewsController {
 
     @ApiOperation("新闻发布")
     @PostMapping("releaseNews")
-    public ServerResponse<String> releaseNews(WechatNewsVo vo, String token) {
+    public ServerResponse<String> releaseNews(String token, @Valid WechatNewsVo vo, BindingResult bindingResult) {
         if (token == null) {
             return ServerResponse.createByErrorMessage("请先登录");
         }

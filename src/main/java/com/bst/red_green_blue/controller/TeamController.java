@@ -27,8 +27,6 @@ public class TeamController {
     private UserMapper userMapper;
 
 
-
-
     @ApiOperation("初始化团队信息")
     @PostMapping("/updateOrInsertTeam")
     public ServerResponse<TeamMessage> updateOrInsertTeam(String token, TeamMessage teamMessage) {
@@ -56,7 +54,7 @@ public class TeamController {
             return ServerResponse.createByErrorMessage("管理员不应该新建团队成员，请让团队负责人新建");
         }
         String teamId = currentUser.getTeamId();
-        if (teamId==null) {
+        if (teamId == null) {
             return ServerResponse.createByErrorMessage("请先初始化团队信息");
         }
         User user1 = userMapper.selectByPrimaryKey(phoneNumber);
@@ -78,8 +76,9 @@ public class TeamController {
             return ServerResponse.createByErrorMessage("管理员不应该删除团队成员，请让团队负责人删除");
         }
 
-        return iTeamService.deleteTeamMember( phoneNumber);
+        return iTeamService.deleteTeamMember(phoneNumber);
     }
+
     @ApiOperation("获取团队信息")
     @GetMapping("/getTeamMessage")
     public ServerResponse<TeamMessageAndMember> getTeamMessage(String token) {
@@ -89,7 +88,6 @@ public class TeamController {
         }
         return iTeamService.getTeamMessage(currentUser);
     }
-
 
 
 }

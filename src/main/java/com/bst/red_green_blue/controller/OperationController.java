@@ -35,6 +35,7 @@ public class OperationController {
         }
         return iOpreationService.operationDataStatistics(operationMessage);
     }
+
     @ApiOperation("查询团队运营信息")
     @GetMapping("checkOperationMessage")
     public ServerResponse<OperationMessage> checkOperationMessage(String token) {

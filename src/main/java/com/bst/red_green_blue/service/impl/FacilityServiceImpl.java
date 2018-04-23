@@ -6,11 +6,13 @@ import com.bst.red_green_blue.common.VoHandle;
 import com.bst.red_green_blue.dao.PublicFacilityMapper;
 import com.bst.red_green_blue.pojo.PublicFacility;
 import com.bst.red_green_blue.pojo.PublicFacilityExample;
+import com.bst.red_green_blue.pojo.vo.PublicFacilityManageVo;
 import com.bst.red_green_blue.pojo.vo.PublicFacilityVo;
 import com.bst.red_green_blue.service.IFacilityService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -31,10 +33,10 @@ public class FacilityServiceImpl implements IFacilityService {
      * @return
      */
     @Override
-    public ServerResponse<String> applicationPublicFacility(PublicFacilityVo vo, String teamId,String phoneNumber) {
+    public ServerResponse<String> applicationPublicFacility(PublicFacilityVo vo, String teamId, String phoneNumber) {
         String id = String.valueOf(UUID.randomUUID());
         //将Vo对象转化为完整的对象
-        PublicFacility publicFacility = VoHandle.useVoCreateToPublicFacility(vo, id, teamId,phoneNumber);
+        PublicFacility publicFacility = VoHandle.useVoCreateToPublicFacility(vo, id, teamId, phoneNumber);
         int status = publicFacilityMapper.insertSelective(publicFacility);
         if (status == 0) {
             return ServerResponse.createByErrorMessage("提交失败");
@@ -49,7 +51,7 @@ public class FacilityServiceImpl implements IFacilityService {
      * @return
      */
     @Override
-    public ServerResponse<List<PublicFacility>> checkPublicFacilityList() {
+    public ServerResponse<List<PublicFacilityManageVo>> checkPublicFacilityList() {
         PublicFacilityExample example = new PublicFacilityExample();
         example.or().andStatusEqualTo(Constant.Status.PASS);
         example.or().andStatusEqualTo(Constant.Status.NOT_PASS);
@@ -57,7 +59,11 @@ public class FacilityServiceImpl implements IFacilityService {
         if (publicFacilities.size() == 0) {
             return ServerResponse.createBySuccessMessage("已审核的公共设施申请空");
         }
-        return ServerResponse.createBySuccess(publicFacilities);
+        List<PublicFacilityManageVo> vos = new ArrayList<>();
+        for (PublicFacility publicFacility : publicFacilities) {
+            vos.add(VoHandle.usePublicFacilityCreateToVo(publicFacility));
+        }
+        return ServerResponse.createBySuccess(vos);
     }
 
     /**
@@ -66,14 +72,18 @@ public class FacilityServiceImpl implements IFacilityService {
      * @return
      */
     @Override
-    public ServerResponse<List<PublicFacility>> checkPendingPublicFacility() {
+    public ServerResponse<List<PublicFacilityManageVo>> checkPendingPublicFacility() {
         PublicFacilityExample example = new PublicFacilityExample();
         example.createCriteria().andStatusEqualTo(Constant.Status.UNTREATED);
         List<PublicFacility> publicFacilities = publicFacilityMapper.selectByExample(example);
         if (publicFacilities.size() == 0) {
             return ServerResponse.createBySuccessMessage("未审核的公共设施申请为空");
         }
-        return ServerResponse.createBySuccess(publicFacilities);
+        List<PublicFacilityManageVo> vos = new ArrayList<>();
+        for (PublicFacility publicFacility : publicFacilities) {
+            vos.add(VoHandle.usePublicFacilityCreateToVo(publicFacility));
+        }
+        return ServerResponse.createBySuccess(vos);
     }
 
     /**
@@ -109,15 +119,22 @@ public class FacilityServiceImpl implements IFacilityService {
 
     /**
      * 获取我的申请列表
+     *
      * @param phoneNumber
      * @return
      */
     @Override
-    public ServerResponse<List> getPublicFacilityList(String phoneNumber){
+    public ServerResponse<List> getPublicFacilityList(String phoneNumber) {
         PublicFacilityExample publicFacilityExample = new PublicFacilityExample();
         publicFacilityExample.createCriteria().andUserIdEqualTo(phoneNumber);
         List<PublicFacility> publicFacilities = publicFacilityMapper.selectByExample(publicFacilityExample);
-        return ServerResponse.createBySuccess(publicFacilities);
+
+        List<PublicFacilityManageVo> vos = new ArrayList<>();
+        for (PublicFacility publicFacility : publicFacilities) {
+            vos.add(VoHandle.usePublicFacilityCreateToVo(publicFacility));
+        }
+        return ServerResponse.createBySuccess(vos);
+
     }
 
 

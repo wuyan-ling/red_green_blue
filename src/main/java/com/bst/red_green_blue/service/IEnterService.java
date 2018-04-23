@@ -49,6 +49,7 @@ public interface IEnterService {
      * @return
      */
     ServerResponse<List<ApplicationForm>> checkPendingApplicationFormList();
+
     /**
      * 管理员入驻申请审核
      *

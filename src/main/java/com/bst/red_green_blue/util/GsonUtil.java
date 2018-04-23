@@ -16,6 +16,7 @@ public class GsonUtil {
         String subject = JwtUtil.parseJWT(token).getSubject();
         return new Gson().fromJson(subject, User.class);
     }
+
     //判断token的状态 失效返回true
     public static boolean StatusCheckout(String token) {
         Claims claims = JwtUtil.parseJWT(token);
