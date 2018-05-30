@@ -11,6 +11,8 @@ import lombok.Data;
 @Data
 public class Token {
 
-    @TokenConstraint
-   public String token;
+//    @TokenConstraint
+   private String token;
+
+    private String phoneNumber;
 }

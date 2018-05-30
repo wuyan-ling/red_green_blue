@@ -4,6 +4,7 @@ package com.bst.red_green_blue.controller;
 import com.bst.red_green_blue.common.Constant;
 import com.bst.red_green_blue.common.ServerResponse;
 import com.bst.red_green_blue.pojo.User;
+import com.bst.red_green_blue.pojo.vo.Token;
 import com.bst.red_green_blue.pojo.vo.UserVo;
 import com.bst.red_green_blue.service.IUserService;
 import com.bst.red_green_blue.util.GsonUtil;
@@ -108,12 +109,12 @@ public class UserController {
 
     @ApiOperation("获取团队列表")
     @GetMapping("/getTeamList")
-    public ServerResponse<List> getTeamList(String token) throws MailcapParseException {
+    public ServerResponse<List> getTeamList(Token token) throws MailcapParseException {
 
-        if (token == null) {
-            return ServerResponse.createByErrorMessage("请登录");
-        }
-        User currentUser = GsonUtil.createUserUseToToken(token);
+//        if (token == null) {
+//            return ServerResponse.createByErrorMessage("请登录");
+//        }
+        User currentUser = GsonUtil.createUserUseToToken(token.getToken());
         if (currentUser.getMark() != Constant.Role.ROLE_ADMIN) {
             return ServerResponse.createByErrorMessage("你没有查看的权限");
         }
