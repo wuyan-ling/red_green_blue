@@ -43,10 +43,9 @@ public class UserController {
     @PostMapping(value = "/login")
     public ServerResponse<UserVo> login(@NonNull String phoneNumber, String password) {
 
-//        if (phoneNumber == null || password == null) {
-//            return ServerResponse.createByErrorMessage("参数不能为空");
-//        } else
- {
+        if (phoneNumber == null || password == null) {
+            return ServerResponse.createByErrorMessage("参数不能为空");
+        } else {
             String md5EncodeUtf8Password = MD5Util.MD5EncodeUtf8(password);
             ServerResponse<UserVo> loginStatus = iUserService.login(phoneNumber, md5EncodeUtf8Password);
             return loginStatus;
@@ -111,11 +110,7 @@ public class UserController {
     @GetMapping("/getTeamList")
     public ServerResponse<List> getTeamList(Token token) throws MailcapParseException {
 
-//        if (token == null) {
-//            return ServerResponse.createByErrorMessage("请登录");
-//        }
-        User currentUser = GsonUtil.createUserUseToToken(token.getToken());
-        if (currentUser.getMark() != Constant.Role.ROLE_ADMIN) {
+        if (token.getRole() != Constant.Role.ROLE_ADMIN) {
             return ServerResponse.createByErrorMessage("你没有查看的权限");
         }
         return iUserService.getTeamList();

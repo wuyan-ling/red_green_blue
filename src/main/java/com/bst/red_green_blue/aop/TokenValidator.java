@@ -4,6 +4,8 @@ import com.bst.red_green_blue.common.ResponseCode;
 import com.bst.red_green_blue.pojo.User;
 import com.bst.red_green_blue.pojo.vo.Token;
 import com.bst.red_green_blue.util.GsonUtil;
+import com.bst.red_green_blue.util.JwtUtil;
+import com.google.gson.Gson;
 import com.sun.activation.registries.MailcapParseException;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.ProceedingJoinPoint;
@@ -24,7 +26,10 @@ public class TokenValidator {
     public Object doAround(ProceedingJoinPoint pjp, Token token) throws Throwable {
         Object retVal;
         //对token进行判断
-        authorityJudge(token.getToken(),token.getPhoneNumber());
+        identityVerification(token);
+        int role = authorityJudge(token);
+        token.setRole(role);
+        //一定要这一步，调用这个方法才会进行下一步
         retVal = pjp.proceed();
         return retVal;
     }
@@ -32,11 +37,12 @@ public class TokenValidator {
 
     /**
      * 对token进行校验，判断合法性
-     * @param token
-     * @param phoneNumber
+     * @param parameter
      * @throws MailcapParseException
      */
-    private void authorityJudge(String token,String phoneNumber) throws MailcapParseException {
+    private void identityVerification(Token parameter) throws MailcapParseException {
+        String token = parameter.getToken();
+        String phoneNumber = parameter.getPhoneNumber();
         System.out.println("测试");
         User user = null;
         try {
@@ -47,6 +53,15 @@ public class TokenValidator {
         if (!user.getPhoneNumber().equals(phoneNumber)) {
             throw new MailcapParseException(ResponseCode.TOKEN_EXCEPTION.getMessage());
         }
-        //没有验证角色
+    }
+
+    /**
+     * 判断当前token的身份角色
+     * @param token
+     * @return
+     */
+    private int authorityJudge(Token token) {
+        String subject = JwtUtil.parseJWT(token.getToken()).getSubject();
+        return new Gson().fromJson(subject, User.class).getMark();
     }
 }

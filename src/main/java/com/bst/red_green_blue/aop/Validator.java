@@ -21,8 +21,7 @@ import java.util.List;
 @Slf4j
 @Aspect
 @Component
-public class Validator
-{
+public class Validator {
 
     @Around("execution(* com.bst.red_green_blue.controller.*.*(..)) && args(..,bindingResult)")
     public Object doAround(ProceedingJoinPoint pjp, BindingResult bindingResult) throws Throwable {
@@ -35,7 +34,7 @@ public class Validator
         return retVal;
     }
 
-//    https://blog.csdn.net/thinkingt_t/article/details/68951703  SpringAOP中，获取参数名称
+//    https://blog.csdn.net/thinkingt_t/article/details/68951703  SpringAOP中，获取被切面管理的方法的参数名称和参数的值
     /**
      * 处理错误信息
      * @param result 参数校验结果
