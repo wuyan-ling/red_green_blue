@@ -118,6 +118,7 @@ public class UserController {
             return ServerResponse.createByErrorMessage("你没有查看的权限");
         }
         return iUserService.getTeamList();
+
     }
 
     @ApiOperation("修改密码")
