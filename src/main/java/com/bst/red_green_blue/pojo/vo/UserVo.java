@@ -1,6 +1,7 @@
 package com.bst.red_green_blue.pojo.vo;
 
 import com.bst.red_green_blue.pojo.User;
+import com.bst.red_green_blue.validator.TokenConstraint;
 
 /**
  * @author 杨红星
@@ -9,6 +10,7 @@ import com.bst.red_green_blue.pojo.User;
  */
 public class UserVo {
     private User user;
+
     private String token;
 
     public User getUser() {

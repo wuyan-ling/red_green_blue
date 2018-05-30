@@ -1,6 +1,10 @@
 package com.bst.red_green_blue.pojo;
 
+import lombok.Data;
+
+@Data
 public class User {
+
     private String phoneNumber;
 
     private String username;

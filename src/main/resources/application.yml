@@ -1,16 +1,17 @@
 spring:
-#  profiles:
-#    active: dev
-  datasource:
-    url: jdbc:mysql://123.207.110.102:3306/red_green_blue?useUnicode=true&characterEncoding=utf-8&useSSL=true&verifyServerCertificate=false
-    driver-class-name: com.mysql.jdbc.Driver
-    username: root
-    password: Bst123456789
+  profiles:
+    active: dev
+#  datasource:
+#    url: jdbc:mysql://123.207.110.102:3306/red_green_blue?useUnicode=true&characterEncoding=utf-8&useSSL=true&verifyServerCertificate=false
+#    driver-class-name: com.mysql.jdbc.Driver
+#    username: root
+#    password: Bst123456789
 #  redis:
 #    host: localhost
 #    port: 6379
 #  session:
 #    store-type: redis
+
 
 
 

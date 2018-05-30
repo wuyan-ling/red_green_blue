@@ -1,5 +1,6 @@
 package com.bst.red_green_blue.controller;
 
+import com.bst.red_green_blue.common.Constant;
 import com.bst.red_green_blue.common.ServerResponse;
 import com.bst.red_green_blue.pojo.ApplicationForm;
 import com.bst.red_green_blue.pojo.User;
@@ -7,12 +8,15 @@ import com.bst.red_green_blue.pojo.vo.ApplicationFormStatusVo;
 import com.bst.red_green_blue.pojo.vo.ApplicationFormVo;
 import com.bst.red_green_blue.service.IEnterService;
 import com.bst.red_green_blue.util.GsonUtil;
+import com.sun.activation.registries.MailcapParseException;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
+import java.io.IOException;
 import java.util.List;
 
 /**
@@ -34,6 +38,7 @@ public class EnterController {
         return iEnterService.enterApplyFor(applicationFormVo);
     }
 
+
     @ApiOperation(value = "审核状态查询")
     @GetMapping(value = "applicationStatusQuery")
     public ServerResponse<ApplicationFormStatusVo> applicationStatusQuery(String responsibilityName, String responsibilityPhoneNumber) {
@@ -54,7 +59,7 @@ public class EnterController {
 
     @ApiOperation(value = "获取已审核列表")
     @GetMapping(value = "checkApplicationFormList")
-    public ServerResponse<List<ApplicationForm>> checkApplicationFormList(String token) {
+    public ServerResponse<List<ApplicationForm>> checkApplicationFormList(String token) throws MailcapParseException {
         if (token == null) {
             return ServerResponse.createByErrorMessage("请先登录");
         }
@@ -67,7 +72,7 @@ public class EnterController {
 
     @ApiOperation(value = "获取待审核列表")
     @GetMapping(value = "checkPendingApplicationFormList")
-    public ServerResponse<List<ApplicationForm>> checkPendingApplicationFormList(String token) {
+    public ServerResponse<List<ApplicationForm>> checkPendingApplicationFormList(String token) throws MailcapParseException {
         if (token == null) {
             return ServerResponse.createByErrorMessage("请先登录");
         }
@@ -80,7 +85,7 @@ public class EnterController {
 
     @ApiOperation(value = "管理员入驻申请审核")
     @PostMapping(value = "checkApplication")
-    public ServerResponse<String> checkApplication(String token, String id, int status) {
+    public ServerResponse<String> checkApplication(String token, String id, int status) throws MailcapParseException {
         if (token == null) {
             return ServerResponse.createByErrorMessage("请先登录");
         }

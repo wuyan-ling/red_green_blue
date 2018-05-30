@@ -1,6 +1,5 @@
 package com.bst.red_green_blue.service.impl;
 
-import com.bst.red_green_blue.common.Constant;
 import com.bst.red_green_blue.common.ServerResponse;
 import com.bst.red_green_blue.dao.TeamMemberMapper;
 import com.bst.red_green_blue.dao.TeamMessageMapper;
@@ -11,14 +10,10 @@ import com.bst.red_green_blue.pojo.vo.UserVo;
 import com.bst.red_green_blue.service.IUserService;
 import com.bst.red_green_blue.util.JwtUtil;
 import com.google.gson.Gson;
-import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 @Service
@@ -61,7 +56,7 @@ public class UserServiceImpl implements IUserService {
     }
 
     @Override
-    public ServerResponse<String> addUser(User user) {
+    public ServerResponse<String> addUser(User user) {  
         UserExample userExample = new UserExample();
         userExample.createCriteria().andPhoneNumberEqualTo(user.getPhoneNumber());
         List<User> users = userMapper.selectByExample(userExample);
@@ -137,6 +132,9 @@ public class UserServiceImpl implements IUserService {
         return ServerResponse.createBySuccess(teamMessageAndMembers);
 
     }
+
+
+
 
     @Override
     public ServerResponse<String> updatePassword(User user, String password) {

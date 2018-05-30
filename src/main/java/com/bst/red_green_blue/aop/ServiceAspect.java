@@ -51,6 +51,7 @@ public class ServiceAspect {
     public Object around(ProceedingJoinPoint proceedingJoinPoint) throws Throwable {
         Object result = null;
         try {
+            //只有调用这个方法，被获取的目标方法才会继续执行。
             result = proceedingJoinPoint.proceed();
         } catch (Exception e) {
             throw e;

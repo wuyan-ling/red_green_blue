@@ -11,7 +11,8 @@ public enum ResponseCode  {
     NEED_LOGIN("10","NEED_LOGIN"),
 
     SQL_EXCEPTION("20","团队名已存在"),
-    UNKNOWN_EXCEPTION("21", "UNKNOWN_EXCEPTION") ;
+    UNKNOWN_EXCEPTION("21", "UNKNOWN_EXCEPTION") ,
+    TOKEN_EXCEPTION("22", "TOKEN_EXCEPTION") ;
 
 
     private  String code;

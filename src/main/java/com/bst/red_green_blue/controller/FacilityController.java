@@ -2,11 +2,13 @@ package com.bst.red_green_blue.controller;
 
 import com.bst.red_green_blue.common.ServerResponse;
 import com.bst.red_green_blue.dao.UserMapper;
+import com.bst.red_green_blue.handle.exception.CustomException;
 import com.bst.red_green_blue.pojo.User;
 import com.bst.red_green_blue.pojo.vo.PublicFacilityManageVo;
 import com.bst.red_green_blue.pojo.vo.PublicFacilityVo;
 import com.bst.red_green_blue.service.IFacilityService;
 import com.bst.red_green_blue.util.GsonUtil;
+import com.sun.activation.registries.MailcapParseException;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.BindingResult;
@@ -30,7 +32,7 @@ public class FacilityController {
 
     @ApiOperation(value = "申请公共设施使用")
     @PostMapping(value = "applicationPublicFacility")
-    public ServerResponse<String> applicationPublicFacility(String token, @Valid PublicFacilityVo vo, BindingResult bindingResult) {
+    public ServerResponse<String> applicationPublicFacility(String token, @Valid PublicFacilityVo vo, BindingResult bindingResult) throws MailcapParseException {
 
         if (token == null) {
             return ServerResponse.createByErrorMessage("请先登录");
@@ -49,7 +51,7 @@ public class FacilityController {
 
     @ApiOperation(value = "获取已审核的公共设施申请列表")
     @GetMapping(value = "checkPublicFacilityList")
-    public ServerResponse<List<PublicFacilityManageVo>> checkPublicFacilityList(String token) {
+    public ServerResponse<List<PublicFacilityManageVo>> checkPublicFacilityList(String token) throws MailcapParseException {
         if (token == null) {
             return ServerResponse.createByErrorMessage("请先登录");
         }
@@ -63,7 +65,7 @@ public class FacilityController {
 
     @ApiOperation(value = "获取待审核的公共设施申请审核列表")
     @GetMapping(value = "checkPendingPublicFacility")
-    public ServerResponse<List<PublicFacilityManageVo>> checkPendingPublicFacility(String token) {
+    public ServerResponse<List<PublicFacilityManageVo>> checkPendingPublicFacility(String token) throws MailcapParseException {
         if (token == null) {
             return ServerResponse.createByErrorMessage("请先登录");
         }
@@ -76,7 +78,7 @@ public class FacilityController {
 
     @ApiOperation(value = "管理员公共设施申请审核")
     @PostMapping(value = "checkPublicFacility")
-    public ServerResponse<String> checkPublicFacility(String token, String id, int status) {
+    public ServerResponse<String> checkPublicFacility(String token, String id, int status) throws MailcapParseException {
         if (token == null) {
             return ServerResponse.createByErrorMessage("请先登录");
         }

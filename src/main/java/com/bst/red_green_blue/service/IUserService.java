@@ -41,7 +41,6 @@ public interface IUserService {
      * 修改用户信息
      *
      * @param user
-     * @param session
      */
     ServerResponse<String> updateUser(User user);
 

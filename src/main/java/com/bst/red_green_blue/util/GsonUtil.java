@@ -1,8 +1,10 @@
 package com.bst.red_green_blue.util;
 
 import com.bst.red_green_blue.common.Constant;
+import com.bst.red_green_blue.handle.exception.CustomException;
 import com.bst.red_green_blue.pojo.User;
 import com.google.gson.Gson;
+import com.sun.activation.registries.MailcapParseException;
 import io.jsonwebtoken.Claims;
 
 /**
@@ -12,7 +14,7 @@ import io.jsonwebtoken.Claims;
  */
 public class GsonUtil {
     //提取token中的用户信息
-    public static User createUserUseToToken(String token) {
+    public static User createUserUseToToken(String token)throws MailcapParseException {
         String subject = JwtUtil.parseJWT(token).getSubject();
         return new Gson().fromJson(subject, User.class);
     }

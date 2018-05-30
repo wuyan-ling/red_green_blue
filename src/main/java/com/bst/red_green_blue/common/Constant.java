@@ -6,7 +6,6 @@ package com.bst.red_green_blue.common;
  */
 public class Constant {
     public static final String CURRENT_USER = "currentUser";
-
     public interface Role {
         //普通用户
         int ROLE_CUSTOMER = 1;
